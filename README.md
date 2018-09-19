@@ -1,5 +1,6 @@
 # golovolomka
 Проект Вадима, Макса и Лехи
-
-Задачи
-https://docs.google.com/spreadsheets/d/1kn53fy197NlNkCA0opnQ0eKjl10PJBdGU8ZoWwuSKhQ/edit#gid=657634269
+Игрок крутит кубы создавая путь шару. Шар должен дойти до конца.
+Размер экрана 1280 * 720. Конец располагаеться справа,шар движется с постонной скоростью
+Задачи 
+0https://docs.google.com/spreadsheets/d/1kn53fy197NlNkCA0opnQ0eKjl10PJBdGU8ZoWwuSKhQ/edit#gid=6576342690000000000
