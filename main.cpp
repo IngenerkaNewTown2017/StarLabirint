@@ -1,4 +1,3 @@
-
 #include "TXLib.h"
 
 int x_ball;
@@ -15,42 +14,40 @@ int main()
     txDeleteDC (main_menu);
     }
 
-
+/*это движение шара вправо */
 void move_ball_rigth()
 {
-/*это движение шара вправо */for(x_ball=point_cuba; x_ball<=/*другой*/point_cuba; x_ball++)
-{
-  x_ball=x_ball+speed_ball;
-}
+    //FIXME Тут скорее if (GetAsyncKeyState(VK_RIGHT)) вместо for.
+    //Или тут выставляешь карту, а шарик движется сам (тогда все правильно, но надо прописать в readme)?
+    for(x_ball=point_cuba; x_ball<=/*другой*/point_cuba; x_ball++)
+    {
+        x_ball=x_ball+speed_ball;
+    }
 }
 
+/*это движение шара влево */
 void move_ball_left()
 {
-/*это движение шара влево */for(x_ball=point_cuba; x_ball<=/*другой*/point_cuba; x_ball++)
-{
- x_ball=x_ball-speed_ball;
-}
+    for(x_ball=point_cuba; x_ball<=/*другой*/point_cuba; x_ball++)
+    {
+        x_ball=x_ball-speed_ball;
+    }
 }
 
+/*это движение шара вверх */
 void move_ball_up()
 {
-/*это движение шара вверх */for(y_ball=point_cuba; y_ball<=/*другой*/point_cuba; y_ball++)
-{
- y_ball=y_ball+speed_ball;
-}
-}
+    for(y_ball=point_cuba; y_ball<=/*другой*/point_cuba; y_ball++)
+    {
+        y_ball=y_ball+speed_ball;
+    }
 
+
+/*это движение шара вниз */
 void move_ball_down()
 {
-/*это движение шара вниз */for(y_ball=point_cuba; y_ball<=/*другой*/point_cuba; y_ball++)
-{
- y_ball=y_ball-speed_ball;
+    for(y_ball=point_cuba; y_ball<=/*другой*/point_cuba; y_ball++)
+    {
+        y_ball=y_ball-speed_ball;
+    }
 }
-}
-
-
-
-
-
-
-

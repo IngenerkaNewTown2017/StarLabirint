@@ -1,4 +1,3 @@
-
 #include "TXLib.h"
 #include "Lib\\lib.cpp"
 
@@ -11,8 +10,8 @@ int main()
     int y = 0;
 
 
-   HDC golova = txLoadImage("pictures\\333.bmp");
-   HDC fon = txLoadImage ("pictures\\fon.bmp");
+    HDC golova = txLoadImage("pictures\\333.bmp");
+    HDC fon = txLoadImage ("pictures\\fon.bmp");
 
 
 
@@ -40,7 +39,7 @@ int main()
             x=0;
         }
 
-   if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
+        if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
             txMouseX() >= 470 && // И мышь находится на кнопке...
             txMouseX() <= 535 &&
             txMouseY() <= 716 &&
@@ -51,5 +50,6 @@ int main()
 
         txSleep(10);
     }
+
     return 0;
 }
