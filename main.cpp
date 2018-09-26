@@ -3,7 +3,7 @@
 
 int x_ball;
 int y_ball;
-int point_cuba;//èõ äîõèãà áóäåò    íå çàáóäü äàóí
+int point_cuba;//Ã¨Ãµ Ã¤Ã®ÃµÃ¨Ã£Ã  Ã¡Ã³Ã¤Ã¥Ã²    Ã­Ã¥ Ã§Ã Ã¡Ã³Ã¤Ã¼ Ã¤Ã Ã³Ã­
 int speed_ball = 35;
 bool Exit = false;
 bool StartGame = false;
@@ -50,6 +50,13 @@ int main()
             txBegin();
             txBitBlt (txDC(), 0, 0, 1280, 720, proba, 0, 0);
 
+            txSetFillColor(TX_RED);
+            txRectangle(0,0,100,30);
+            txSetFillColor(TX_YELLOW);
+            txRectangle(0,30,100,60);
+            txSetFillColor(TX_BLUE);
+            txRectangle(0,60,100,90);
+
             if(txMouseButtons () == 1 &&
                 txMouseX () >= 525 &&
                 txMouseX () <= 689 &&
@@ -71,7 +78,7 @@ int main()
 
 void move_ball_rigth()
 {
-/*ýòî äâèæåíèå øàðà âïðàâî */for(x_ball=point_cuba; x_ball<=/*äðóãîé*/point_cuba; x_ball++)
+/*Ã½Ã²Ã® Ã¤Ã¢Ã¨Ã¦Ã¥Ã­Ã¨Ã¥ Ã¸Ã Ã°Ã  Ã¢Ã¯Ã°Ã Ã¢Ã® */for(x_ball=point_cuba; x_ball<=/*Ã¤Ã°Ã³Ã£Ã®Ã©*/point_cuba; x_ball++)
 {
   x_ball=x_ball+speed_ball;
 }
@@ -79,7 +86,7 @@ void move_ball_rigth()
 
 void move_ball_left()
 {
-/*ýòî äâèæåíèå øàðà âëåâî */for(x_ball=point_cuba; x_ball<=/*äðóãîé*/point_cuba; x_ball++)
+/*Ã½Ã²Ã® Ã¤Ã¢Ã¨Ã¦Ã¥Ã­Ã¨Ã¥ Ã¸Ã Ã°Ã  Ã¢Ã«Ã¥Ã¢Ã® */for(x_ball=point_cuba; x_ball<=/*Ã¤Ã°Ã³Ã£Ã®Ã©*/point_cuba; x_ball++)
 {
  x_ball=x_ball-speed_ball;
 }
@@ -87,7 +94,7 @@ void move_ball_left()
 
 void move_ball_up()
 {
-/*ýòî äâèæåíèå øàðà ââåðõ */for(y_ball=point_cuba; y_ball<=/*äðóãîé*/point_cuba; y_ball++)
+/*Ã½Ã²Ã® Ã¤Ã¢Ã¨Ã¦Ã¥Ã­Ã¨Ã¥ Ã¸Ã Ã°Ã  Ã¢Ã¢Ã¥Ã°Ãµ */for(y_ball=point_cuba; y_ball<=/*Ã¤Ã°Ã³Ã£Ã®Ã©*/point_cuba; y_ball++)
 {
  y_ball=y_ball+speed_ball;
 }
@@ -95,16 +102,8 @@ void move_ball_up()
 
 void move_ball_down()
 {
-/*ýòî äâèæåíèå øàðà âíèç */for(y_ball=point_cuba; y_ball<=/*äðóãîé*/point_cuba; y_ball++)
+/*Ã½Ã²Ã® Ã¤Ã¢Ã¨Ã¦Ã¥Ã­Ã¨Ã¥ Ã¸Ã Ã°Ã  Ã¢Ã­Ã¨Ã§ */for(y_ball=point_cuba; y_ball<=/*Ã¤Ã°Ã³Ã£Ã®Ã©*/point_cuba; y_ball++)
 {
  y_ball=y_ball-speed_ball;
 }
 }
-
-
-
-
-
-
-
-
