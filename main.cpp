@@ -3,7 +3,7 @@
 
 int x_ball;
 int y_ball;
-int point_cuba;//их дохига будет    не забудь даун
+int point_cuba;//ГЁГµ Г¤Г®ГµГЁГЈГ  ГЎГіГ¤ГҐГІ    Г­ГҐ Г§Г ГЎГіГ¤Гј Г¤Г ГіГ­
 int speed_ball = 35;
 bool Exit = false;
 bool StartGame = false;
@@ -49,14 +49,13 @@ int main()
         {
             txBegin();
             txBitBlt (txDC(), 0, 0, 1280, 720, proba, 0, 0);
+
             txSetFillColor(TX_RED);
             txRectangle(0,0,100,30);
             txSetFillColor(TX_YELLOW);
             txRectangle(0,30,100,60);
             txSetFillColor(TX_BLUE);
             txRectangle(0,60,100,90);
-
-
 
             if(txMouseButtons () == 1 &&
                 txMouseX () >= 525 &&
@@ -79,7 +78,7 @@ int main()
 
 void move_ball_rigth()
 {
-/*это движение шара вправо */for(x_ball=point_cuba; x_ball<=/*другой*/point_cuba; x_ball++)
+/*ГЅГІГ® Г¤ГўГЁГ¦ГҐГ­ГЁГҐ ГёГ Г°Г  ГўГЇГ°Г ГўГ® */for(x_ball=point_cuba; x_ball<=/*Г¤Г°ГіГЈГ®Г©*/point_cuba; x_ball++)
 {
   x_ball=x_ball+speed_ball;
 }
@@ -87,7 +86,7 @@ void move_ball_rigth()
 
 void move_ball_left()
 {
-/*это движение шара влево */for(x_ball=point_cuba; x_ball<=/*другой*/point_cuba; x_ball++)
+/*ГЅГІГ® Г¤ГўГЁГ¦ГҐГ­ГЁГҐ ГёГ Г°Г  ГўГ«ГҐГўГ® */for(x_ball=point_cuba; x_ball<=/*Г¤Г°ГіГЈГ®Г©*/point_cuba; x_ball++)
 {
  x_ball=x_ball-speed_ball;
 }
@@ -95,7 +94,7 @@ void move_ball_left()
 
 void move_ball_up()
 {
-/*это движение шара вверх */for(y_ball=point_cuba; y_ball<=/*другой*/point_cuba; y_ball++)
+/*ГЅГІГ® Г¤ГўГЁГ¦ГҐГ­ГЁГҐ ГёГ Г°Г  ГўГўГҐГ°Гµ */for(y_ball=point_cuba; y_ball<=/*Г¤Г°ГіГЈГ®Г©*/point_cuba; y_ball++)
 {
  y_ball=y_ball+speed_ball;
 }
@@ -103,16 +102,8 @@ void move_ball_up()
 
 void move_ball_down()
 {
-/*это движение шара вниз */for(y_ball=point_cuba; y_ball<=/*другой*/point_cuba; y_ball++)
+/*ГЅГІГ® Г¤ГўГЁГ¦ГҐГ­ГЁГҐ ГёГ Г°Г  ГўГ­ГЁГ§ */for(y_ball=point_cuba; y_ball<=/*Г¤Г°ГіГЈГ®Г©*/point_cuba; y_ball++)
 {
  y_ball=y_ball-speed_ball;
 }
 }
-
-
-
-
-
-
-
-
