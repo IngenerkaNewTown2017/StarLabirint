@@ -1,0 +1,6 @@
+
+    HDC fon = txLoadImage ("фон.bmp");
+    
+    txBitBlt (txDC(), 0, 0, 1000, 800, fon, 0, 0);
+    
+    txDeleteDC (fon);

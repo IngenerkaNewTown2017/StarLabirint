@@ -78,11 +78,11 @@ int main()
                 txBitBlt (txDC(), 415, 0, 100, 100, vsecuby, 483, 10);
                 txBitBlt (txDC(), 415, 200, 100, 100, vsecuby, 483, 10);
             }
-
+            
             if (risovatCub3)
             {
-                txBitBlt (txDC(), 315, 100, 100, 100, vsecuby, 602, 10);
-                txBitBlt (txDC(), 515, 100, 100, 100, vsecuby, 602, 10);
+                txBitBlt (txDC(), 415, 0, 100, 100, vsecuby, 483, 10);
+                txBitBlt (txDC(), 415, 200, 100, 100, vsecuby, 483, 10);
             }
 
 
@@ -114,7 +114,7 @@ int main()
             {
                 risovatCub2 = true;
             }
-
+            
             if(txMouseButtons () == 1 &&
                 txMouseX () >= 0 &&
                 txMouseX () <= 100 &&
