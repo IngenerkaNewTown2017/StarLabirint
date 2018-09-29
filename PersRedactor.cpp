@@ -1,3 +1,4 @@
+
 #include "TXLib.h"
 #include "Lib\\lib.cpp"
 
@@ -8,48 +9,132 @@ int main()
 
     int x = 0;
     int y = 0;
-
-
-    HDC golova = txLoadImage("pictures\\333.bmp");
+    bool risovat_gol = false;
+    bool risovat_gol2 = false;
+    bool risovat_odej = false;
+    HDC golova = txLoadImage("pictures\\head.bmp");
     HDC fon = txLoadImage ("pictures\\fon.bmp");
-
+    HDC fon1  = txLoadImage ("pictures\\fon1.bmp ");
+    HDC fon_golovy  = txLoadImage ("pictures\\fon2.bmp ");
+    HDC fon_tela  = txLoadImage ("pictures\\fon3.bmp ");
+    HDC fon4  = txLoadImage ("pictures\\fon4.bmp ");
+    HDC telo  = txLoadImage ("pictures\\telo.bmp ");
+    HDC kartinka = fon1;
 
 
     while (!GetAsyncKeyState('R')) {
 
         txClear();
-        risovat_fon(fon);
-        risovat_golova(golova,x,y);
+
+        risovat_fon(kartinka);
+
+        if (risovat_gol)
+        {
+            risovat_golova(golova,3,y);
+        }
+        else if (risovat_gol2)
+        {
+            risovat_golova(golova,221,y);
+        }
+
+        if (risovat_odej)
+        {
+            risovat_telo(telo,9,y) ;
+        }
+
+
+        if (txMouseButtons()&& // если нажата левая кнопка мыши
+            txMouseX() >= 0 && // И мышь находится на кнопке...
+            txMouseX() <= 1280 &&
+            txMouseY() <= 720 &&
+            txMouseY() >= 0)
+        {
+           //kartinka = fon1;
+        }
+
 
         if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
-            txMouseX() >= 173 && // И мышь находится на кнопке...
-            txMouseX() <= 351 &&
-            txMouseY() <= 381 &&
-            txMouseY() >= 256)
+            txMouseX() >= 645 && // И мышь находится на кнопке...
+            txMouseX() <= 821 &&
+            txMouseY() <= 123 &&
+            txMouseY() >= 77)
         {
-            x=270;
+           kartinka = fon_golovy;
         }
 
         if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
-            txMouseX() >= 934 && // И мышь находится на кнопке...
-            txMouseX() <= 1083 &&
-            txMouseY() <= 390 &&
-            txMouseY() >= 294)
+            txMouseX() >= 825 && // И мышь находится на кнопке...
+            txMouseX() <= 1000 &&
+            txMouseY() <= 121 &&
+            txMouseY() >= 75)
         {
-            x=0;
+           kartinka = fon_tela;
         }
 
         if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
-            txMouseX() >= 470 && // И мышь находится на кнопке...
-            txMouseX() <= 535 &&
-            txMouseY() <= 716 &&
-            txMouseY() >= 650)
+            txMouseX() >= 1001 && // И мышь находится на кнопке...
+            txMouseX() <= 1185 &&
+            txMouseY() <= 121 &&
+            txMouseY() >= 75)
         {
-            x=530;
+           kartinka = fon4;
         }
 
+        if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
+            txMouseX() >= 1185 && // И мышь находится на кнопке...
+            txMouseX() <= 1240 &&
+            txMouseY() <= 121 &&
+            txMouseY() >= 75)
+        {
+             txDestroyWindow();
+            return 0;
+        }
+
+         if (kartinka==fon_golovy)
+         {
+
+            if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
+                txMouseX() >= 643 && // И мышь находится на кнопке...
+                txMouseX() <= 783 &&
+                txMouseY() <= 255 &&
+                txMouseY() >= 127)
+            {
+                risovat_gol = true;
+                risovat_gol2 = false;
+                //risovat_odej = false;
+            }
+
+            if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
+                txMouseX() >= 785 && // И мышь находится на кнопке...
+                txMouseX() <= 925 &&
+                txMouseY() <= 255 &&
+                txMouseY() >= 125)
+            {
+                risovat_gol = false;
+                risovat_gol2 = true;
+                //risovat_odej = false;
+
+            }
+        }
+
+
+         if (kartinka==fon_tela)
+         {
+
+            if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
+                txMouseX() >= 645 && // И мышь находится на кнопке...
+                txMouseX() <= 825 &&
+                txMouseY() <= 303 &&
+                txMouseY() >= 120)
+            {
+                risovat_odej = true;
+                //risovat_gol = false;
+                //risovat_gol2 = false;
+            }
+
+        }
         txSleep(10);
     }
-
     return 0;
 }
+

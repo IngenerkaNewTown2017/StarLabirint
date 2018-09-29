@@ -19,9 +19,9 @@ int main()
     {
     txCreateWindow (1280, 720);
 
-    HDC main_menu = txLoadImage ("main_menu.bmp");
-    HDC proba = txLoadImage ("proba.bmp");
-    HDC vsecuby = txLoadImage ("vsecuby.bmp");
+    HDC main_menu = txLoadImage ("pictures\\main_menu.bmp");
+    HDC proba = txLoadImage ("pictures\\proba.bmp");
+    HDC vsecuby = txLoadImage ("pictures\\vsecuby.bmp");
 
     while(Exit == false && StartGame == false)
     {
