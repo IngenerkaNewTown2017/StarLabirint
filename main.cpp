@@ -1,109 +1,55 @@
 
 #include "TXLib.h"
-
-int x_ball;
-int y_ball;
-int point_cuba;//ГЁГµ Г¤Г®ГµГЁГЈГ  ГЎГіГ¤ГҐГІ    Г­ГҐ Г§Г ГЎГіГ¤Гј Г¤Г ГіГ­
-int speed_ball = 35;
-bool Exit = false;
-bool StartGame = false;
+#include "lib.cpp"
 
 int main()
     {
-    txCreateWindow (1280, 720);
+    txCreateWindow (1280,720);
+    txSetFillColor(TX_WHITE);
 
-    HDC main_menu = txLoadImage ("main_menu.bmp");
-    HDC proba = txLoadImage ("proba.bmp");
+    int x = 0;
+    int y = 0;
 
 
-    while(Exit == false && StartGame == false)
-    {
-        txBegin();
+   HDC golova = txLoadImage("pictures\\333.bmp");
+   HDC fon = txLoadImage ("pictures\\fon.bmp");
+
+
+
+    while (!GetAsyncKeyState('R')) {
+
         txClear();
-        txBitBlt (txDC(), 0, 0, 1280, 720, main_menu, 0, 0);
+        risovat_fon(fon);
+        risovat_golova(golova,x,y);
 
-        if(txMouseButtons () == 1 &&
-            txMouseX () >= 525 &&
-            txMouseX () <= 689 &&
-            txMouseY () >= 480 &&
-            txMouseY () <= 580)
+        if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
+            txMouseX() >= 173 && // И мышь находится на кнопке...
+            txMouseX() <= 351 &&
+            txMouseY() <= 381 &&
+            txMouseY() >= 256)
         {
-            Exit = true;
+            x=270;
         }
-        if(txMouseButtons () == 1 &&
-            txMouseX () >= 517 &&
-            txMouseX () <= 704 &&
-            txMouseY () >= 275 &&
-            txMouseY () <= 368)
+
+        if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
+            txMouseX() >= 934 && // И мышь находится на кнопке...
+            txMouseX() <= 1083 &&
+            txMouseY() <= 390 &&
+            txMouseY() >= 294)
         {
-            StartGame = true;
+            x=0;
+        }
+
+   if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
+            txMouseX() >= 470 && // И мышь находится на кнопке...
+            txMouseX() <= 535 &&
+            txMouseY() <= 716 &&
+            txMouseY() >= 650)
+        {
+            x=530;
         }
 
         txSleep(10);
-        txEnd();
     }
-
-    if (StartGame == true)
-    {
-        while(Exit == false)
-        {
-            txBegin();
-            txBitBlt (txDC(), 0, 0, 1280, 720, proba, 0, 0);
-
-            txSetFillColor(TX_RED);
-            txRectangle(0,0,100,30);
-            txSetFillColor(TX_YELLOW);
-            txRectangle(0,30,100,60);
-            txSetFillColor(TX_BLUE);
-            txRectangle(0,60,100,90);
-
-            if(txMouseButtons () == 1 &&
-                txMouseX () >= 525 &&
-                txMouseX () <= 689 &&
-                txMouseY () >= 480 &&
-                txMouseY () <= 580)
-            {
-                txBitBlt (txDC(), 400, 400, 1280, 720, proba, 0, 0);
-            }
-            txSleep(10);
-            txEnd();
-        }
-    }
-
-    txDeleteDC (main_menu);
-    txDeleteDC (proba);
     return 0;
-}
-
-
-void move_ball_rigth()
-{
-/*ГЅГІГ® Г¤ГўГЁГ¦ГҐГ­ГЁГҐ ГёГ Г°Г  ГўГЇГ°Г ГўГ® */for(x_ball=point_cuba; x_ball<=/*Г¤Г°ГіГЈГ®Г©*/point_cuba; x_ball++)
-{
-  x_ball=x_ball+speed_ball;
-}
-}
-
-void move_ball_left()
-{
-/*ГЅГІГ® Г¤ГўГЁГ¦ГҐГ­ГЁГҐ ГёГ Г°Г  ГўГ«ГҐГўГ® */for(x_ball=point_cuba; x_ball<=/*Г¤Г°ГіГЈГ®Г©*/point_cuba; x_ball++)
-{
- x_ball=x_ball-speed_ball;
-}
-}
-
-void move_ball_up()
-{
-/*ГЅГІГ® Г¤ГўГЁГ¦ГҐГ­ГЁГҐ ГёГ Г°Г  ГўГўГҐГ°Гµ */for(y_ball=point_cuba; y_ball<=/*Г¤Г°ГіГЈГ®Г©*/point_cuba; y_ball++)
-{
- y_ball=y_ball+speed_ball;
-}
-}
-
-void move_ball_down()
-{
-/*ГЅГІГ® Г¤ГўГЁГ¦ГҐГ­ГЁГҐ ГёГ Г°Г  ГўГ­ГЁГ§ */for(y_ball=point_cuba; y_ball<=/*Г¤Г°ГіГЈГ®Г©*/point_cuba; y_ball++)
-{
- y_ball=y_ball-speed_ball;
-}
 }
