@@ -1,4 +1,3 @@
-
 #include "TXLib.h"
 
 int x_ball;
