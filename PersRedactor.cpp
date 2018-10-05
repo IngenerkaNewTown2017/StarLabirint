@@ -1,6 +1,21 @@
-
 #include "TXLib.h"
 #include "Lib\\lib.cpp"
+
+bool checkClick(int MinX, int MaxX, int MinY, int MaxY)
+{
+    if (
+        txMouseButtons() & 1 &&
+        txMouseX() >= MinX &&
+        txMouseX() <= MaxX &&
+        txMouseY() <= MaxY &&
+        txMouseY() >= MinY
+        )
+    {
+        return true;
+    }
+
+    return false;
+}
 
 int main()
     {
@@ -9,9 +24,8 @@ int main()
 
     int x = 0;
     int y = 0;
-    bool risovat_gol = false;
-    bool risovat_gol2 = false;
-    bool risovat_odej = false;
+    int koordinata_bashki = -100;
+    int koordinata_odejdi = -100;
     HDC golova = txLoadImage("pictures\\head.bmp");
     HDC fon = txLoadImage ("pictures\\fon.bmp");
     HDC fon1  = txLoadImage ("pictures\\fon1.bmp ");
@@ -28,111 +42,74 @@ int main()
 
         risovat_fon(kartinka);
 
-        if (risovat_gol)
+        if (koordinata_bashki != -100)
         {
-            risovat_golova(golova,3,y);
-        }
-        else if (risovat_gol2)
-        {
-            risovat_golova(golova,221,y);
-        }
-
-        if (risovat_odej)
-        {
-            risovat_telo(telo,9,y) ;
+            risovat_golova(golova,koordinata_bashki,y);
         }
 
 
-        if (txMouseButtons()&& // если нажата левая кнопка мыши
-            txMouseX() >= 0 && // И мышь находится на кнопке...
-            txMouseX() <= 1280 &&
-            txMouseY() <= 720 &&
-            txMouseY() >= 0)
+        if (koordinata_odejdi != -100)
         {
-           //kartinka = fon1;
+            risovat_telo(telo,koordinata_odejdi,y);
         }
 
 
-        if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
-            txMouseX() >= 645 && // И мышь находится на кнопке...
-            txMouseX() <= 821 &&
-            txMouseY() <= 123 &&
-            txMouseY() >= 77)
+
+        if (checkClick(645, 821, 77, 123))
         {
            kartinka = fon_golovy;
         }
-
-        if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
-            txMouseX() >= 825 && // И мышь находится на кнопке...
-            txMouseX() <= 1000 &&
-            txMouseY() <= 121 &&
-            txMouseY() >= 75)
+        else if (checkClick(825, 1000, 75, 121))
         {
            kartinka = fon_tela;
         }
-
-        if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
-            txMouseX() >= 1001 && // И мышь находится на кнопке...
-            txMouseX() <= 1185 &&
-            txMouseY() <= 121 &&
-            txMouseY() >= 75)
+        else if (checkClick(1001, 1185, 75, 121))
         {
            kartinka = fon4;
         }
 
-        if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
-            txMouseX() >= 1185 && // И мышь находится на кнопке...
-            txMouseX() <= 1240 &&
-            txMouseY() <= 121 &&
-            txMouseY() >= 75)
+        txSetColor(TX_BLACK, 5);
+        txRectangle(640, 80, 820, 120);
+        txSetTextAlign (TA_CENTER);
+        txSelectFont("Arial", 45);
+        txDrawText(640, 80, 820, 120, "Голова");
+
+
+        if (checkClick(1185, 1240, 75, 121))
         {
-             txDestroyWindow();
+
+            txDestroyWindow();
             return 0;
         }
 
-         if (kartinka==fon_golovy)
-         {
 
-            if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
-                txMouseX() >= 643 && // И мышь находится на кнопке...
-                txMouseX() <= 783 &&
-                txMouseY() <= 255 &&
-                txMouseY() >= 127)
+        if (kartinka==fon_golovy)
+         {
+            if (checkClick(643, 783, 127, 255))
             {
-                risovat_gol = true;
-                risovat_gol2 = false;
-                //risovat_odej = false;
+                koordinata_bashki = 3;
             }
 
-            if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
-                txMouseX() >= 785 && // И мышь находится на кнопке...
-                txMouseX() <= 925 &&
-                txMouseY() <= 255 &&
-                txMouseY() >= 125)
+            else if (checkClick(785, 925, 127, 255))
             {
-                risovat_gol = false;
-                risovat_gol2 = true;
-                //risovat_odej = false;
-
+                koordinata_bashki = 221;
             }
         }
 
 
-         if (kartinka==fon_tela)
+        if (kartinka==fon_tela)
          {
-
-            if (txMouseButtons() & 1 && // если нажата левая кнопка мыши
-                txMouseX() >= 645 && // И мышь находится на кнопке...
-                txMouseX() <= 825 &&
-                txMouseY() <= 303 &&
-                txMouseY() >= 120)
+            if (checkClick(643, 825, 127, 300))
             {
-                risovat_odej = true;
-                //risovat_gol = false;
-                //risovat_gol2 = false;
+                koordinata_odejdi = 9;
             }
 
+            else if (checkClick(820, 999, 127, 300))
+            {
+                koordinata_odejdi = 205;
+            }
         }
+
         txSleep(10);
     }
     return 0;
