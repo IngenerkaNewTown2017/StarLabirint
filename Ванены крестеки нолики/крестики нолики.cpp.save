@@ -45,15 +45,23 @@ txBitBlt (txDC(), 0, 170, 162, 158, nolic, 0, 0);
 			nomer_X = nomer_X + 1;
 	    }
 
+		for (int counter = 0; counter < 5; counter++)
+        {
+            if (x[counter]  == true)
+            {
+                txTransparentBlt (txDC(), figureX[counter], figureY[counter], 162, 163, krestic, 0, 0, TX_WHITE);
+            }
+        }
 
         if (txMouseButtons() & 2 ) //нолики
 		{
 			o[nomer_O] = true;
 			figureO[nomer_O] = round(txMouseX() / 165) * 165;
 			figureP[nomer_O] = round(txMouseY() / 165) * 165;
-
-            for (int counter = 0; counter < nomer_O; counter++)
-            {
+			nomer_O = nomer_O + 1;
+	    }
+        for (int counter = 0; counter < nomer_O; counter++)
+        {
                 if (figureO[nomer_O] == figureO[counter] and
                 figureP[nomer_O] == figureP[counter]
 
@@ -62,21 +70,22 @@ txBitBlt (txDC(), 0, 170, 162, 158, nolic, 0, 0);
                 {
                     nomer_O = nomer_O - 1;
                 }
-            }
                   nomer_O = nomer_O + 1;
-	    }
+        }
 
 
 		for (int counter = 0; counter < 5; counter++)
         {
-            if (x[counter]  == true)
-            {
-                txTransparentBlt (txDC(), figureX[counter], figureY[counter], 162, 163, krestic, 0, 0, TX_WHITE);
-            }
             if (o[counter]  == true)
             {
-                txTransparentBlt (txDC(), figureO[counter], figureP[counter], 158,158, nolic, 0, 0, TX_WHITE);
+                txTransparentBlt (txDC(), figureO[counter], figureY[counter], 162, 163, krestic, 0, 0, TX_WHITE);
             }
+
+                if (nomer_O)
+            {
+                txTransparentBlt (txDC(), figureO[counter], figureP[counter], 162, 163, nolic, 0, 0, TX_WHITE);
+            }
+
         }
 
 
