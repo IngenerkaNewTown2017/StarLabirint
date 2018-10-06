@@ -1,6 +1,15 @@
-
 #include "TXLib.h"
 
+struct ColorButton
+{
+    int x;
+    int x1;
+    int y;
+    int y1;
+    COLORREF color;
+    int pictureX;
+    int pictureY;
+};
 
 //файл для рисования всех частей тел XD
 void risovat_golova(HDC golova,int x ,int y) {

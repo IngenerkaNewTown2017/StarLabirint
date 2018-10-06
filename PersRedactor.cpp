@@ -24,12 +24,16 @@ int main()
 
     int x = 0;
     int y = 0;
+    int nomer_vkladki = 0;
+    const int VKLADKA_LICO = 1;
     int koordinata_bashki = -100;
     int koordinata_odejdi = -100;
     HDC golova = txLoadImage("pictures\\head.bmp");
     HDC fon = txLoadImage ("pictures\\fon.bmp");
     HDC fon1  = txLoadImage ("pictures\\fon1.bmp ");
-    HDC fon_golovy  = txLoadImage ("pictures\\fon2.bmp ");
+    //HDC fon_golovy  = txLoadImage ("pictures\\fon2.bmp ");
+    HDC golovy  = txLoadImage ("pictures\\face.bmp ");
+    HDC rects  = txLoadImage ("pictures\\rects.bmp ");
     HDC fon_tela  = txLoadImage ("pictures\\fon3.bmp ");
     HDC fon4  = txLoadImage ("pictures\\fon4.bmp ");
     HDC telo  = txLoadImage ("pictures\\telo.bmp ");
@@ -38,9 +42,16 @@ int main()
 
     while (!GetAsyncKeyState('R')) {
 
+        txBegin();
         txClear();
 
         risovat_fon(kartinka);
+        if (nomer_vkladki == VKLADKA_LICO)
+        {
+            txBitBlt (txDC(), 639, 120, 290, 185, golovy, x, y);
+            txBitBlt (txDC(), 640, 580, 600, 80, rects, x, y);
+        }
+
 
         if (koordinata_bashki != -100)
         {
@@ -57,15 +68,18 @@ int main()
 
         if (checkClick(645, 821, 77, 123))
         {
-           kartinka = fon_golovy;
+           kartinka = fon1;
+           nomer_vkladki = VKLADKA_LICO;
         }
         else if (checkClick(825, 1000, 75, 121))
         {
            kartinka = fon_tela;
+           nomer_vkladki = 0;
         }
         else if (checkClick(1001, 1185, 75, 121))
         {
            kartinka = fon4;
+           nomer_vkladki = 0;
         }
 
         txSetColor(TX_BLACK, 5);
@@ -83,7 +97,9 @@ int main()
         }
 
 
-        if (kartinka==fon_golovy)
+
+        if (nomer_vkladki == VKLADKA_LICO)
+        //if (kartinka==fon_golovy)
          {
             if (checkClick(643, 783, 127, 255))
             {
@@ -93,6 +109,12 @@ int main()
             else if (checkClick(785, 925, 127, 255))
             {
                 koordinata_bashki = 221;
+            }
+
+            //640 580 1240 660
+            if (koordinata_bashki == 3 &&  checkClick( 640, 700, 580, 660))
+            {
+                y=205;
             }
         }
 
@@ -108,10 +130,16 @@ int main()
             {
                 koordinata_odejdi = 205;
             }
+
+
         }
 
         txSleep(10);
+        txEnd();
     }
+
+    txDeleteDC(golovy);
+    txDeleteDC(rects);
+
     return 0;
 }
-
