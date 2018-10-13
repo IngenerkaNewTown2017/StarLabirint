@@ -1,5 +1,9 @@
 #include "TXLib.h"
 
+int uroven_tekushii = 1;
+int uroven_staryi = 0;
+
+
 int x_ball;
 int y_ball;
 int point_cuba;
@@ -58,6 +62,7 @@ int main()
     HDC main_menu = txLoadImage ("pictures\\main_menu.bmp");
     HDC proba = txLoadImage ("pictures\\proba.bmp");
     HDC vsecuby = txLoadImage ("pictures\\vsecuby.bmp");
+    HDC kartaurovneya = txLoadImage ("kartaurovneya.bmp");
 
     //Сделать массивом
     Oblast obl1 = {212, 312, 119, 219, 1, 1, 4};
@@ -97,8 +102,27 @@ int main()
 
     if (StartGame == true)
     {
+
+        txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
+
+        while(uroven_staryi < uroven_tekushii)
+        {
+            if(txMouseButtons () &1 &&
+                txMouseX () >= 76 &&
+                txMouseX () <= 175 &&
+                txMouseY () >= 115 &&
+                txMouseY () <= 214)
+            {
+                uroven_staryi = uroven_tekushii;
+            }
+            txSleep(10);
+        }
+
+        uroven_tekushii = uroven_tekushii + 1;
+
         while(Exit == false)
         {
+
             txBegin();
             txBitBlt (txDC(), 0, 0, 1280, 720, proba, 0, 0);
 
