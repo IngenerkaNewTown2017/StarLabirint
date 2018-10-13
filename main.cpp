@@ -54,6 +54,7 @@ struct Oblast
 void drawButton(Button btn1);
 int KNOPKAClick (Button exitButton, int risovat);
 int clickOnOblkast(Oblast obl1);
+int coord(Oblast obl1);
 
 int main()
     {
@@ -65,13 +66,24 @@ int main()
     HDC kartaurovneya = txLoadImage ("kartaurovneya.bmp");
 
     //Сделать массивом
-    Oblast obl1 = {212, 312, 119, 219, 1, 1, 4};
-    Oblast obl2 = {312, 412, 119, 219, 5, 5, 6};
+    int KOLICH_KNOPOK = 5;
+    Button btn[KOLICH_KNOPOK];
+    btn[0] = {0, 100,   0,  30, TX_RED, "red11111111111111111111111"};
+    btn[1] = {0, 100,  30,  60, TX_YELLOW, "yellow111111111111111111111111"};
+    btn[2] = {0, 100,  60,  90, TX_BLUE, "blue1111111111111111111111111111"};
+    btn[3] = {0, 100,  90, 120, TX_YELLOW, "yellow111111111111111111111111"};
+    btn[4] = {0, 100, 120, 150, TX_BLUE, "blue1111111111111111111111111111"};
 
-
-    Button btn1 = {0, 100,  0, 30, TX_RED, "red11111111111111111111111"};
-    Button btn2 = {0, 100, 30, 60, TX_YELLOW, "yellow111111111111111111111111"};
-    Button btn3 = {0, 100, 60, 90, TX_BLUE, "blue1111111111111111111111111111"};
+    int KOLVO_OBLASTEI = 8;
+    Oblast obl[KOLVO_OBLASTEI];
+    /*1*/obl[0] = {212, 312, 119, 219, 1, 1, 4};
+    /*1*/obl[1] = {312, 412, 119, 219, 5, 5, 6};
+    /*1*/obl[2] = {412, 512, 119, 219, 1, 1, 4};
+    /*1*/obl[3] = {512, 612, 119, 219, 5, 5, 6};
+    /*1*/obl[4] = {612, 712, 119, 219, 1, 1, 4};
+    /*1*/obl[5] = {712, 812, 119, 219, 5, 5, 6};
+    /*1*/obl[6] = {812, 912, 119, 219, 1, 1, 4};
+    /*1*/obl[7] = {912, 1012, 119, 219, 5, 5, 6};
 
     while(Exit == false && StartGame == false)
     {
@@ -126,39 +138,29 @@ int main()
             txBegin();
             txBitBlt (txDC(), 0, 0, 1280, 720, proba, 0, 0);
 
-            drawButton(btn1);
-            drawButton(btn2);
-            drawButton(btn3);
+            for (int nomer_knopki = 0; nomer_knopki < KOLICH_KNOPOK; nomer_knopki++)
+            {
+                drawButton(btn[nomer_knopki]);
+            }
 
-//Сделать функцией
-            int coord1 = 0;
-            if (obl1.poloj == 1)
+            for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
             {
-                coord1 = 10;
-            }
-            else if (obl1.poloj == 2)
-            {
-                coord1 = 129;
-            }
-            else if (obl1.poloj == 3)
-            {
-                coord1 = 248;
-            }
-            else if (obl1.poloj == 4)
-            {
-                coord1 = 366;
-            }
-            txBitBlt (txDC(), obl1.lx, obl1.vy, obl1.rx - obl1.lx, obl1.ny - obl1.vy, vsecuby, coord1, 10);
-            //txBitBlt (txDC(), 315, 0, 100, 100, vsecuby, coord1, 10);
-            //С/Можно сделать функцией
-            if (clickOnOblkast(obl1) == 1)
-            {
-                obl1.poloj = obl1.poloj + 1;
-                if (obl1.poloj > obl1.max_poloj)
+                //Ищем координату для рисования нужного кадра
+                int coord1 = coord(obl[nomer_oblasti]);
+
+                //Проверяем, что кадр не слишком большой
+                if (clickOnOblkast(obl[nomer_oblasti]) == 1)
                 {
-                    obl1.poloj = obl1.min_poloj;
+                    obl[nomer_oblasti].poloj = obl[nomer_oblasti].poloj + 1;
+                    if (obl[nomer_oblasti].poloj > obl[nomer_oblasti].max_poloj)
+                    {
+                        obl[nomer_oblasti].poloj = obl[nomer_oblasti].min_poloj;
+                    }
                 }
+
+                txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
             }
+
 
 
             if (risovatCub1 == 1)
@@ -193,9 +195,9 @@ int main()
                 txBitBlt (txDC(), 400, 400, 1280, 720, proba, 0, 0);
             }
 
-            risovatCub1 = KNOPKAClick(btn1, risovatCub1);
-            risovatCub2 = KNOPKAClick(btn2, risovatCub2);
-            risovatCub3 = KNOPKAClick(btn3, risovatCub3);
+            risovatCub1 = KNOPKAClick(btn[0], risovatCub1);
+            risovatCub2 = KNOPKAClick(btn[1], risovatCub2);
+            risovatCub3 = KNOPKAClick(btn[2], risovatCub3);
 
 
             txSleep(10);
@@ -210,6 +212,36 @@ int main()
 }
 
 
+int coord(Oblast obl1)
+{
+    int coord1 = 0;
+    if (obl1.poloj == 1)
+    {
+        coord1 = 10;
+    }
+    else if (obl1.poloj == 2)
+    {
+        coord1 = 129;
+    }
+    else if (obl1.poloj == 3)
+    {
+        coord1 = 248;
+    }
+    else if (obl1.poloj == 4)
+    {
+        coord1 = 366;
+    }
+    else if (obl1.poloj == 5)
+    {
+        coord1 = 483;
+    }
+    else if (obl1.poloj == 6)
+    {
+        coord1 = 602;
+    }
+
+    return coord1;
+}
 
 void move_ball_rigth()
 {
