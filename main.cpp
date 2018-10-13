@@ -68,11 +68,11 @@ int main()
     //—делать массивом
     int KOLICH_KNOPOK = 5;
     Button btn[KOLICH_KNOPOK];
-    btn[0] = {0, 100,   0,  30, TX_RED, "red11111111111111111111111"};
-    btn[1] = {0, 100,  30,  60, TX_YELLOW, "yellow111111111111111111111111"};
-    btn[2] = {0, 100,  60,  90, TX_BLUE, "blue1111111111111111111111111111"};
-    btn[3] = {0, 100,  90, 120, TX_YELLOW, "yellow111111111111111111111111"};
-    btn[4] = {0, 100, 120, 150, TX_BLUE, "blue1111111111111111111111111111"};
+    btn[0] = {0, 100,   0,  90, TX_RED, " нопка 1"};
+    btn[1] = {0, 100,  90, 180, TX_YELLOW, " нопка 2"};
+    btn[2] = {0, 100, 180, 270, TX_BLUE, " нопка 3"};
+    btn[3] = {0, 100, 270, 360, TX_YELLOW, " нопка 4"};
+    btn[4] = {0, 100, 360, 450, TX_BLUE, " нопка 5"};
 
     int KOLVO_OBLASTEI = 8;
     Oblast obl[KOLVO_OBLASTEI];
@@ -277,9 +277,11 @@ for(y_ball=point_cuba; y_ball<=point_cuba; y_ball++)
 
 void drawButton(Button btn1)
 {
-    txSetFillColor(btn1.color);
+    txSetFillColor(RGB(0, 0, 255));
     txRectangle   (btn1.x1, btn1.y1, btn1.x2, btn1.y2);
-    txTextOut     (btn1.x1, btn1.y1, btn1.text);
+    txSetFillColor(RGB(0,0,0));
+    txRectangle   (btn1.x1+5, btn1.y1+5, btn1.x2-5, btn1.y2-5);
+    txDrawText    (btn1.x1, btn1.y1, btn1.x2, btn1.y2, btn1.text);
 }
 
 int KNOPKAClick (Button exitButton, int risovat)
