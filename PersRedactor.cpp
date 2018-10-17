@@ -22,11 +22,11 @@ int main()
     txCreateWindow (1280,720);
     txSetFillColor(TX_WHITE);
 
-    int x = 0;
     int y = 0;
     int nomer_vkladki = 0;
-    const int VKLADKA_LICO = 1;
+    const int VKLADKA_GOLOVA = 1;
     const int VKLADKA_TELO = 2;
+    const int VKLADKA_LICO = 3;
     int koordinata_bashki = -100;
     int koordinata_odejdi = -100;
     HDC golova = txLoadImage("pictures\\head.bmp");
@@ -47,10 +47,18 @@ int main()
         txClear();
 
         risovat_fon(kartinka);
-        if (nomer_vkladki == VKLADKA_LICO)
+        if (nomer_vkladki == VKLADKA_GOLOVA)
         {
-            txBitBlt (txDC(), 639, 120, 290, 185, golovy, x, y);
-            txBitBlt (txDC(), 640, 580, 600, 80, rects, x, y);
+            txBitBlt (txDC(), 639, 120, 290, 185, golovy, 0, 0);
+            txBitBlt (txDC(), 640, 580, 600, 80, rects, 0, 0);
+        }
+        else if (nomer_vkladki == VKLADKA_TELO)
+        {
+            //Рисуем все варианты тел (но не весь фон меняем!!!)
+        }
+        else if (nomer_vkladki == VKLADKA_LICO)
+        {
+            //Рисуем все варианты эмоций (но не весь фон меняем!!!)
         }
 
 
@@ -59,30 +67,31 @@ int main()
             risovat_golova(golova,koordinata_bashki,y);
         }
 
-
         if (koordinata_odejdi != -100)
         {
             risovat_telo(telo,koordinata_odejdi,y);
         }
 
 
-
+        //Смена вкладки (сделай функцией). На выходе int, на входе ничего
         if (checkClick(645, 821, 77, 123))
         {
-           kartinka = fon1;
-           nomer_vkladki = VKLADKA_LICO;
+            kartinka = fon1;
+            nomer_vkladki = VKLADKA_GOLOVA;
         }
         else if (checkClick(825, 1000, 75, 121))
         {
-           kartinka = fon_tela;
-           nomer_vkladki = VKLADKA_TELO;
+            //А потом картинка не должна меняться (Меняем не весь фон, а только фрагмент со всеми телами)
+            kartinka = fon_tela;
+            nomer_vkladki = VKLADKA_TELO;
         }
         else if (checkClick(1001, 1185, 75, 121))
         {
-           kartinka = fon4;
-           nomer_vkladki = 0;
+            kartinka = fon4;
+            nomer_vkladki = VKLADKA_LICO;
         }
 
+        //Пусть остальные вкладки рисуются так же (через ректанглы)
         txSetColor(TX_BLACK, 5);
         txRectangle(640, 80, 820, 120);
         txSetTextAlign (TA_CENTER);
@@ -92,16 +101,16 @@ int main()
 
         if (checkClick(1185, 1240, 75, 121))
         {
-
             txDestroyWindow();
             return 0;
         }
 
 
 
-        if (nomer_vkladki == VKLADKA_LICO)
+        //Выбор головы. Почему бы не сделать функцией
+        if (nomer_vkladki == VKLADKA_GOLOVA)
         //if (kartinka==fon_golovy)
-         {
+        {
             if (checkClick(643, 783, 127, 255))
             {
                 koordinata_bashki = 3;
@@ -115,13 +124,14 @@ int main()
             //640 580 1240 660
             if (koordinata_bashki == 3 &&  checkClick( 640, 700, 580, 660))
             {
-                y=205;
+                //y=205;
             }
         }
 
 
+        //Выбор тела. Почему бы не сделать функцией
         if (nomer_vkladki == VKLADKA_TELO)
-         {
+        {
             if (checkClick(643, 825, 127, 300))
             {
                 koordinata_odejdi = 9;
@@ -135,7 +145,7 @@ int main()
 
         }
 
-         if (checkClick(785, 1080, 655, 715))
+        if (checkClick(785, 1080, 655, 715))
         {
 
              return 0;
@@ -145,6 +155,7 @@ int main()
         txEnd();
     }
 
+    //Что-то мне кажется. у тебя еще 100500 картинок, которые никто не удаляет
     txDeleteDC(golovy);
     txDeleteDC(rects);
 
