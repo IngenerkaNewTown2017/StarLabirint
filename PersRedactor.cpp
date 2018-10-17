@@ -26,6 +26,7 @@ int main()
     int y = 0;
     int nomer_vkladki = 0;
     const int VKLADKA_LICO = 1;
+    const int VKLADKA_TELO = 2;
     int koordinata_bashki = -100;
     int koordinata_odejdi = -100;
     HDC golova = txLoadImage("pictures\\head.bmp");
@@ -74,7 +75,7 @@ int main()
         else if (checkClick(825, 1000, 75, 121))
         {
            kartinka = fon_tela;
-           nomer_vkladki = 0;
+           nomer_vkladki = VKLADKA_TELO;
         }
         else if (checkClick(1001, 1185, 75, 121))
         {
@@ -119,7 +120,7 @@ int main()
         }
 
 
-        if (kartinka==fon_tela)
+        if (nomer_vkladki == VKLADKA_TELO)
          {
             if (checkClick(643, 825, 127, 300))
             {
@@ -132,6 +133,12 @@ int main()
             }
 
 
+        }
+
+         if (checkClick(785, 1080, 655, 715))
+        {
+
+             return 0;
         }
 
         txSleep(10);
