@@ -10,6 +10,7 @@ int point_cuba;
 int speed_ball = 35;
 bool Exit = false;
 bool StartGame = false;
+bool Start_level = false;
 int risovatCub1 = 0;
 int risovatCub2 = 0;
 int risovatCub3 = 0;
@@ -56,6 +57,9 @@ int KNOPKAClick (Button exitButton, int risovat);
 int clickOnOblkast(Oblast obl1);
 int coord(Oblast obl1);
 
+int get_max_poloj(int poloj);
+int min_max_poloj(int poloj);
+
 int main()
     {
     txCreateWindow (1280, 720);
@@ -64,26 +68,73 @@ int main()
     HDC proba = txLoadImage ("pictures\\proba.bmp");
     HDC vsecuby = txLoadImage ("pictures\\vsecuby.bmp");
     HDC kartaurovneya = txLoadImage ("kartaurovneya.bmp");
+    HDC fonurovnya = txLoadImage ("fonurovnya.bmp");
 
     //—делать массивом
-    int KOLICH_KNOPOK = 5;
+    /*int KOLICH_KNOPOK = 5;
     Button btn[KOLICH_KNOPOK];
     btn[0] = {0, 100,   0,  90, TX_RED, " нопка 1"};
     btn[1] = {0, 100,  90, 180, TX_YELLOW, " нопка 2"};
     btn[2] = {0, 100, 180, 270, TX_BLUE, " нопка 3"};
     btn[3] = {0, 100, 270, 360, TX_YELLOW, " нопка 4"};
-    btn[4] = {0, 100, 360, 450, TX_BLUE, " нопка 5"};
+    btn[4] = {0, 100, 360, 450, TX_BLUE, " нопка 5"};*/
 
-    int KOLVO_OBLASTEI = 8;
+    int KOLVO_OBLASTEI = 40;
     Oblast obl[KOLVO_OBLASTEI];
-    /*1*/obl[0] = {212, 312, 119, 219, 1, 1, 4};
-    /*1*/obl[1] = {312, 412, 119, 219, 5, 5, 6};
-    /*1*/obl[2] = {412, 512, 119, 219, 1, 1, 4};
-    /*1*/obl[3] = {512, 612, 119, 219, 5, 5, 6};
-    /*1*/obl[4] = {612, 712, 119, 219, 1, 1, 4};
-    /*1*/obl[5] = {712, 812, 119, 219, 5, 5, 6};
-    /*1*/obl[6] = {812, 912, 119, 219, 1, 1, 4};
-    /*1*/obl[7] = {912, 1012, 119, 219, 5, 5, 6};
+    /*if (poloj >= 1 и <= 4) vernut 1
+    if (poloj >= 5 и <= 6) vernut 5 */
+    obl[0] =  {242,  342, 119, 219, 1, 1, 4};
+    obl[1] =  {342,  442, 119, 219, 5, 5, 6};
+    obl[2] =  {442,  542, 119, 219, 1, 1, 4};
+    obl[3] =  {542,  642, 119, 219, 5, 5, 6};
+    obl[4] =  {642,  742, 119, 219, 1, 1, 4};
+    obl[5] =  {742,  842, 119, 219, 5, 5, 6};
+    obl[6] =  {842,  942, 119, 219, 1, 1, 4};
+    obl[7] =  {942, 1042, 119, 219, 5, 5, 6};
+
+    obl[8] =  {242,  342, 219, 319, 1, 1, 4};
+    obl[9] =  {342,  442, 219, 319, 5, 5, 6};
+    obl[10] = {442,  542, 219, 319, 1, 1, 4};
+    obl[11] = {542,  642, 219, 319, 5, 5, 6};
+    obl[12] = {642,  742, 219, 319, 1, 1, 4};
+    obl[13] = {742,  842, 219, 319, 5, 5, 6};
+    obl[14] = {842,  942, 219, 319, 1, 1, 4};
+    obl[15] = {942, 1042, 219, 319, 5, 5, 6};
+
+    obl[16] = {242,  342, 319, 419, 1, 1, 4};
+    obl[17] = {342,  442, 319, 419, 5, 5, 6};
+    obl[18] = {442,  542, 319, 419, 1, 1, 4};
+    obl[19] = {542,  642, 319, 419, 5, 5, 6};
+    obl[20] = {642,  742, 319, 419, 1, 1, 4};
+    obl[21] = {742,  842, 319, 419, 5, 5, 6};
+    obl[22] = {842,  942, 319, 419, 1, 1, 4};
+    obl[23] = {942, 1042, 319, 419, 5, 5, 6};
+
+    obl[24] = {242,  342, 419, 519, 1, 1, 4};
+    obl[25] = {342,  442, 419, 519, 5, 5, 6};
+    obl[26] = {442,  542, 419, 519, 1, 1, 4};
+    obl[27] = {542,  642, 419, 519, 5, 5, 6};
+    obl[28] = {642,  742, 419, 519, 1, 1, 4};
+    obl[29] = {742,  842, 419, 519, 5, 5, 6};
+    obl[30] = {842,  942, 419, 519, 1, 1, 4};
+    obl[31] = {942, 1042, 419, 519, 5, 5, 6};
+
+    obl[32] = {242,  342, 519, 619, 1, 1, 4};
+    obl[33] = {342,  442, 519, 619, 5, 5, 6};
+    obl[34] = {442,  542, 519, 619, 1, 1, 4};
+    obl[35] = {542,  642, 519, 619, 5, 5, 6};
+    obl[36] = {642,  742, 519, 619, 1, 1, 4};
+    obl[37] = {742,  842, 519, 619, 5, 5, 6};
+    obl[38] = {842,  942, 519, 619, 1, 1, 4};
+    obl[39] = {942, 1042, 519, 619, 5, 5, 6};
+
+
+    /*for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+    {
+       obl[nomer_oblasti].max_poloj = GET_max_poloj(obl[nomer_oblasti].poloj);
+    } */
+
+
 
     while(Exit == false && StartGame == false)
     {
@@ -136,13 +187,13 @@ int main()
         {
 
             txBegin();
-            txBitBlt (txDC(), 0, 0, 1280, 720, proba, 0, 0);
+            txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
 
-            for (int nomer_knopki = 0; nomer_knopki < KOLICH_KNOPOK; nomer_knopki++)
+            /*for (int nomer_knopki = 0; nomer_knopki < KOLICH_KNOPOK; nomer_knopki++)
             {
                 drawButton(btn[nomer_knopki]);
             }
-
+*/
             for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
             {
                 //»щем координату дл€ рисовани€ нужного кадра
@@ -160,7 +211,7 @@ int main()
 
                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
             }
-
+/*
 
 
             if (risovatCub1 == 1)
@@ -197,7 +248,7 @@ int main()
 
             risovatCub1 = KNOPKAClick(btn[0], risovatCub1);
             risovatCub2 = KNOPKAClick(btn[1], risovatCub2);
-            risovatCub3 = KNOPKAClick(btn[2], risovatCub3);
+            risovatCub3 = KNOPKAClick(btn[2], risovatCub3);*/
 
 
             txSleep(10);
@@ -211,6 +262,36 @@ int main()
     return 0;
 }
 
+
+int get_max_poloj(int poloj)
+{
+    int max_poloj = 0;
+    if (poloj >= 1 and poloj <= 4)
+    {
+        max_poloj = 4;
+    }
+    else if (poloj >= 5 and poloj <=6)
+    {
+        max_poloj = 6;
+    }
+
+    return max_poloj;
+}
+
+int min_max_poloj(int poloj)
+{
+    int min_poloj = 0;
+    if (poloj >= 1 and poloj <= 4)
+    {
+        min_poloj = 1;
+    }
+    else if (poloj >= 5 and poloj <=6)
+    {
+        min_poloj = 5;
+    }
+
+    return min_poloj;
+}
 
 int coord(Oblast obl1)
 {
