@@ -1,4 +1,5 @@
 #include "TXLib.h"
+#include "lib\\oblast.cpp"
 
 int uroven_tekushii = 1;
 int uroven_staryi = 0;
@@ -14,22 +15,6 @@ bool Start_level = false;
 int risovatCub1 = 0;
 int risovatCub2 = 0;
 int risovatCub3 = 0;
-int x_1 = 212;
-int x_2 = 312;
-int x_3 = 412;
-int x_4 = 512;
-int x_5 = 612;
-int x_6 = 712;
-int x_7 = 812;
-int x_8 = 912;
-int x_9 = 1012;
-
-int y_1 = 119;
-int y_2 = 219;
-int y_3 = 319;
-int y_4 = 419;
-int y_5 = 519;
-//int y_6 = 619;
 
 struct Button
 {
@@ -39,17 +24,6 @@ struct Button
     int y2;
     COLORREF color;
     const char* text;
-};
-
-struct Oblast
-{
-    int poloj;
-    int lx;
-    int rx;
-    int vy;
-    int ny;
-    int min_poloj;
-    int max_poloj;
 };
 
 void drawButton(Button btn1);
@@ -72,14 +46,14 @@ int main()
     HDC kartaurovneya = txLoadImage ("kartaurovneya.bmp");
     HDC fonurovnya = txLoadImage ("fonurovnya.bmp");
 
-    //Сделать массивом
+    //Г‘Г¤ГҐГ«Г ГІГј Г¬Г Г±Г±ГЁГўГ®Г¬
     /*int KOLICH_KNOPOK = 5;
     Button btn[KOLICH_KNOPOK];
-    btn[0] = {0, 100,   0,  90, TX_RED, "Кнопка 1"};
-    btn[1] = {0, 100,  90, 180, TX_YELLOW, "Кнопка 2"};
-    btn[2] = {0, 100, 180, 270, TX_BLUE, "Кнопка 3"};
-    btn[3] = {0, 100, 270, 360, TX_YELLOW, "Кнопка 4"};
-    btn[4] = {0, 100, 360, 450, TX_BLUE, "Кнопка 5"};*/
+    btn[0] = {0, 100,   0,  90, TX_RED, "ГЉГ­Г®ГЇГЄГ  1"};
+    btn[1] = {0, 100,  90, 180, TX_YELLOW, "ГЉГ­Г®ГЇГЄГ  2"};
+    btn[2] = {0, 100, 180, 270, TX_BLUE, "ГЉГ­Г®ГЇГЄГ  3"};
+    btn[3] = {0, 100, 270, 360, TX_YELLOW, "ГЉГ­Г®ГЇГЄГ  4"};
+    btn[4] = {0, 100, 360, 450, TX_BLUE, "ГЉГ­Г®ГЇГЄГ  5"};*/
 
     int KOLVO_OBLASTEI = 40;
     Oblast obl[KOLVO_OBLASTEI];
@@ -131,7 +105,7 @@ int main()
 
     for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
     {
-        //13%8 = 5, потому что 13 = 8 * 1 + 5
+        //13%8 = 5, ГЇГ®ГІГ®Г¬Гі Г·ГІГ® 13 = 8 * 1 + 5
        obl[nomer_oblasti].lx = get_min_x((nomer_oblasti % 8) + 1);
        obl[nomer_oblasti].rx = get_min_x((nomer_oblasti % 8) + 2);
        obl[nomer_oblasti].vy = get_min_y(nomer_oblasti / 8 + 1);
@@ -189,7 +163,7 @@ int main()
 
         uroven_tekushii = uroven_tekushii + 1;
 
-        //Как пройти игру / выйти из игры? Exit ведь всегда == false
+        //ГЉГ ГЄ ГЇГ°Г®Г©ГІГЁ ГЁГЈГ°Гі / ГўГ»Г©ГІГЁ ГЁГ§ ГЁГЈГ°Г»? Exit ГўГҐГ¤Гј ГўГ±ГҐГЈГ¤Г  == false
         while(Exit == false)
         {
 
@@ -203,10 +177,10 @@ int main()
 */
             for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
             {
-                //Ищем координату для рисования нужного кадра
+                //Г€Г№ГҐГ¬ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГі Г¤Г«Гї Г°ГЁГ±Г®ГўГ Г­ГЁГї Г­ГіГ¦Г­Г®ГЈГ® ГЄГ Г¤Г°Г 
                 int coord1 = coord(obl[nomer_oblasti]);
 
-                //Проверяем, что кадр не слишком большой
+                //ГЏГ°Г®ГўГҐГ°ГїГҐГ¬, Г·ГІГ® ГЄГ Г¤Г° Г­ГҐ Г±Г«ГЁГёГЄГ®Г¬ ГЎГ®Г«ГјГёГ®Г©
                 if (clickOnOblkast(obl[nomer_oblasti]) == 1)
                 {
                     obl[nomer_oblasti].poloj = obl[nomer_oblasti].poloj + 1;
@@ -214,7 +188,7 @@ int main()
                     {
                         obl[nomer_oblasti].poloj = obl[nomer_oblasti].min_poloj;
                     }
-                    //Не мешало бы сюда паузу добавить. А то очень тяжело кликом отловить нужное положение
+                    //ГЌГҐ Г¬ГҐГёГ Г«Г® ГЎГ» Г±ГѕГ¤Г  ГЇГ ГіГ§Гі Г¤Г®ГЎГ ГўГЁГІГј. ГЂ ГІГ® Г®Г·ГҐГ­Гј ГІГїГ¦ГҐГ«Г® ГЄГ«ГЁГЄГ®Г¬ Г®ГІГ«Г®ГўГЁГІГј Г­ГіГ¦Г­Г®ГҐ ГЇГ®Г«Г®Г¦ГҐГ­ГЁГҐ
                 }
 
                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
@@ -264,7 +238,7 @@ int main()
         }
     }
 
-    //Еще пару картинок забываешь удалить
+    //Г…Г№ГҐ ГЇГ Г°Гі ГЄГ Г°ГІГЁГ­Г®ГЄ Г§Г ГЎГ»ГўГ ГҐГёГј ГіГ¤Г Г«ГЁГІГј
     txDeleteDC(main_menu);
     txDeleteDC(proba);
     txDeleteDC(vsecuby);
@@ -274,40 +248,13 @@ int main()
 
 int get_min_y(int nomer_stroki)
 {
-    int min_y = 0;
-    if (nomer_stroki ==1)
-    {
-        min_y = 111;
-    }
-    else if (nomer_stroki ==2)
-    {
-        min_y = 211;
-    }
-    else if (nomer_stroki ==3)
-    {
-        min_y = 311;
-    }
-    else if (nomer_stroki ==4)
-    {
-        min_y = 411;
-    }
-    else if (nomer_stroki ==5)
-    {
-        min_y = 511;
-    }
-    else if (nomer_stroki ==6)
-    {
-        min_y = 611;
-    }
-
-
+    int min_y = 11 + 100 * nomer_stroki;
     return min_y;
 }
 
 int get_min_x(int nomer_stolbca)
 {
     int min_x = 138 + 100 * nomer_stolbca;
-
     return min_x;
 }
 
