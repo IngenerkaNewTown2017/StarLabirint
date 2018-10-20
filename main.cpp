@@ -1,4 +1,5 @@
 #include "TXLib.h"
+#include "lib\\oblast.cpp"
 
 int uroven_tekushii = 1;
 int uroven_staryi = 0;
@@ -39,17 +40,6 @@ struct Button
     int y2;
     COLORREF color;
     const char* text;
-};
-
-struct Oblast
-{
-    int lx;
-    int rx;
-    int vy;
-    int ny;
-    int poloj;
-    int min_poloj;
-    int max_poloj;
 };
 
 void drawButton(Button btn1);
