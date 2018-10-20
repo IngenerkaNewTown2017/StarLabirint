@@ -1,6 +1,11 @@
 #include "TXLib.h"
 #include "Lib\\lib.cpp"
 
+const int VKLADKA_GOLOVA = 1;
+const int VKLADKA_TELO = 2;
+const int VKLADKA_LICO = 3;
+
+
 bool checkClick(int MinX, int MaxX, int MinY, int MaxY)
 {
     if (
@@ -17,26 +22,58 @@ bool checkClick(int MinX, int MaxX, int MinY, int MaxY)
     return false;
 }
 
+void drawTabs()
+{
+    //Пусть остальные вкладки рисуются так же (через ректанглы)
+    txSetTextAlign (TA_CENTER);
+    txSelectFont("Arial", 45);
+    txSetColor(TX_BLACK, 5);
+    txRectangle(640, 80, 820, 120);
+    txDrawText(640, 80, 820, 120, "Голова");
+    txRectangle(825, 80, 1000, 120);
+    txDrawText(825, 80, 1000, 120, "Тело");
+    txRectangle(1000, 80, 1185, 120);
+    txDrawText(1000, 80, 1185, 120, "Эмоции");
+}
+
+//Смена вкладки (сделай функцией). На выходе int, на входе ничего
+int changeTab(int tab)
+{
+    if (checkClick(645, 821, 77, 123))
+    {
+        tab = VKLADKA_GOLOVA;
+    }
+    else if (checkClick(825, 1000, 75, 121))
+    {
+       tab = VKLADKA_TELO;
+    }
+    else if (checkClick(1001, 1185, 75, 121))
+    {
+       tab = VKLADKA_LICO;
+    }
+
+    return tab;
+}
+
 int main()
     {
     txCreateWindow (1280,720);
     txSetFillColor(TX_WHITE);
 
-    int y = 0;
     int nomer_vkladki = 0;
-    const int VKLADKA_GOLOVA = 1;
-    const int VKLADKA_TELO = 2;
-    const int VKLADKA_LICO = 3;
-    int koordinata_bashki = -100;
-    int koordinata_odejdi = -100;
+
+    int x_bashki = -100;
+    int y_bashki = 0;
+
+    int x_odejdi = -100;
+    int y_odejdi = 0;
     HDC golova = txLoadImage("pictures\\head.bmp");
     HDC fon = txLoadImage ("pictures\\fon.bmp");
-    HDC fon1  = txLoadImage ("pictures\\fon1.bmp ");
-    //HDC fon_golovy  = txLoadImage ("pictures\\fon2.bmp ");
+    HDC fon1  = txLoadImage ("pictures\\fon11.bmp ");
     HDC golovy  = txLoadImage ("pictures\\face.bmp ");
     HDC rects  = txLoadImage ("pictures\\rects.bmp ");
-    HDC fon_tela  = txLoadImage ("pictures\\fon3.bmp ");
-    HDC fon4  = txLoadImage ("pictures\\fon4.bmp ");
+    HDC FONtelo =  txLoadImage ("pictures\\1123456.bmp");
+    HDC emodji = txLoadImage ("pictures\\123444.bmp");
     HDC telo  = txLoadImage ("pictures\\telo.bmp ");
     HDC kartinka = fon1;
 
@@ -55,49 +92,27 @@ int main()
         else if (nomer_vkladki == VKLADKA_TELO)
         {
             //Рисуем все варианты тел (но не весь фон меняем!!!)
+            vkladka(FONtelo);
         }
         else if (nomer_vkladki == VKLADKA_LICO)
         {
             //Рисуем все варианты эмоций (но не весь фон меняем!!!)
+             vkladka(emodji);
         }
 
 
-        if (koordinata_bashki != -100)
+        if (x_bashki != -100)
         {
-            risovat_golova(golova,koordinata_bashki,y);
+            risovat_golova(golova,x_bashki,y_bashki);
         }
 
-        if (koordinata_odejdi != -100)
+        if (x_odejdi != -100)
         {
-            risovat_telo(telo,koordinata_odejdi,y);
+            risovat_telo(telo,x_odejdi,y_odejdi);
         }
 
-
-        //Смена вкладки (сделай функцией). На выходе int, на входе ничего
-        if (checkClick(645, 821, 77, 123))
-        {
-            kartinka = fon1;
-            nomer_vkladki = VKLADKA_GOLOVA;
-        }
-        else if (checkClick(825, 1000, 75, 121))
-        {
-            //А потом картинка не должна меняться (Меняем не весь фон, а только фрагмент со всеми телами)
-            kartinka = fon_tela;
-            nomer_vkladki = VKLADKA_TELO;
-        }
-        else if (checkClick(1001, 1185, 75, 121))
-        {
-            kartinka = fon4;
-            nomer_vkladki = VKLADKA_LICO;
-        }
-
-        //Пусть остальные вкладки рисуются так же (через ректанглы)
-        txSetColor(TX_BLACK, 5);
-        txRectangle(640, 80, 820, 120);
-        txSetTextAlign (TA_CENTER);
-        txSelectFont("Arial", 45);
-        txDrawText(640, 80, 820, 120, "Голова");
-
+        drawTabs();
+        nomer_vkladki = changeTab(nomer_vkladki);
 
         if (checkClick(1185, 1240, 75, 121))
         {
@@ -113,18 +128,18 @@ int main()
         {
             if (checkClick(643, 783, 127, 255))
             {
-                koordinata_bashki = 3;
+                x_bashki = 3;
             }
 
             else if (checkClick(785, 925, 127, 255))
             {
-                koordinata_bashki = 221;
+                x_bashki = 221;
             }
 
             //640 580 1240 660
-            if (koordinata_bashki == 3 &&  checkClick( 640, 700, 580, 660))
+            if (checkClick( 640, 700, 580, 660))
             {
-                //y=205;
+                y_bashki = 205;
             }
         }
 
@@ -134,12 +149,12 @@ int main()
         {
             if (checkClick(643, 825, 127, 300))
             {
-                koordinata_odejdi = 9;
+                x_odejdi = 9;
             }
 
             else if (checkClick(820, 999, 127, 300))
             {
-                koordinata_odejdi = 205;
+                x_odejdi = 205;
             }
 
 

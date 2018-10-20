@@ -1,5 +1,5 @@
 #include "TXLib.h"
-#include "lib\\oblast.cpp"
+#include "lib\\Oblast.cpp"
 
 int uroven_tekushii = 1;
 int uroven_staryi = 0;
@@ -28,13 +28,6 @@ struct Button
 
 void drawButton(Button btn1);
 int KNOPKAClick (Button exitButton, int risovat);
-int clickOnOblkast(Oblast obl1);
-int coord(Oblast obl1);
-
-int get_max_poloj(int poloj);
-int min_max_poloj(int poloj);
-int get_min_y(int nomer_stroki);
-int get_min_x(int nomer_stolbca);
 
 int main()
     {
@@ -85,8 +78,8 @@ int main()
     obl[22] = {1};
     obl[23] = {5};
 
-    obl[24] =  {1};
-    obl[25] =  {5};
+    obl[24] = {1};
+    obl[25] = {5};
     obl[26] = {1};
     obl[27] = {5};
     obl[28] = {1};
@@ -94,8 +87,8 @@ int main()
     obl[30] = {1};
     obl[31] = {5};
 
-    obl[32] =  {1};
-    obl[33] =  {5};
+    obl[32] = {1};
+    obl[33] = {5};
     obl[34] = {1};
     obl[35] = {5};
     obl[36] = {1};
@@ -106,12 +99,12 @@ int main()
     for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
     {
         //13%8 = 5, ïîòîìó ÷òî 13 = 8 * 1 + 5
-       obl[nomer_oblasti].lx = get_min_x((nomer_oblasti % 8) + 1);
-       obl[nomer_oblasti].rx = get_min_x((nomer_oblasti % 8) + 2);
-       obl[nomer_oblasti].vy = get_min_y(nomer_oblasti / 8 + 1);
-       obl[nomer_oblasti].ny = get_min_y(nomer_oblasti / 8 + 2);
-       obl[nomer_oblasti].max_poloj = get_max_poloj(obl[nomer_oblasti].poloj);
-       obl[nomer_oblasti].min_poloj = min_max_poloj(obl[nomer_oblasti].poloj);
+        obl[nomer_oblasti].lx = get_min_x((nomer_oblasti % 8) + 1);
+        obl[nomer_oblasti].rx = get_min_x((nomer_oblasti % 8) + 2);
+        obl[nomer_oblasti].vy = get_min_y(nomer_oblasti / 8 + 1);
+        obl[nomer_oblasti].ny = get_min_y(nomer_oblasti / 8 + 2);
+        obl[nomer_oblasti].max_poloj = get_max_poloj(obl[nomer_oblasti].poloj);
+        obl[nomer_oblasti].min_poloj = min_max_poloj(obl[nomer_oblasti].poloj);
     }
 
 
@@ -246,79 +239,6 @@ int main()
 }
 
 
-int get_min_y(int nomer_stroki)
-{
-    int min_y = 11 + 100 * nomer_stroki;
-    return min_y;
-}
-
-int get_min_x(int nomer_stolbca)
-{
-    int min_x = 138 + 100 * nomer_stolbca;
-    return min_x;
-}
-
-int get_max_poloj(int poloj)
-{
-    int max_poloj = 0;
-    if (poloj >= 1 and poloj <= 4)
-    {
-        max_poloj = 4;
-    }
-    else if (poloj >= 5 and poloj <=6)
-    {
-        max_poloj = 6;
-    }
-
-    return max_poloj;
-}
-
-int min_max_poloj(int poloj)
-{
-    int min_poloj = 0;
-    if (poloj >= 1 and poloj <= 4)
-    {
-        min_poloj = 1;
-    }
-    else if (poloj >= 5 and poloj <=6)
-    {
-        min_poloj = 5;
-    }
-
-    return min_poloj;
-}
-
-int coord(Oblast obl1)
-{
-    int coord1 = 0;
-    if (obl1.poloj == 1)
-    {
-        coord1 = 10;
-    }
-    else if (obl1.poloj == 2)
-    {
-        coord1 = 129;
-    }
-    else if (obl1.poloj == 3)
-    {
-        coord1 = 248;
-    }
-    else if (obl1.poloj == 4)
-    {
-        coord1 = 366;
-    }
-    else if (obl1.poloj == 5)
-    {
-        coord1 = 483;
-    }
-    else if (obl1.poloj == 6)
-    {
-        coord1 = 602;
-    }
-
-    return coord1;
-}
-
 void move_ball_rigth()
 {
 for(x_ball=point_cuba; x_ball<=point_cuba; x_ball++)
@@ -372,17 +292,4 @@ int KNOPKAClick (Button exitButton, int risovat)
     }
 
     return risovat;
-}
-
-int clickOnOblkast(Oblast obl1)
-{
-    if (txMouseButtons () == 1 &&
-        txMouseX () >= obl1.lx &&
-        txMouseX () <= obl1.rx &&
-        txMouseY () >= obl1.vy &&
-        txMouseY () <= obl1.ny)
-     {
-        return 1;
-     }
-     return 0;
 }

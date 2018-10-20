@@ -21,3 +21,6 @@ void risovat_telo(HDC telo,int x ,int y) {
 void risovat_fon(HDC fon) {
     txBitBlt (txDC(),0, 0, 1280, 720,fon, 0, 0);
 }
+void vkladka(HDC FONtelo){
+    txBitBlt (txDC(),635, 70, 1280, 720,FONtelo, 0, 0);
+}
