@@ -1,8 +1,8 @@
 #include "TXLib.h"
 
-  int main()
+  int jopa()
 {
- txCreateWindow(490,490);
+ //txCreateWindow(490,490);
 
 HDC fon = txLoadImage ("крестикинолики.bmp");
 
@@ -25,6 +25,7 @@ txBitBlt (txDC(), 0, 170, 162, 158, nolic, 0, 0);
     while (!GetAsyncKeyState(VK_ESCAPE))
     {
 		txBegin();
+        txClear();
         txBitBlt (txDC(), 0, 0, 500, 500, fon, 0, 0);
 
         if (txMouseButtons() & 1 ) //крестики
@@ -36,13 +37,16 @@ txBitBlt (txDC(), 0, 170, 162, 158, nolic, 0, 0);
             for (int counter = 0; counter < nomer_X; counter++)
             {
                 if (figureX[nomer_X] == figureX[counter] and figureY[nomer_X] == figureY[counter]
-
                 )
                 {
                     nomer_X = nomer_X - 1;
                 }
             }
-			nomer_X = nomer_X + 1;
+
+            if (figureX[nomer_X]  < 495)
+            {
+                nomer_X = nomer_X + 1;
+            }
 	    }
 
 
@@ -67,8 +71,13 @@ txBitBlt (txDC(), 0, 170, 162, 158, nolic, 0, 0);
 	    }
 
 
-		for (int counter = 0; counter < 5; counter++)
+		for (int counter = 0; counter < nomer_X; counter++)
         {
+            txSetColor(TX_RED);
+            char str[100];
+            sprintf(str, "%d", figureX[counter]);
+            txTextOut(500, 100 +30 * counter, str);
+
             if (x[counter]  == true)
             {
                 txTransparentBlt (txDC(), figureX[counter], figureY[counter], 162, 163, krestic, 0, 0, TX_WHITE);
