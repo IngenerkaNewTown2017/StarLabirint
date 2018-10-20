@@ -97,40 +97,45 @@ int main()
     obl[9] =  {5};
     obl[10] = {1};
     obl[11] = {5};
-    obl[12] = {1};
-    obl[13] = {5};
-    obl[14] = {1};
-    obl[15] = {5};
+    obl[12] = { 1};
+    obl[13] = {get_min_x(6),  get_min_x(7), get_min_y(2), get_min_y(3), 5};
+    obl[14] = {get_min_x(7),  get_min_x(8), get_min_y(2), get_min_y(3), 1};
+    obl[15] = {get_min_x(8), get_min_x(9), get_min_y(2), get_min_y(3), 5};
 
-    obl[16] = {1};
-    obl[17] = {5};
-    obl[18] = {1};
-    obl[19] = {5};
-    obl[20] = {1};
-    obl[21] = {5};
-    obl[22] = {1};
-    obl[23] = {5};
+    obl[16] = {get_min_x(1),  get_min_x(2), get_min_y(3), get_min_y(4), 1};
+    obl[17] = {get_min_x(2),  get_min_x(3), get_min_y(3), get_min_y(4), 5};
+    obl[18] = {get_min_x(3),  get_min_x(4), get_min_y(3), get_min_y(4), 1};
+    obl[19] = {get_min_x(4),  get_min_x(5), get_min_y(3), get_min_y(4), 5};
+    obl[20] = {get_min_x(5),  get_min_x(6), get_min_y(3), get_min_y(4), 1};
+    obl[21] = {get_min_x(6),  get_min_x(7), get_min_y(3), get_min_y(4), 5};
+    obl[22] = {get_min_x(7),  get_min_x(8), get_min_y(3), get_min_y(4), 1};
+    obl[23] = {get_min_x(8), get_min_x(9), get_min_y(3), get_min_y(4), 5};
 
-    obl[24] =  {1};
-    obl[25] =  {5};
-    obl[26] = {1};
-    obl[27] = {5};
-    obl[28] = {1};
-    obl[29] = {5};
-    obl[30] = {1};
-    obl[31] = {5};
+    obl[24] = {get_min_x(1),  get_min_x(2), get_min_y(4), get_min_y(5), 1};
+    obl[25] = {get_min_x(2),  get_min_x(3), get_min_y(4), get_min_y(5), 5};
+    obl[26] = {get_min_x(3),  get_min_x(4), get_min_y(4), get_min_y(5), 1};
+    obl[27] = {get_min_x(4),  get_min_x(5), get_min_y(4), get_min_y(5), 5};
+    obl[28] = {get_min_x(5),  get_min_x(6), get_min_y(4), get_min_y(5), 1};
+    obl[29] = {get_min_x(6),  get_min_x(7), get_min_y(4), get_min_y(5), 5};
+    obl[30] = {get_min_x(7),  get_min_x(8), get_min_y(4), get_min_y(5), 1};
+    obl[31] = {get_min_x(8), get_min_x(9), get_min_y(4), get_min_y(5), 5};
 
-    obl[32] =  {1};
-    obl[33] =  {5};
-    obl[34] = {1};
-    obl[35] = {5};
-    obl[36] = {1};
-    obl[37] = {5};
-    obl[38] = {1};
-    obl[39] = {5};
+    //Прикинь, теперь 6 и 7 цифры можно не писать
+    //Но я хочу не писать и первые 4. Заметь, что они постоянно увеличиваются на 100
+    //Попробуй для начала сделать функцию, у которой на вход номер ряда (5 в случае ниже),
+    //а она автоматом выдаст минимальный и максимальный y. Можно 2 функции сделать
+    obl[32] = {1,  get_min_x(2), get_min_y(5), get_min_y(6), 1};
+    obl[33] = {2,  get_min_x(3), get_min_y(5), get_min_y(6), 5};
+    obl[34] = {get_min_x(3),  get_min_x(4), get_min_y(5), get_min_y(6), 1};
+    obl[35] = {4 , get_min_x(5), get_min_y(5), get_min_y(6), 5};
+    obl[36] = {get_min_x(5),  get_min_x(6), 3, 6, 1};
+    obl[37] = {get_min_x(6),  7, get_min_y(5), get_min_y(6), 5};
+    obl[38] = {get_min_x(7),  get_min_x(8), get_min_y(5), get_min_y(6), 1};
+    obl[39] = {get_min_x(8), get_min_x(9), get_min_y(5), get_min_y(6), 5};
+
 
     for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
-    {
+    { 
         //13%8 = 5, потому что 13 = 8 * 1 + 5
        obl[nomer_oblasti].lx = get_min_x((nomer_oblasti % 8) + 1);
        obl[nomer_oblasti].rx = get_min_x((nomer_oblasti % 8) + 2);
@@ -306,7 +311,44 @@ int get_min_y(int nomer_stroki)
 
 int get_min_x(int nomer_stolbca)
 {
-    int min_x = 138 + 100 * nomer_stolbca;
+    int min_x = 0;
+    if (nomer_stolbca ==1)
+    {
+        min_x = 238;
+    }
+    else if (nomer_stolbca ==2)
+    {
+        min_x = 338;
+    }
+    else if (nomer_stolbca ==3)
+    {
+        min_x = 438;
+    }
+    else if (nomer_stolbca ==4)
+    {
+        min_x = 538;
+    }
+    else if (nomer_stolbca ==5)
+    {
+        min_x = 638;
+    }
+    else if (nomer_stolbca ==6)
+    {
+        min_x = 738;
+    }
+    else if (nomer_stolbca ==7)
+    {
+        min_x = 838;
+    }
+    else if (nomer_stolbca ==8)
+    {
+        min_x = 938;
+    }
+    else if (nomer_stolbca ==9)
+    {
+        min_x = 1038;
+    }
+
 
     return min_x;
 }
@@ -439,3 +481,320 @@ int clickOnOblkast(Oblast obl1)
      }
      return 0;
 }
+
+void oblast_cubov_1()
+{
+ /* if(txMouseButtons () == 1 &&
+     txMouseX () >= obl1.lx &&
+     txMouseX () <= obl1.rx &&
+     txMouseY () >= obl1.vy &&
+     txMouseY () <= obl1.ny)
+     {
+
+     }     */
+
+   if(txMouseButtons () == 1 &&
+//      txMouseX () >= obl1.lx &&
+      txMouseX () <= x_2 &&
+      txMouseY () >= y_2 &&
+      txMouseY () <= y_3)
+      {
+
+      }
+
+      if(txMouseButtons () == 1 &&
+      txMouseX () >= x_1 &&
+      txMouseX () <= x_2 &&
+      txMouseY () >= y_3 &&
+      txMouseY () <= y_4)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_1 &&
+      txMouseX () <= x_2 &&
+      txMouseY () >= y_4 &&
+      txMouseY () <= y_5)
+      {
+
+      }
+
+
+
+}
+
+void oblast_cubov_2()
+{
+   if(txMouseButtons () == 1 &&
+     txMouseX () >= x_2 &&
+     txMouseX () <= x_3 &&
+     txMouseY () >= y_1 &&
+     txMouseY () <= y_2)
+     {
+
+     }
+
+   if(txMouseButtons () == 1 &&
+      txMouseX () >= x_2 &&
+      txMouseX () <= x_3 &&
+      txMouseY () >= y_2 &&
+      txMouseY () <= y_3)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_2 &&
+      txMouseX () <= x_3 &&
+      txMouseY () >= y_3 &&
+      txMouseY () <= y_4)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_2 &&
+      txMouseX () <= x_3 &&
+      txMouseY () >= y_4 &&
+      txMouseY () <= y_5)
+      {
+
+      }
+}
+
+void oblast_cubov_3()
+{
+   if(txMouseButtons () == 1 &&
+     txMouseX () >= x_3 &&
+     txMouseX () <= x_4 &&
+     txMouseY () >= y_1 &&
+     txMouseY () <= y_2)
+     {
+
+     }
+
+   if(txMouseButtons () == 1 &&
+      txMouseX () >= x_3 &&
+      txMouseX () <= x_4 &&
+      txMouseY () >= y_2 &&
+      txMouseY () <= y_3)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_3 &&
+      txMouseX () <= x_4 &&
+      txMouseY () >= y_3 &&
+      txMouseY () <= y_4)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_3 &&
+      txMouseX () <= x_4 &&
+      txMouseY () >= y_4 &&
+      txMouseY () <= y_5)
+      {
+
+      }
+}
+
+void oblast_cubov_4()
+{
+   if(txMouseButtons () == 1 &&
+     txMouseX () >= x_4 &&
+     txMouseX () <= x_5 &&
+     txMouseY () >= y_1 &&
+     txMouseY () <= y_2)
+     {
+
+     }
+
+   if(txMouseButtons () == 1 &&
+      txMouseX () >= x_4 &&
+      txMouseX () <= x_5 &&
+      txMouseY () >= y_2 &&
+      txMouseY () <= y_3)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_4 &&
+      txMouseX () <= x_5 &&
+      txMouseY () >= y_3 &&
+      txMouseY () <= y_4)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_4 &&
+      txMouseX () <= x_5 &&
+      txMouseY () >= y_4 &&
+      txMouseY () <= y_5)
+      {
+
+      }
+}
+
+void oblast_cubov_5()
+{
+   if(txMouseButtons () == 1 &&
+     txMouseX () >= x_5 &&
+     txMouseX () <= x_6 &&
+     txMouseY () >= y_1 &&
+     txMouseY () <= y_2)
+     {
+
+     }
+
+   if(txMouseButtons () == 1 &&
+      txMouseX () >= x_5 &&
+      txMouseX () <= x_6 &&
+      txMouseY () >= y_2 &&
+      txMouseY () <= y_3)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_5 &&
+      txMouseX () <= x_6 &&
+      txMouseY () >= y_3 &&
+      txMouseY () <= y_4)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_5 &&
+      txMouseX () <= x_6 &&
+      txMouseY () >= y_4 &&
+      txMouseY () <= y_5)
+      {
+
+      }
+}
+
+void oblast_cubov_6()
+{
+   if(txMouseButtons () == 1 &&
+     txMouseX () >= x_6 &&
+     txMouseX () <= x_7 &&
+     txMouseY () >= y_1 &&
+     txMouseY () <= y_2)
+     {
+
+     }
+
+   if(txMouseButtons () == 1 &&
+      txMouseX () >= x_6 &&
+      txMouseX () <= x_7 &&
+      txMouseY () >= y_2 &&
+      txMouseY () <= y_3)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_6 &&
+      txMouseX () <= x_7 &&
+      txMouseY () >= y_3 &&
+      txMouseY () <= y_4)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_6 &&
+      txMouseX () <= x_7 &&
+      txMouseY () >= y_4 &&
+      txMouseY () <= y_5)
+      {
+
+      }
+}
+
+void oblast_cubov_7()
+{
+   if(txMouseButtons () == 1 &&
+     txMouseX () >= x_7 &&
+     txMouseX () <= x_8 &&
+     txMouseY () >= y_1 &&
+     txMouseY () <= y_2)
+     {
+
+     }
+
+   if(txMouseButtons () == 1 &&
+      txMouseX () >= x_7 &&
+      txMouseX () <= x_8 &&
+      txMouseY () >= y_2 &&
+      txMouseY () <= y_3)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_7 &&
+      txMouseX () <= x_8 &&
+      txMouseY () >= y_3 &&
+      txMouseY () <= y_4)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_7 &&
+      txMouseX () <= x_8 &&
+      txMouseY () >= y_4 &&
+      txMouseY () <= y_5)
+      {
+
+      }
+}
+
+void oblast_cubov_8()
+{
+   if(txMouseButtons () == 1 &&
+     txMouseX () >= x_8 &&
+     txMouseX () <= x_9 &&
+     txMouseY () >= y_1 &&
+     txMouseY () <= y_2)
+     {
+
+     }
+
+   if(txMouseButtons () == 1 &&
+      txMouseX () >= x_8 &&
+      txMouseX () <= x_9 &&
+      txMouseY () >= y_2 &&
+      txMouseY () <= y_3)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_8 &&
+      txMouseX () <= x_9 &&
+      txMouseY () >= y_3 &&
+      txMouseY () <= y_4)
+      {
+
+      }
+
+    if(txMouseButtons () == 1 &&
+      txMouseX () >= x_8 &&
+      txMouseX () <= x_9 &&
+      txMouseY () >= y_4 &&
+      txMouseY () <= y_5)
+      {
+
+      }
+}
+
+
