@@ -1,9 +1,7 @@
 #include "TXLib.h"
 #include "крестики нолики.cpp"
-
-int main()
-{
-    txCreateWindow(800,700);
+  int main()
+  {
+    txCreateWindow (700,690);
     jopa();
-    return 0;
-}
+    }
