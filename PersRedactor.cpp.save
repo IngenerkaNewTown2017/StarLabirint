@@ -1,10 +1,5 @@
 #include "TXLib.h"
 #include "Lib\\lib.cpp"
-#include <string> // –ø–æ–¥–∫–ª—é—á–∞–µ–º —Å—Ç—Ä–æ–∫–∏
-#include <fstream>
-#include <iostream>
-
-using namespace std;
 
 const int VKLADKA_GOLOVA = 1;
 const int VKLADKA_TELO = 2;
@@ -82,6 +77,14 @@ int main()
     HDC telo  = txLoadImage ("pictures\\telo.bmp ");
     HDC kartinka = fon1;
 
+#include "TXLib.h"
+#include <iostream>
+#include <string> // –ø–æ–¥–∫–ª—é—á–∞–µ–º —Å—Ç—Ä–æ–∫–∏
+#include <fstream>
+
+using namespace std;
+
+    txCreateWindow (1280, 720);
 
     ifstream file("Lib\\2.txt"); // —Ñ–∞–π–ª –∏–∑ –∫–æ—Ç–æ—Ä–æ–≥–æ —á–∏—Ç–∞–µ–º (–¥–ª—è –ª–∏–Ω—É–∫—Å –ø—É—Ç—å –±—É–¥–µ—Ç –≤—ã–≥–ª—è–¥–µ—Ç—å –ø–æ –¥—Ä—É–≥–æ–º—É)
 
@@ -89,16 +92,9 @@ int main()
     getline(file, stroka_golovy);
     x_bashki = {atoi(stroka_golovy.c_str())};
     getline(file, stroka_tela);
-    x_odejdi = {atoi(stroka_tela.c_str())};
+    x_tela = {atoi(stroka_tela.c_str())};
     file.close();
-
-ofstream out;
-out.open("Lib\\3.txt");
-if (out.is_open())
-{
-out << x_bashki << std::endl;
-}
-out.close();
+    
 
     while (!GetAsyncKeyState('R')) {
 
@@ -136,10 +132,10 @@ out.close();
         drawTabs();
         nomer_vkladki = changeTab(nomer_vkladki);
 
-        //f (checkClick(1185, 1240, 75, 121))
+        if (checkClick(1185, 1240, 75, 121))
         {
-            //txDestroyWindow();
-           // return 0;
+            txDestroyWindow();
+            return 0;
         }
 
 
@@ -214,7 +210,6 @@ out.close();
     //◊ÚÓ-ÚÓ ÏÌÂ Í‡ÊÂÚÒˇ. Û ÚÂ·ˇ Â˘Â 100500 Í‡ÚËÌÓÍ, ÍÓÚÓ˚Â ÌËÍÚÓ ÌÂ Û‰‡ÎˇÂÚ
     txDeleteDC(golovy);
     txDeleteDC(rects);
-
 
     return 0;
 }
