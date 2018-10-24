@@ -20,7 +20,7 @@ txBitBlt (txDC(), 0, 170, 162, 158, nolic, 0, 0);
 	int figureY[5];
     int figureO[5];
 	int figureP[5];
-    char str[100]
+
 
     while (!GetAsyncKeyState(VK_ESCAPE))
     {
