@@ -54,8 +54,6 @@ txBitBlt (txDC(), 0, 170, 162, 158, nolic, 0, 0);
 
 
         if (txMouseButtons() & 2 ) //нолики
-            if (nomer_O < 5)
-
 		{
 			o[nomer_O] = true;
 			figureO[nomer_O] = round(txMouseX() / 165) * 165;
@@ -64,9 +62,10 @@ txBitBlt (txDC(), 0, 170, 162, 158, nolic, 0, 0);
             for (int counter = 0; counter < nomer_O; counter++)
             {
                 if (figureO[nomer_O] == figureO[counter] and
-                figureP[nomer_O] == figureP[counter] and nomer_O < 5)
+                figureP[nomer_O] == figureP[counter]
 
-                if (figureO[nomer_O]  < 495 and nomer_O < 5)
+                )
+
                 {
                     nomer_O = nomer_O - 1;
                 }
@@ -81,8 +80,7 @@ txBitBlt (txDC(), 0, 170, 162, 158, nolic, 0, 0);
             {
                 txTransparentBlt (txDC(), figureX[counter], figureY[counter], 162, 163, krestic, 0, 0, TX_WHITE);
             }
-        }
-		for (int counter = 0; counter < nomer_O; counter++)
+		for (int counter = 0; counter < nomer_X; counter++)
         {
             if (o[counter]  == true)
             {
