@@ -1,4 +1,7 @@
 #include "TXLib.h"
+#include <iostream>
+#include <string>
+#include <fstream>
 #include "lib\\Oblast.cpp"
 
 int uroven_tekushii = 1;
@@ -29,6 +32,8 @@ struct Button
 void drawButton(Button btn1);
 int KNOPKAClick (Button exitButton, int risovat);
 
+using namespace std;
+
 int main()
     {
     txCreateWindow (1280, 720);
@@ -51,7 +56,23 @@ int main()
     int KOLVO_OBLASTEI = 40;
     Oblast obl[KOLVO_OBLASTEI];
 
-    obl[0] =  {1};
+    ifstream file ("levels\\1.txt");
+
+    string poloj;
+    int nomer_obl = 0;
+    while(getline(file, poloj) )//пока я не дошел до конца файла
+    {
+
+            obl[nomer_obl] = {atoi(poloj.c_str())};//конвертация строки в число
+            nomer_obl = nomer_obl + 1;
+
+    }
+
+    file.close();
+
+//obls
+   {
+    /*obl[0] =  {1};
     obl[1] =  {5};
     obl[2] =  {1};
     obl[3] =  {5};
@@ -94,7 +115,8 @@ int main()
     obl[36] = {1};
     obl[37] = {5};
     obl[38] = {1};
-    obl[39] = {5};
+    obl[39] = {5};*/
+                         }
 
     for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
     {
