@@ -1,5 +1,7 @@
 #include "TXLib.h"
 #include "Lib\\lib.cpp"
+#include "Lib\\PersStruct.cpp"
+#include "Lib\\Buttons.cpp"
 #include <string> // РїРѕРґРєР»СЋС‡Р°РµРј СЃС‚СЂРѕРєРё
 #include <fstream>
 #include <iostream>
@@ -10,22 +12,6 @@ const int VKLADKA_GOLOVA = 1;
 const int VKLADKA_TELO = 2;
 const int VKLADKA_LICO = 3;
 
-
-bool checkClick(int MinX, int MaxX, int MinY, int MaxY)
-{
-    if (
-        txMouseButtons() & 1 &&
-        txMouseX() >= MinX &&
-        txMouseX() <= MaxX &&
-        txMouseY() <= MaxY &&
-        txMouseY() >= MinY
-        )
-    {
-        return true;
-    }
-
-    return false;
-}
 
 void drawTabs()
 {
@@ -41,7 +27,6 @@ void drawTabs()
     txDrawText(1000, 80, 1185, 120, "Эмоции");
 }
 
-//Смена вкладки (сделай функцией). На выходе int, на входе ничего
 int changeTab(int tab)
 {
     if (checkClick(645, 821, 77, 123))
@@ -146,32 +131,34 @@ out.close();
 
         //Выбор головы. Почему бы не сделать функцией
         if (nomer_vkladki == VKLADKA_GOLOVA)
-        //if (kartinka==fon_golovy)
         {
+            /*if (checkClick(bashka1.x1, bashka1.x2, bashka1.y1, bashka1.y2))
+            {
+                x_bashki = bashka1.part_x;
+                y_bashki = bashka1.part_y;
+            } */
+
             if (checkClick(643, 783, 127, 255))
             {
                 x_bashki = 3;
             }
-
             else if (checkClick(785, 925, 127, 255))
             {
                 x_bashki = 221;
+            }
+            else if (checkClick (1055, 1190, 125, 255))    //негр
+            {
+                x_bashki = 450;
+            }
+            else if (checkClick (930, 1060, 125, 255))    //дедушка
+            {
+                x_bashki = 660;
             }
 
             //640 580 1240 660
             if (checkClick( 640, 700, 580, 660))
             {
                 y_bashki = 205;
-            }
-
-              if (checkClick (930, 1060, 125, 255))    //дедушка
-            {
-                x_bashki = 660;
-            }
-
-              if (checkClick (1055, 1190, 125, 255))    //негр
-            {
-                x_bashki = 450;
             }
         }
 
@@ -189,12 +176,12 @@ out.close();
                 x_odejdi = 205;
             }
 
-        else if (checkClick(1000, 1080, 127, 300))
+            else if (checkClick(1000, 1080, 127, 300))
             {
                 x_odejdi = 388;
             }
 
-        else if (checkClick(635, 825, 300, 485))
+            else if (checkClick(635, 825, 300, 485))
             {
                 x_odejdi = 575;
             }
@@ -202,7 +189,6 @@ out.close();
 
         if (checkClick(785, 1080, 655, 715))
         {
-
              return 0;
         }
 
