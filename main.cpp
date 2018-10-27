@@ -9,8 +9,8 @@
 struct OblUr
 {
     int x;
-    int y;
     int x1;
+    int y;
     int y1;
     const char* adress;
 };

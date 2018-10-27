@@ -10,6 +10,3 @@ struct PersPartButton
     int part_x;
     int part_y;
 };
-
-
-PersPartButton bashka1 = {643, 783, 127, 255, 3, 0};

@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "Lib\\save.cpp"
 using namespace std;
 
 const int VKLADKA_GOLOVA = 1;
@@ -66,6 +67,18 @@ int main()
     HDC emodji = txLoadImage ("pictures\\123444.bmp");
     HDC telo  = txLoadImage ("pictures\\telo.bmp ");
     HDC kartinka = fon1;
+
+
+
+PersPartButton bashka[4];
+bashka[0] = {643, 783, 127, 255, 3, 0};
+bashka[1] = {785, 925, 127, 255, 225, 0};
+bashka[2] = {1055, 1190, 127, 255, 450, 0};//негр
+bashka[3] = {930, 1060, 127, 255, 660, 0};//дедушка
+
+
+
+
 
 
     ifstream file("Lib\\2.txt"); // С„Р°Р№Р» РёР· РєРѕС‚РѕСЂРѕРіРѕ С‡РёС‚Р°РµРј (РґР»СЏ Р»РёРЅСѓРєСЃ РїСѓС‚СЊ Р±СѓРґРµС‚ РІС‹РіР»СЏРґРµС‚СЊ РїРѕ РґСЂСѓРіРѕРјСѓ)
@@ -132,28 +145,16 @@ out.close();
         //Выбор головы. Почему бы не сделать функцией
         if (nomer_vkladki == VKLADKA_GOLOVA)
         {
-            /*if (checkClick(bashka1.x1, bashka1.x2, bashka1.y1, bashka1.y2))
+            for (int nomer_bashki = 0; nomer_bashki < 4; nomer_bashki++)
             {
-                x_bashki = bashka1.part_x;
-                y_bashki = bashka1.part_y;
-            } */
+                if (checkClick(bashka[nomer_bashki].x1, bashka[nomer_bashki].x2, bashka[nomer_bashki].y1, bashka[nomer_bashki].y2))
+                {
+                    x_bashki = bashka[nomer_bashki].part_x;
+                    y_bashki = bashka[nomer_bashki].part_y;
+                }
 
-            if (checkClick(643, 783, 127, 255))
-            {
-                x_bashki = 3;
             }
-            else if (checkClick(785, 925, 127, 255))
-            {
-                x_bashki = 221;
-            }
-            else if (checkClick (1055, 1190, 125, 255))    //негр
-            {
-                x_bashki = 450;
-            }
-            else if (checkClick (930, 1060, 125, 255))    //дедушка
-            {
-                x_bashki = 660;
-            }
+
 
             //640 580 1240 660
             if (checkClick( 640, 700, 580, 660))
@@ -168,7 +169,7 @@ out.close();
         {
             if (checkClick(643, 825, 127, 300))
             {
-                x_odejdi = 9;
+                x_odejdi = 15;
             }
 
             else if (checkClick(820, 999, 127, 300))
@@ -178,23 +179,26 @@ out.close();
 
             else if (checkClick(1000, 1080, 127, 300))
             {
-                x_odejdi = 388;
+                x_odejdi = 395;
             }
 
             else if (checkClick(635, 825, 300, 485))
             {
-                x_odejdi = 575;
+                x_odejdi = 590;
             }
         }
 
         if (checkClick(785, 1080, 655, 715))
         {
+
+     ScreenCapture(400,400, 510,510, "picture.bmp");
              return 0;
         }
 
         txSleep(10);
         txEnd();
     }
+
 
 
     //Что-то мне кажется. у тебя еще 100500 картинок, которые никто не удаляет
