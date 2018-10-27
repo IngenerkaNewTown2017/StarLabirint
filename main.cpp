@@ -30,9 +30,33 @@ bool Start_level = false;
 
 using namespace std;
 
+void drawLevelButton(int x, int y, const char* text, COLORREF backColor, COLORREF frontColor);
+void drawLevelButton(int x, int y, const char* text, COLORREF backColor, COLORREF frontColor)
+{
+    //x = 76, y = 115
+    txSetColor(TX_BLACK);
+    txSetFillColor(backColor);
+    txRectangle(x,      y,      x +  99, y +  99);
+
+    txSetColor(frontColor);
+    txSetFillColor(frontColor);
+    txRectangle(x + 25, y -  5, x +  75, y + 104);
+    txRectangle(x -  5, y + 24, x + 104, y +  84);
+
+    txSetColor(TX_BLACK);
+    txSelectFont("Bauhaus 93", 72);
+    txTextOut  (x + 34, y + 15, text);
+}
+
+
 int main()
     {
     txCreateWindow (1280, 720);
+
+    drawLevelButton(76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29));
+    drawLevelButton(303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29));
+
+    txSleep(2000);
 
     HDC main_menu =     txLoadImage ("pictures\\Labirint\\main_menu.bmp");
     HDC proba =         txLoadImage ("pictures\\Labirint\\proba.bmp");
