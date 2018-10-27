@@ -29,9 +29,33 @@ struct Button
 void drawButton(Button btn1);
 int KNOPKAClick (Button exitButton, int risovat);
 
+void drawLevelButton(int x, int y, const char* text, COLORREF backColor, COLORREF frontColor);
+void drawLevelButton(int x, int y, const char* text, COLORREF backColor, COLORREF frontColor)
+{
+    //x = 76, y = 115
+    txSetColor(TX_BLACK);
+    txSetFillColor(backColor);
+    txRectangle(76 - 76 + x, 115 - 115 + y, 175 - 76 + x, 214 - 115 + y);
+
+    txSetColor(frontColor);
+    txSetFillColor(frontColor);
+    txRectangle(101 - 76 + x, 110 - 115 + y, 151 - 76 + x, 219 - 115 + y);
+    txRectangle(71 - 76 + x, 139 - 115 + y, 180 - 76 + x, 189 - 115 + y);
+
+    txSetColor(TX_BLACK);
+    txSelectFont("Bauhaus 93", 72);
+    txTextOut(120 - 76 + x, 160 - 115 + y, text);
+}
+
+
 int main()
     {
     txCreateWindow (1280, 720);
+
+    drawLevelButton(76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29));
+    drawLevelButton(303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29));
+
+    txSleep(100000);
 
     HDC main_menu = txLoadImage ("pictures\\main_menu.bmp");
     HDC proba = txLoadImage ("pictures\\proba.bmp");
