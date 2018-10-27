@@ -5,6 +5,16 @@
 #include "lib\\Oblast.cpp"
 #include "lib\\Buttons.cpp"
 
+
+struct OblUr
+{
+    int x;
+    int y;
+    int x1;
+    int y1;
+    const char* adress;
+};
+
 int uroven_tekushii = 1;
 int uroven_staryi = 0;
 
@@ -32,30 +42,19 @@ int main()
 
     int KOLVO_OBLASTEI = 40;
     Oblast obl[KOLVO_OBLASTEI];
-
-    ifstream file ("levels\\1.txt");
-
-    string poloj;
-    int nomer_obl = 0;
-    while(getline(file, poloj) )//пока я не дошел до конца файла
-    {
-        obl[nomer_obl] = {atoi(poloj.c_str())};//конвертация строки в число
-        nomer_obl = nomer_obl + 1;
-    }
-
-    file.close();
+    string file_adress = "";
 
 
-    for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
-    {
-        //13%8 = 5, ГЇГ®ГІГ®Г¬Гі Г·ГІГ® 13 = 8 * 1 + 5
-        obl[nomer_oblasti].lx = get_min_x((nomer_oblasti % 8) + 1);
-        obl[nomer_oblasti].rx = get_min_x((nomer_oblasti % 8) + 2);
-        obl[nomer_oblasti].vy = get_min_y(nomer_oblasti / 8 + 1);
-        obl[nomer_oblasti].ny = get_min_y(nomer_oblasti / 8 + 2);
-        obl[nomer_oblasti].max_poloj = get_max_poloj(obl[nomer_oblasti].poloj);
-        obl[nomer_oblasti].min_poloj = min_max_poloj(obl[nomer_oblasti].poloj);
-    }
+
+    OblUr Lev1 = {76, 175, 115, 215, "levels\\1.txt"};
+    OblUr Lev2 = {301, 401, 125, 225, "levels\\2.txt"};
+    OblUr Lev3 = {191, 291, 392, 492, "levels\\3.txt"};
+    OblUr Lev4 = {506, 606, 151, 251, "levels\\4.txt"};
+    OblUr Lev5 = {1153, 1253, 15, 115, "levels\\5.txt"};
+    OblUr Lev6 = {247, 347, 569, 669, "levels\\6.txt"};
+    OblUr Lev7 = {1145, 1245, 240, 340, "levels\\7.txt"};
+    OblUr Lev8 = {503, 603, 591, 691, "levels\\8.txt"};
+    OblUr Lev9 = {1039, 1139, 438, 538, "levels\\9.txt"};
 
 
 
@@ -73,11 +72,8 @@ int main()
         {
             Exit = true;
         }
-        if(txMouseButtons () == 1 &&
-            txMouseX () >= 517 &&
-            txMouseX () <= 704 &&
-            txMouseY () >= 275 &&
-            txMouseY () <= 368)
+
+        if (checkClick(517, 705, 274, 370))
         {
             StartGame = true;
         }
@@ -88,23 +84,100 @@ int main()
 
     if (StartGame == true)
     {
-
         txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
 
-        while(uroven_staryi < uroven_tekushii)
+        while(Start_level == false)
         {
-            if(txMouseButtons () &1 &&
-                txMouseX () >= 76 &&
-                txMouseX () <= 175 &&
-                txMouseY () >= 115 &&
-                txMouseY () <= 214)
+            if(checkClick(Lev1.x, Lev1.x1, Lev1.y, Lev1.y1))
             {
-                uroven_staryi = uroven_tekushii;
+                Start_level = true;
+                file_adress = Lev1.adress;
             }
+
+            else if(checkClick(Lev2.x, Lev2.x1, Lev2.y, Lev2.y1))
+            {
+                Start_level = true;
+                file_adress = Lev2.adress;
+            }
+
+             else if(checkClick(Lev3.x, Lev3.x1, Lev3.y, Lev3.y1))
+            {
+                Start_level = true;
+                file_adress = Lev3.adress;
+            }
+
+             else if(checkClick(Lev4.x, Lev4.x1, Lev4.y, Lev4.y1))
+            {
+                Start_level = true;
+                file_adress = Lev4.adress;
+            }
+
+             else if(checkClick(Lev5.x, Lev5.x1, Lev5.y, Lev5.y1))
+            {
+                Start_level = true;
+                file_adress = Lev5.adress;
+            }
+
+             else if(checkClick(Lev6.x, Lev6.x1, Lev6.y, Lev6.y1))
+            {
+                Start_level = true;
+                file_adress = Lev6.adress;
+            }
+
+             else if(checkClick(Lev7.x, Lev7.x1, Lev7.y, Lev7.y1))
+            {
+                Start_level = true;
+                file_adress = Lev7.adress;
+            }
+
+             else if(checkClick(Lev8.x, Lev8.x1, Lev8.y, Lev8.y1))
+            {
+                Start_level = true;
+                file_adress = Lev8.adress;
+            }
+
+             else if(checkClick(Lev9.x, Lev9.x1, Lev9.y, Lev9.y1))
+            {
+                Start_level = true;
+                file_adress = Lev9.adress;
+            }
+
+
+
+
+
+
+
             txSleep(10);
         }
 
-        uroven_tekushii = uroven_tekushii + 1;
+
+        ifstream file (file_adress);
+
+        string poloj;
+        int nomer_obl = 0;
+        while(getline(file, poloj) )//пока я не дошел до конца файла
+        {
+            obl[nomer_obl] = {atoi(poloj.c_str())};//конвертация строки в число
+            nomer_obl = nomer_obl + 1;
+        }
+
+        file.close();
+
+
+        for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+        {
+            //13%8 = 5, ГЇГ®ГІГ®Г¬Гі Г·ГІГ® 13 = 8 * 1 + 5
+            obl[nomer_oblasti].lx = get_min_x((nomer_oblasti % 8) + 1);
+            obl[nomer_oblasti].rx = get_min_x((nomer_oblasti % 8) + 2);
+            obl[nomer_oblasti].vy = get_min_y(nomer_oblasti / 8 + 1);
+            obl[nomer_oblasti].ny = get_min_y(nomer_oblasti / 8 + 2);
+            obl[nomer_oblasti].max_poloj = get_max_poloj(obl[nomer_oblasti].poloj);
+            obl[nomer_oblasti].min_poloj = min_max_poloj(obl[nomer_oblasti].poloj);
+        }
+
+
+
 
         //ГЉГ ГЄ ГЇГ°Г®Г©ГІГЁ ГЁГЈГ°Гі / ГўГ»Г©ГІГЁ ГЁГ§ ГЁГЈГ°Г»? Exit ГўГҐГ¤Гј ГўГ±ГҐГЈГ¤Г  == false
         while(Exit == false)
