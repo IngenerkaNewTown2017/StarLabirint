@@ -69,18 +69,19 @@ int main()
     HDC kartinka = fon1;
 
 
+    int vsego_boshek = 4;
+    PersPartButton bashka[vsego_boshek];
+    bashka[0] = { 643,  783, 127, 255,   3, 1};
+    bashka[1] = { 785,  925, 127, 255, 221, 0};
+    bashka[2] = {1055, 1190, 127, 255, 450, 3};//негр
+    bashka[3] = { 930, 1060, 127, 255, 665, 0};//дедушка
 
-PersPartButton bashka[4];
-bashka[0] = {643, 783, 127, 255, 3, 0};
-bashka[1] = {785, 925, 127, 255, 225, 0};
-bashka[2] = {1055, 1190, 127, 255, 450, 0};//негр
-bashka[3] = {930, 1060, 127, 255, 660, 0};//дедушка
-
-PersPartButton telo[4];
-telo[0] = {643, 825, 127, 300, 15, 0};
-telo[1] = {820, 999, 127, 300, 205, 0};
-telo[2] = {1000, 1180, 127, 300,395, 0};
-telo [3] = {635, 825, 300,485, 590, 0};
+    int vsego_tel = 4;
+    PersPartButton telo[vsego_tel];
+    telo[0] = { 643,  825, 127, 300,   5, 0};
+    telo[1] = { 820,  999, 127, 300, 200, 0};
+    telo[2] = {1000, 1180, 127, 300, 390, 0};
+    telo[3] = { 635,  825, 300, 485, 570, 0};
 
 
     ifstream file("Lib\\2.txt"); // С„Р°Р№Р» РёР· РєРѕС‚РѕСЂРѕРіРѕ С‡РёС‚Р°РµРј (РґР»СЏ Р»РёРЅСѓРєСЃ РїСѓС‚СЊ Р±СѓРґРµС‚ РІС‹РіР»СЏРґРµС‚СЊ РїРѕ РґСЂСѓРіРѕРјСѓ)
@@ -147,7 +148,7 @@ out.close();
         //Выбор головы. Почему бы не сделать функцией
         if (nomer_vkladki == VKLADKA_GOLOVA)
         {
-            for (int nomer_bashki = 0; nomer_bashki < 4; nomer_bashki++)
+            for (int nomer_bashki = 0; nomer_bashki < vsego_boshek; nomer_bashki++)
             {
                 if (checkClick(bashka[nomer_bashki].x1, bashka[nomer_bashki].x2, bashka[nomer_bashki].y1, bashka[nomer_bashki].y2))
                 {
@@ -169,42 +170,21 @@ out.close();
         //Выбор тела. Почему бы не сделать функцией
         if (nomer_vkladki == VKLADKA_TELO)
         {
-
-         for (int nomer_bashki = 0; nomer_bashki < 4; nomer_bashki++)
+            for (int nomer_tela = 0; nomer_tela < vsego_tel; nomer_tela++)
             {
-                if (checkClick(telo[nomer_bashki].x1, telo[nomer_bashki].x2, telo[nomer_bashki].y1, telo[nomer_bashki].y2))
+                if (checkClick(telo[nomer_tela].x1, telo[nomer_tela].x2, telo[nomer_tela].y1, telo[nomer_tela].y2))
                 {
-                    x_odejdi = telo[nomer_bashki].part_x;
-                    y_odejdi = telo[nomer_bashki].part_y;
+                    x_odejdi = telo[nomer_tela].part_x;
+                    y_odejdi = telo[nomer_tela].part_y;
                 }
 
             }
-
-           /* if (checkClick(643, 825, 127, 300))
-            {
-                x_odejdi = 15;
-            }
-
-            else if (checkClick(820, 999, 127, 300))
-            {
-                x_odejdi = 205;
-            }
-
-            else if (checkClick(1000, 1080, 127, 300))
-            {
-                x_odejdi = 395;
-            }
-
-            else if (checkClick(635, 825, 300, 485))
-            {
-                x_odejdi = 590;
-            }          */
         }
 
+        //СОхранение
         if (checkClick(785, 1080, 655, 715))
         {
-
-     ScreenCapture(70, 155, 450, 450, "picture.bmp");
+             ScreenCapture(70, 155, 450, 450, "picture.bmp");
              return 0;
         }
 
@@ -217,7 +197,6 @@ out.close();
     //Что-то мне кажется. у тебя еще 100500 картинок, которые никто не удаляет
     txDeleteDC(golovy);
     txDeleteDC(rects);
-
 
     return 0;
 }
