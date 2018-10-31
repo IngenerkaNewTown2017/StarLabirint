@@ -44,7 +44,7 @@ void drawLevelButton(int x, int y, const char* text, COLORREF backColor, COLORRE
     txRectangle(x -  5, y + 24, x + 104, y +  84);
 
     txSetColor(TX_BLACK);
-    txSelectFont("Bauhaus 93", 72);
+    txSelectFont("Bauhaus 93", 36);
     txTextOut  (x + 34, y + 15, text);
 }
 
@@ -58,6 +58,8 @@ int main()
 
     txSleep(2000);
 
+    HDC spraitzagruzki =      txLoadImage ("spraitzagruzki.bmp");
+    HDC zagruzka =      txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
     HDC main_menu =     txLoadImage ("pictures\\Labirint\\main_menu.bmp");
     HDC proba =         txLoadImage ("pictures\\Labirint\\proba.bmp");
     HDC vsecuby =       txLoadImage ("pictures\\Labirint\\vsecuby.bmp");
@@ -99,6 +101,8 @@ int main()
 
         if (checkClick(517, 705, 274, 370))
         {
+
+
             StartGame = true;
         }
 
@@ -114,6 +118,10 @@ int main()
         {
             if(checkClick(Lev1.x, Lev1.x1, Lev1.y, Lev1.y1))
             {
+
+                txBitBlt (txDC(), 0, 0, 1280, 720, zagruzka, 0, 0);
+                 txSleep(5000);
+
                 Start_level = true;
                 file_adress = Lev1.adress;
             }
