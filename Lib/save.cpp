@@ -94,7 +94,7 @@ bool ScreenCapture(int x, int y, int width, int height, char *filename){
 int  mscreen()
 {
 
-     ScreenCapture(70, 115, 450, 450, "picture.bmp");
+     ScreenCapture(50, 115, 450, 450, "picture.bmp");
 
 
 

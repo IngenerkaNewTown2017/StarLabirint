@@ -179,26 +179,6 @@ out.close();
                 }
 
             }
-
-           /* if (checkClick(643, 825, 127, 300))
-            {
-                x_odejdi = 15;
-            }
-
-            else if (checkClick(820, 999, 127, 300))
-            {
-                x_odejdi = 205;
-            }
-
-            else if (checkClick(1000, 1080, 127, 300))
-            {
-                x_odejdi = 395;
-            }
-
-            else if (checkClick(635, 825, 300, 485))
-            {
-                x_odejdi = 590;
-            }          */
         }
 
         if (checkClick(785, 1080, 655, 715))
