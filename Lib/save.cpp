@@ -84,22 +84,7 @@ bool ScreenCapture(int x, int y, int width, int height, char *filename){
     HDC hDc = Win32::CreateCompatibleDC(0);
     HBITMAP hBmp = Win32::CreateCompatibleBitmap(GetDC(0), width, height);
     Win32::SelectObject(hDc, hBmp);
-
-
-    HWND hwndOwner = GetDesktopWindow();
-    WINDOWPLACEMENT rcOwner;
-    GetWindowPlacement(hwndOwner, &rcOwner);
-
-txClear();
-
-char str[100];
-sprintf(str, "%d",  rcOwner.rcNormalPosition.left);  //Writing car_x_coord value to str
-txTextOut(100, 100, str);
-    Sleep(1000);
-
-
-
-    Win32::BitBlt(hDc, 0, 0, width, height, GetDC(0), rcOwner.rcNormalPosition.left + x, rcOwner.rcNormalPosition.top + y, SRCCOPY);
+    Win32::BitBlt(hDc, 0, 0, width, height, txDC(), x, y, SRCCOPY);
     bool ret = SaveBMPFile(filename, hBmp, hDc, width, height);
     Win32::DeleteObject(hBmp);
 

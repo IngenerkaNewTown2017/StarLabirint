@@ -115,7 +115,8 @@ out << x_bashki << std::endl;
 }
 out.close();
 
-    while (!GetAsyncKeyState('R')) {
+bool isExit = false;
+    while (!GetAsyncKeyState('R') && !isExit) {
 
         txBegin();
         txClear();
@@ -216,11 +217,8 @@ out.close();
         //ÑÎõğàíåíèå
         if (checkClick(785, 1080, 655, 715))
         {
-             ScreenCapture(0, 0, 450, 450, "picture1.bmp");
-             ScreenCapture(120, 255, 450, 450, "picture2.bmp");
-             ScreenCapture(500, 255, 450, 450, "picture3.bmp");
-             ScreenCapture(300, 500, 450, 450, "picture4.bmp");
-             return 0;
+             ScreenCapture(70, 120, 450, 450, "picture.bmp");
+             isExit = true;
         }
 
         txSleep(10);

@@ -9,6 +9,7 @@ struct Oblast
     int ny;
     int max_poloj;
     int min_poloj;
+    int nomber_obl;
 };
 
 int clickOnOblkast(Oblast obl1);
