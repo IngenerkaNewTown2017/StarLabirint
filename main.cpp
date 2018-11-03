@@ -4,6 +4,7 @@
 #include <fstream>
 #include "lib\\Oblast.cpp"
 #include "lib\\Buttons.cpp"
+#include "lib\\shar.cpp"
 
 
 struct OblUr
@@ -22,7 +23,7 @@ int uroven_staryi = 0;
 int x_ball;
 int y_ball;
 int point_cuba;
-int speed_ball = 35;
+int speed_ball = 5;
 bool Exit = false;
 bool StartGame = false;
 bool Start_level = false;
@@ -191,6 +192,7 @@ int main()
         while(getline(file, poloj) )//пока я не дошел до конца файла
         {
             obl[nomer_obl] = {atoi(poloj.c_str())};//конвертация строки в число
+            obl[nomer_obl].nomber_obl = nomer_obl;
             nomer_obl = nomer_obl + 1;
         }
 
@@ -206,6 +208,41 @@ int main()
             obl[nomer_oblasti].ny = get_min_y(nomer_oblasti / 8 + 2);
             obl[nomer_oblasti].max_poloj = get_max_poloj(obl[nomer_oblasti].poloj);
             obl[nomer_oblasti].min_poloj = min_max_poloj(obl[nomer_oblasti].poloj);
+        }
+
+
+        for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+        {
+            int nomer_stolbca = (nomer_oblasti % 8) + 1;
+            int nomer_stroki = (nomer_oblasti / 8) + 1;
+
+            get_min_x(nomer_stolbca + 1);
+            get_min_y(nomer_stroki);
+
+
+
+            get_min_x(nomer_stolbca - 1);
+            get_min_y(nomer_stroki);
+
+
+            get_min_x(nomer_stolbca);
+            get_min_y(nomer_stroki + 1);
+
+            get_min_x(nomer_stolbca);
+            get_min_y(nomer_stroki - 1);
+        }
+        /*if (proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,
+           obl[1].lx  ,obl[1].vy ,obl[2].lx  ,obl[2].vy) )
+        {
+            txTextOut(100, 100, "Можно"   );
+            txSleep(1000);
+
+       }
+        else
+        {
+            txTextOut(100, 100, "Не Можно"   );
+            txSleep(1000);
+
         }
 
 
@@ -240,7 +277,7 @@ int main()
             txSleep(10);
             txEnd();
         }
-    }
+    }     */
 
     //Г…Г№ГҐ ГЇГ Г°Гі ГЄГ Г°ГІГЁГ­Г®ГЄ Г§Г ГЎГ»ГўГ ГҐГёГј ГіГ¤Г Г«ГЁГІГј
     txDeleteDC(main_menu);
