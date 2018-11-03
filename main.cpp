@@ -189,9 +189,9 @@ int main()
 
         string poloj;
         int nomer_obl = 0;
-        while(getline(file, poloj) )//���� � �� ����� �� ����� �����
+        while(getline(file, poloj) )//пока я не дошел до конца файла
         {
-            obl[nomer_obl] = {atoi(poloj.c_str())};//����������� ������ � �����
+            obl[nomer_obl] = {atoi(poloj.c_str())};//конвертация строки в число
             obl[nomer_obl].nomber_obl = nomer_obl;
             nomer_obl = nomer_obl + 1;
         }
@@ -201,7 +201,7 @@ int main()
 
         for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
         {
-            //13%8 = 5, ïîòîìó ÷òî 13 = 8 * 1 + 5
+            //13%8 = 5, ГЇГ®ГІГ®Г¬Гі Г·ГІГ® 13 = 8 * 1 + 5
             obl[nomer_oblasti].lx = get_min_x((nomer_oblasti % 8) + 1);
             obl[nomer_oblasti].rx = get_min_x((nomer_oblasti % 8) + 2);
             obl[nomer_oblasti].vy = get_min_y(nomer_oblasti / 8 + 1);
@@ -234,13 +234,13 @@ int main()
         /*if (proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,
            obl[1].lx  ,obl[1].vy ,obl[2].lx  ,obl[2].vy) )
         {
-            txTextOut(100, 100, "�����"   );
+            txTextOut(100, 100, "Можно"   );
             txSleep(1000);
 
        }
         else
         {
-            txTextOut(100, 100, "�� �����"   );
+            txTextOut(100, 100, "Не Можно"   );
             txSleep(1000);
 
         }
@@ -248,7 +248,7 @@ int main()
 
 
 
-        //Êàê ïðîéòè èãðó / âûéòè èç èãðû? Exit âåäü âñåãäà == false
+        //ГЉГ ГЄ ГЇГ°Г®Г©ГІГЁ ГЁГЈГ°Гі / ГўГ»Г©ГІГЁ ГЁГ§ ГЁГЈГ°Г»? Exit ГўГҐГ¤Гј ГўГ±ГҐГЈГ¤Г  == false
         while(Exit == false)
         {
 
@@ -257,10 +257,10 @@ int main()
 
             for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
             {
-                //Èùåì êîîðäèíàòó äëÿ ðèñîâàíèÿ íóæíîãî êàäðà
+                //Г€Г№ГҐГ¬ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГі Г¤Г«Гї Г°ГЁГ±Г®ГўГ Г­ГЁГї Г­ГіГ¦Г­Г®ГЈГ® ГЄГ Г¤Г°Г 
                 int coord1 = coord(obl[nomer_oblasti]);
 
-                //Ïðîâåðÿåì, ÷òî êàäð íå ñëèøêîì áîëüøîé
+                //ГЏГ°Г®ГўГҐГ°ГїГҐГ¬, Г·ГІГ® ГЄГ Г¤Г° Г­ГҐ Г±Г«ГЁГёГЄГ®Г¬ ГЎГ®Г«ГјГёГ®Г©
                 if (clickOnOblkast(obl[nomer_oblasti]) == 1)
                 {
                     obl[nomer_oblasti].poloj = obl[nomer_oblasti].poloj + 1;
@@ -268,7 +268,7 @@ int main()
                     {
                         obl[nomer_oblasti].poloj = obl[nomer_oblasti].min_poloj;
                     }
-                    //Íå ìåøàëî áû ñþäà ïàóçó äîáàâèòü. À òî î÷åíü òÿæåëî êëèêîì îòëîâèòü íóæíîå ïîëîæåíèå
+                    //ГЌГҐ Г¬ГҐГёГ Г«Г® ГЎГ» Г±ГѕГ¤Г  ГЇГ ГіГ§Гі Г¤Г®ГЎГ ГўГЁГІГј. ГЂ ГІГ® Г®Г·ГҐГ­Гј ГІГїГ¦ГҐГ«Г® ГЄГ«ГЁГЄГ®Г¬ Г®ГІГ«Г®ГўГЁГІГј Г­ГіГ¦Г­Г®ГҐ ГЇГ®Г«Г®Г¦ГҐГ­ГЁГҐ
                 }
 
                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
@@ -279,7 +279,7 @@ int main()
         }
     }     */
 
-    //Åùå ïàðó êàðòèíîê çàáûâàåøü óäàëèòü
+    //Г…Г№ГҐ ГЇГ Г°Гі ГЄГ Г°ГІГЁГ­Г®ГЄ Г§Г ГЎГ»ГўГ ГҐГёГј ГіГ¤Г Г«ГЁГІГј
     txDeleteDC(main_menu);
     txDeleteDC(proba);
     txDeleteDC(vsecuby);

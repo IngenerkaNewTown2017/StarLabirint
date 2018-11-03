@@ -58,13 +58,18 @@ int main()
 
     int x_odejdi = -100;
     int y_odejdi = 0;
-    HDC golova = txLoadImage("pictures\\head.bmp");
+
+     int x_lico = -100;
+    int y_lico = 0;
+
+    HDC golova = txLoadImage("pictures\\head2.bmp");
     HDC fon = txLoadImage ("pictures\\fon.bmp");
     HDC fon1  = txLoadImage ("pictures\\fon11.bmp ");
     HDC golovy  = txLoadImage ("pictures\\face.bmp ");
     HDC rects  = txLoadImage ("pictures\\rects.bmp ");
     HDC FONtelo =  txLoadImage ("pictures\\1123456.bmp");
-    HDC emodji = txLoadImage ("pictures\\123444.bmp");
+    HDC emodji = txLoadImage ("pictures\\5.bmp");
+    HDC lico1 = txLoadImage ("pictures\\eye.bmp");
     HDC teloPic  = txLoadImage ("pictures\\telo.bmp ");
     HDC kartinka = fon1;
 
@@ -78,20 +83,29 @@ int main()
 
     int vsego_tel = 4;
     PersPartButton telo[vsego_tel];
-    telo[0] = { 643,  825, 127, 300,   5, 0};
+    telo[0] = { 643,  825, 127, 300, 5, 0};
     telo[1] = { 820,  999, 127, 300, 200, 0};
     telo[2] = {1000, 1180, 127, 300, 390, 0};
     telo[3] = { 635,  825, 300, 485, 570, 0};
 
+ int vsego_emoj = 4;
+    PersPartButton lico[vsego_emoj];
+    lico[0] = {  58, 115,3,118,   5, 0};
+   lico[1] = { 120,  230, 58, 115, 200, 0};
+    lico[2] = {235, 350, 58, 115, 390, 0};
+    lico[3] = {351, 450, 58, 115, 570, 0};
 
     ifstream file("Lib\\2.txt"); // файл из которого читаем (для линукс путь будет выглядеть по другому)
 
-    string stroka_golovy, stroka_tela;
+    string stroka_golovy, stroka_tela,stroka_lico;
     getline(file, stroka_golovy);
     x_bashki = {atoi(stroka_golovy.c_str())};
     getline(file, stroka_tela);
     x_odejdi = {atoi(stroka_tela.c_str())};
+    getline(file, stroka_lico);
+    x_lico = {atoi(stroka_lico.c_str())};
     file.close();
+
 
 ofstream out;
 out.open("Lib\\3.txt");
@@ -132,6 +146,11 @@ out.close();
         if (x_odejdi != -100)
         {
             risovat_telo(teloPic,x_odejdi,y_odejdi);
+        }
+
+        if (x_lico != -100)
+        {
+            risovat_lico(lico1,x_lico,y_lico);
         }
 
         drawTabs();
@@ -181,10 +200,26 @@ out.close();
             }
         }
 
+        if (nomer_vkladki == VKLADKA_LICO)
+        {
+            for (int nomer_lico = 0; nomer_lico < vsego_emoj; nomer_lico++)
+            {
+                if (checkClick(lico[nomer_lico].x1, telo[nomer_lico].x2, lico[nomer_lico].y1, lico[nomer_lico].y2))
+                {
+                    x_lico = lico[nomer_lico].part_x;
+                    y_lico = lico[nomer_lico].part_y;
+                }
+
+            }
+        }
+
         //����������
         if (checkClick(785, 1080, 655, 715))
         {
-             ScreenCapture(70, 155, 450, 450, "picture.bmp");
+             ScreenCapture(0, 0, 450, 450, "picture1.bmp");
+             ScreenCapture(120, 255, 450, 450, "picture2.bmp");
+             ScreenCapture(500, 255, 450, 450, "picture3.bmp");
+             ScreenCapture(300, 500, 450, 450, "picture4.bmp");
              return 0;
         }
 
