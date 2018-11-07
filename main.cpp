@@ -66,6 +66,7 @@ int main()
     HDC vsecuby =       txLoadImage ("pictures\\Labirint\\vsecuby.bmp");
     HDC kartaurovneya = txLoadImage ("pictures\\Labirint\\kartaurovneya.bmp");
     HDC fonurovnya =    txLoadImage ("pictures\\Labirint\\fonurovnya.bmp");
+    HDC spraitshara =    txLoadImage ("pictures\\Labirint\\spraitshara.bmp");
 
     int KOLVO_OBLASTEI = 40;
     Oblast obl[KOLVO_OBLASTEI];
@@ -121,7 +122,7 @@ int main()
             {
 
                 txBitBlt (txDC(), 0, 0, 1280, 720, zagruzka, 0, 0);
-                 txSleep(5000);
+                // txSleep(5000);
 
                 Start_level = true;
                 file_adress = Lev1.adress;
@@ -181,6 +182,8 @@ int main()
 
 
 
+
+
             txSleep(10);
         }
 
@@ -231,8 +234,8 @@ int main()
             get_min_x(nomer_stolbca);
             get_min_y(nomer_stroki - 1);
         }
-        /*if (proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,
-           obl[1].lx  ,obl[1].vy ,obl[2].lx  ,obl[2].vy) )
+        if (proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,
+           obl[16].lx  ,obl[16].vy ,obl[8].lx  ,obl[8].vy) )
         {
             txTextOut(100, 100, "Можно"   );
             txSleep(1000);
@@ -243,7 +246,7 @@ int main()
             txTextOut(100, 100, "Не Можно"   );
             txSleep(1000);
 
-        } */
+        }
 
 
 
@@ -274,6 +277,11 @@ int main()
                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
             }
 
+             if(Start_level == true && Exit == false && StartGame == true)
+             {
+                  txBitBlt(txDC(), 0, 0, 50, 50, spraitshara, 30, 300);
+             }
+
             txSleep(10);
             txEnd();
         }
@@ -283,6 +291,7 @@ int main()
     txDeleteDC(main_menu);
     txDeleteDC(proba);
     txDeleteDC(vsecuby);
+    txDeleteDC(spraitshara);
     return 0;
 }
 
