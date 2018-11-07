@@ -19,7 +19,7 @@ struct OblUr
 int uroven_tekushii = 1;
 int uroven_staryi = 0;
 
-
+int frame = 0;
 int x_ball;
 int y_ball;
 int point_cuba;
@@ -59,13 +59,13 @@ int main()
 
     txSleep(2000);
 
-    HDC spraitzagruzki =      txLoadImage ("spraitzagruzki.bmp");
-    HDC zagruzka =      txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
-    HDC main_menu =     txLoadImage ("pictures\\Labirint\\main_menu.bmp");
-    HDC proba =         txLoadImage ("pictures\\Labirint\\proba.bmp");
-    HDC vsecuby =       txLoadImage ("pictures\\Labirint\\vsecuby.bmp");
-    HDC kartaurovneya = txLoadImage ("pictures\\Labirint\\kartaurovneya.bmp");
-    HDC fonurovnya =    txLoadImage ("pictures\\Labirint\\fonurovnya.bmp");
+    HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
+    HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
+    HDC main_menu =      txLoadImage ("pictures\\Labirint\\main_menu.bmp");
+    HDC proba =          txLoadImage ("pictures\\Labirint\\proba.bmp");
+    HDC vsecuby =        txLoadImage ("pictures\\Labirint\\vsecuby.bmp");
+    HDC kartaurovneya =  txLoadImage ("pictures\\Labirint\\kartaurovneya.bmp");
+    HDC fonurovnya =     txLoadImage ("pictures\\Labirint\\fonurovnya.bmp");
 
     int KOLVO_OBLASTEI = 40;
     Oblast obl[KOLVO_OBLASTEI];
@@ -85,7 +85,9 @@ int main()
 
 
 
-    while(Exit == false && StartGame == false)
+
+
+while(Exit == false && StartGame == false)
     {
         txBegin();
         txClear();
@@ -120,8 +122,13 @@ int main()
             if(checkClick(Lev1.x, Lev1.x1, Lev1.y, Lev1.y1))
             {
 
-                txBitBlt (txDC(), 0, 0, 1280, 720, zagruzka, 0, 0);
-                 txSleep(5000);
+                while(frame < 4)
+                {
+                    txBitBlt (txDC(), 0, 0, 1280, 720, zagruzka, 0, 0);
+                    txBitBlt (txDC(), 1100, 530, 90, 90, spraitzagruzki, 90 * frame, 0);
+                    txSleep(1000);
+                    frame = frame + 1;
+                }
 
                 Start_level = true;
                 file_adress = Lev1.adress;
