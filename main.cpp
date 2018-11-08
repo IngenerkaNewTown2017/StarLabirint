@@ -19,7 +19,7 @@ struct OblUr
 int uroven_tekushii = 1;
 int uroven_staryi = 0;
 
-
+int frame = 0;
 int x_ball;
 int y_ball;
 int point_cuba;
@@ -54,18 +54,18 @@ int main()
     {
     txCreateWindow (1280, 720);
 
-    drawLevelButton(76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29));
-    drawLevelButton(303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29));
+    //drawLevelButton(76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29));
+    //drawLevelButton(303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29));
 
-    txSleep(2000);
+    //txSleep(2000);
 
-    HDC spraitzagruzki =      txLoadImage ("spraitzagruzki.bmp");
-    HDC zagruzka =      txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
-    HDC main_menu =     txLoadImage ("pictures\\Labirint\\main_menu.bmp");
-    HDC proba =         txLoadImage ("pictures\\Labirint\\proba.bmp");
-    HDC vsecuby =       txLoadImage ("pictures\\Labirint\\vsecuby.bmp");
-    HDC kartaurovneya = txLoadImage ("pictures\\Labirint\\kartaurovneya.bmp");
-    HDC fonurovnya =    txLoadImage ("pictures\\Labirint\\fonurovnya.bmp");
+    HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
+    HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
+    HDC main_menu =      txLoadImage ("pictures\\Labirint\\main_menu.bmp");
+    HDC proba =          txLoadImage ("pictures\\Labirint\\proba.bmp");
+    HDC vsecuby =        txLoadImage ("pictures\\Labirint\\vsecuby.bmp");
+    HDC kartaurovneya =  txLoadImage ("pictures\\Labirint\\kartaurovneya.bmp");
+    HDC fonurovnya =     txLoadImage ("pictures\\Labirint\\fonurovnya.bmp");
     HDC spraitshara =    txLoadImage ("pictures\\Labirint\\spraitshara.bmp");
 
     int KOLVO_OBLASTEI = 40;
@@ -120,9 +120,13 @@ int main()
         {
             if(checkClick(Lev1.x, Lev1.x1, Lev1.y, Lev1.y1))
             {
-
-                txBitBlt (txDC(), 0, 0, 1280, 720, zagruzka, 0, 0);
-                // txSleep(5000);
+                while(frame < 4)
+                {
+                    txBitBlt (txDC(), 0, 0, 1280, 720, zagruzka, 0, 0);
+                    txBitBlt (txDC(), 1100, 530, 90, 90, spraitzagruzki, 90 * frame, 0);
+                    txSleep(1000);
+                    frame = frame + 1;
+                }
 
                 Start_level = true;
                 file_adress = Lev1.adress;
@@ -176,14 +180,6 @@ int main()
                 file_adress = Lev9.adress;
             }
 
-
-
-
-
-
-
-
-
             txSleep(10);
         }
 
@@ -192,9 +188,9 @@ int main()
 
         string poloj;
         int nomer_obl = 0;
-        while(getline(file, poloj) )//���� � �� ����� �� ����� �����
+        while(getline(file, poloj) )//ïîêà ÿ íå äîøåë äî êîíöà ôàéëà
         {
-            obl[nomer_obl] = {atoi(poloj.c_str())};//����������� ������ � �����
+            obl[nomer_obl] = {atoi(poloj.c_str())};//êîíâåðòàöèÿ ñòðîêè â ÷èñëî
             obl[nomer_obl].nomber_obl = nomer_obl;
             nomer_obl = nomer_obl + 1;
         }
@@ -204,7 +200,7 @@ int main()
 
         for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
         {
-            //13%8 = 5, ïîòîìó ÷òî 13 = 8 * 1 + 5
+            //13%8 = 5, Ã¯Ã®Ã²Ã®Ã¬Ã³ Ã·Ã²Ã® 13 = 8 * 1 + 5
             obl[nomer_oblasti].lx = get_min_x((nomer_oblasti % 8) + 1);
             obl[nomer_oblasti].rx = get_min_x((nomer_oblasti % 8) + 2);
             obl[nomer_oblasti].vy = get_min_y(nomer_oblasti / 8 + 1);
@@ -234,24 +230,22 @@ int main()
             get_min_x(nomer_stolbca);
             get_min_y(nomer_stroki - 1);
         }
+      
         if (proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,
            obl[16].lx  ,obl[16].vy ,obl[8].lx  ,obl[8].vy) )
         {
-            txTextOut(100, 100, "�����"   );
+            txTextOut(100, 100, "Ìîæíî"   );
             txSleep(1000);
-
        }
         else
         {
-            txTextOut(100, 100, "�� �����"   );
+            txTextOut(100, 100, "Íå Ìîæíî"   );
             txSleep(1000);
-
         }
 
 
 
-
-        //Êàê ïðîéòè èãðó / âûéòè èç èãðû? Exit âåäü âñåãäà == false
+        //ÃŠÃ Ãª Ã¯Ã°Ã®Ã©Ã²Ã¨ Ã¨Ã£Ã°Ã³ / Ã¢Ã»Ã©Ã²Ã¨ Ã¨Ã§ Ã¨Ã£Ã°Ã»? Exit Ã¢Ã¥Ã¤Ã¼ Ã¢Ã±Ã¥Ã£Ã¤Ã  == false
         while(Exit == false)
         {
 
@@ -260,10 +254,10 @@ int main()
 
             for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
             {
-                //Èùåì êîîðäèíàòó äëÿ ðèñîâàíèÿ íóæíîãî êàäðà
+                //ÃˆÃ¹Ã¥Ã¬ ÃªÃ®Ã®Ã°Ã¤Ã¨Ã­Ã Ã²Ã³ Ã¤Ã«Ã¿ Ã°Ã¨Ã±Ã®Ã¢Ã Ã­Ã¨Ã¿ Ã­Ã³Ã¦Ã­Ã®Ã£Ã® ÃªÃ Ã¤Ã°Ã 
                 int coord1 = coord(obl[nomer_oblasti]);
 
-                //Ïðîâåðÿåì, ÷òî êàäð íå ñëèøêîì áîëüøîé
+                //ÃÃ°Ã®Ã¢Ã¥Ã°Ã¿Ã¥Ã¬, Ã·Ã²Ã® ÃªÃ Ã¤Ã° Ã­Ã¥ Ã±Ã«Ã¨Ã¸ÃªÃ®Ã¬ Ã¡Ã®Ã«Ã¼Ã¸Ã®Ã©
                 if (clickOnOblkast(obl[nomer_oblasti]) == 1)
                 {
                     obl[nomer_oblasti].poloj = obl[nomer_oblasti].poloj + 1;
@@ -271,7 +265,7 @@ int main()
                     {
                         obl[nomer_oblasti].poloj = obl[nomer_oblasti].min_poloj;
                     }
-                    //Íå ìåøàëî áû ñþäà ïàóçó äîáàâèòü. À òî î÷åíü òÿæåëî êëèêîì îòëîâèòü íóæíîå ïîëîæåíèå
+                    //ÃÃ¥ Ã¬Ã¥Ã¸Ã Ã«Ã® Ã¡Ã» Ã±Ã¾Ã¤Ã  Ã¯Ã Ã³Ã§Ã³ Ã¤Ã®Ã¡Ã Ã¢Ã¨Ã²Ã¼. Ã€ Ã²Ã® Ã®Ã·Ã¥Ã­Ã¼ Ã²Ã¿Ã¦Ã¥Ã«Ã® ÃªÃ«Ã¨ÃªÃ®Ã¬ Ã®Ã²Ã«Ã®Ã¢Ã¨Ã²Ã¼ Ã­Ã³Ã¦Ã­Ã®Ã¥ Ã¯Ã®Ã«Ã®Ã¦Ã¥Ã­Ã¨Ã¥
                 }
 
                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
@@ -281,17 +275,18 @@ int main()
              {
                   txBitBlt(txDC(), 0, 0, 50, 50, spraitshara, 30, 300);
              }
-
+          
             txSleep(10);
             txEnd();
         }
     }
 
-    //Åùå ïàðó êàðòèíîê çàáûâàåøü óäàëèòü
+    //Ã…Ã¹Ã¥ Ã¯Ã Ã°Ã³ ÃªÃ Ã°Ã²Ã¨Ã­Ã®Ãª Ã§Ã Ã¡Ã»Ã¢Ã Ã¥Ã¸Ã¼ Ã³Ã¤Ã Ã«Ã¨Ã²Ã¼
     txDeleteDC(main_menu);
     txDeleteDC(proba);
     txDeleteDC(vsecuby);
     txDeleteDC(spraitshara);
+  
     return 0;
 }
 
