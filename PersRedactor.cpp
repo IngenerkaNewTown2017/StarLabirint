@@ -28,6 +28,8 @@ void drawTabs()
     txDrawText(1000, 80, 1185, 120, "Ýìîöèè");
 }
 
+
+
 int changeTab(int tab)
 {
     if (checkClick(645, 821, 77, 123))
@@ -46,6 +48,14 @@ int changeTab(int tab)
     return tab;
 }
 
+int SizerX(HDC golova)
+{
+    HBITMAP hbm=(HBITMAP)Win32::GetCurrentObject(golova, OBJ_BITMAP);
+    BITMAP bm;
+    Win32::GetObject(hbm,sizeof(bm), (LPVOID)&bm);
+    return bm.bmWidth;
+}
+
 int main()
     {
     txCreateWindow (1280,720);
@@ -62,10 +72,15 @@ int main()
      int x_lico = -100;
     int y_lico = 0;
 
+
+
     HDC golova = txLoadImage("pictures\\head2.bmp");
     HDC fon = txLoadImage ("pictures\\fon.bmp");
     HDC fon1  = txLoadImage ("pictures\\fon11.bmp ");
     HDC golovy  = txLoadImage ("pictures\\face.bmp ");
+    int RAZMER_KARTINKI_GOLOVY = 140;
+    int RAZMER_GOLOVY_V_MENU = 140;
+    int width_golov = SizerX(golovy);
     HDC rects  = txLoadImage ("pictures\\rects.bmp ");
     HDC FONtelo =  txLoadImage ("pictures\\1123456.bmp");
     HDC emodji = txLoadImage ("pictures\\5.bmp");
@@ -73,13 +88,28 @@ int main()
     HDC teloPic  = txLoadImage ("pictures\\telo.bmp ");
     HDC kartinka = fon1;
 
-
-    int vsego_boshek = 4;
-    PersPartButton bashka[vsego_boshek];
+    PersPartButton bashka[100];
+    int vsego_boshek = 0;
+    int coord = 0;
+    while (coord < width_golov - RAZMER_KARTINKI_GOLOVY)
+    {
+        bashka[vsego_boshek] = { 643 + vsego_boshek * RAZMER_GOLOVY_V_MENU,  783 + vsego_boshek * RAZMER_GOLOVY_V_MENU, 127, 255,   vsego_boshek * RAZMER_KARTINKI_GOLOVY, 0};
+        vsego_boshek ++;
+        coord += RAZMER_KARTINKI_GOLOVY;
+    }
+    /*
     bashka[0] = { 643,  783, 127, 255,   3, 1};
     bashka[1] = { 785,  925, 127, 255, 221, 0};
     bashka[2] = {1055, 1190, 127, 255, 450, 3};//íåãð
     bashka[3] = { 930, 1060, 127, 255, 665, 0};//äåäóøêà
+    */
+
+    /*int vsego_boshek = 4;
+    PersPartButton bashka[vsego_boshek];
+    bashka[0] = { 643,  783, 127, 255,   3, 1};
+    bashka[1] = { 785,  925, 127, 255, 221, 0};
+    bashka[2] = {1055, 1190, 127, 255, 450, 3};//íåãð
+    bashka[3] = { 930, 1060, 127, 255, 665, 0};//äåäóøêà*/
 
     int vsego_tel = 4;
     PersPartButton telo[vsego_tel];
@@ -90,10 +120,10 @@ int main()
 
  int vsego_emoj = 4;
     PersPartButton lico[vsego_emoj];
-    lico[0] = {  58, 115,3,118,   5, 0};
-   lico[1] = { 120,  230, 58, 115, 200, 0};
-    lico[2] = {235, 350, 58, 115, 390, 0};
-    lico[3] = {351, 450, 58, 115, 570, 0};
+    lico[0] = { 640, 783,3,250,   5, 0};
+   lico[1] = { 785,  925,3, 250, 200, 0};
+    lico[2] = {1055, 350,3, 250, 390, 0};
+    lico[3] = {931, 1060,3, 2, 570, 0};
 
     ifstream file("Lib\\2.txt"); // Ñ„Ð°Ð¹Ð» Ð¸Ð· ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð³Ð¾ Ñ‡Ð¸Ñ‚Ð°ÐµÐ¼ (Ð´Ð»Ñ Ð»Ð¸Ð½ÑƒÐºÑ Ð¿ÑƒÑ‚ÑŒ Ð±ÑƒÐ´ÐµÑ‚ Ð²Ñ‹Ð³Ð»ÑÐ´ÐµÑ‚ÑŒ Ð¿Ð¾ Ð´Ñ€ÑƒÐ³Ð¾Ð¼Ñƒ)
 
@@ -153,7 +183,6 @@ bool isExit = false;
         {
             risovat_lico(lico1,x_lico,y_lico);
         }
-
         drawTabs();
         nomer_vkladki = changeTab(nomer_vkladki);
 
@@ -217,7 +246,7 @@ bool isExit = false;
         //ÑÎõðàíåíèå
         if (checkClick(785, 1080, 655, 715))
         {
-             ScreenCapture(70, 120, 450, 450, "picture.bmp");
+             ScreenCapture(70, 120, 450, 450, "picture.jpg");
              isExit = true;
         }
 
