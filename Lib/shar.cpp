@@ -72,6 +72,31 @@ else if(y_shara + 75 == obl,poloj3() or y_shara + 75 = obl,poloj4() or y_shara +
    }
                        */
 
+
+int proverit_mozhno_vpravo(int poloj)
+{
+    if (poloj == 1  or poloj == 3  or poloj == 5)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+int proverit_mozhno_vlevo(int poloj)
+{
+    if (poloj == 2  or poloj == 4  or poloj == 5)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+
 int proverit_chto_mozhno_idti_suda(
     Oblast* oblasti,   int KOLVO_OBLASTEI,
     int x_old, int y_old,
@@ -82,13 +107,33 @@ int proverit_chto_mozhno_idti_suda(
 
     for (int  nomer = 0; nomer < KOLVO_OBLASTEI; nomer++)
     {
+    /*
+        int mozhno_vlevo = proverit_mozhno_vlevo(oblasti[nomer].poloj)) ;
+        int mozhno_vpravo = proverit_mozhno_vpravo(oblasti[nomer].poloj)) ;
+
+
+            if (oblasti[nomer].lx == x_old &&
+                oblasti[nomer].vy == y_old)
+            {
+                if (x_new > x_old && mozhno_vpravo)
+                {
+                    normalnyi_x_y_old  = 1;
+                }
+                if (x_new < x_old && mozhno_vlevo)
+                {
+                    normalnyi_x_y_old  = 1;
+                }
+            }            */
+
+
         //Допустим, хотим вправо
+
         if (x_new > x_old)
         {
             //Из старой точки можно уйти вправо
             if (oblasti[nomer].lx == x_old &&
                 oblasti[nomer].vy == y_old &&
-                (oblasti[nomer].poloj == 1  or oblasti[nomer].poloj == 3  or oblasti[nomer].poloj == 5    ))
+                proverit_mozhno_vpravo(oblasti[nomer].poloj))
             {
                 normalnyi_x_y_old  = 1;
             }
@@ -96,16 +141,16 @@ int proverit_chto_mozhno_idti_suda(
             //В новую точку можно прийти слева
             if (oblasti[nomer].lx == x_new &&
                 oblasti[nomer].vy == y_new &&
-                (oblasti[nomer].poloj == 2  or oblasti[nomer].poloj == 4  or oblasti[nomer].poloj == 5    ))
+                proverit_mozhno_vlevo(oblasti[nomer].poloj))
             {
                 normalnyi_x_y_new  = 1;
             }
         }
 
-        //Допустим, хотим вправо
+        //Допустим, хотим вниз
         else if (y_new > y_old)
         {
-            //Из старой точки можно уйти вправо
+            //Из старой точки можно уйти вниз
             if (oblasti[nomer].lx == x_old &&
                 oblasti[nomer].vy == y_old &&
                 (oblasti[nomer].poloj == 3  or oblasti[nomer].poloj == 4  or oblasti[nomer].poloj == 6    ))
@@ -113,7 +158,7 @@ int proverit_chto_mozhno_idti_suda(
                 normalnyi_x_y_old  = 1;
             }
 
-            //В новую точку можно прийти слева
+            //В новую точку можно прийти сверху
             if (oblasti[nomer].lx == x_new &&
                 oblasti[nomer].vy == y_new &&
                 (oblasti[nomer].poloj == 1  or oblasti[nomer].poloj == 2  or oblasti[nomer].poloj == 6    ))
@@ -121,8 +166,59 @@ int proverit_chto_mozhno_idti_suda(
                 normalnyi_x_y_new  = 1;
             }
         }
+
+         //допустим хотим в вверх
+         else if (y_new < y_old)
+        {
+            //Из старой точки можно уйти вверх
+            if (oblasti[nomer].lx == x_old &&
+                oblasti[nomer].vy == y_old &&
+                (oblasti[nomer].poloj == 1  or oblasti[nomer].poloj == 2  or oblasti[nomer].poloj == 6   ))
+            {
+                normalnyi_x_y_old  = 1;
+            }
+
+            //В новую точку можно прийти снизу
+            if (oblasti[nomer].lx == x_new &&
+                oblasti[nomer].vy == y_new &&
+                (oblasti[nomer].poloj == 3  or oblasti[nomer].poloj == 4  or oblasti[nomer].poloj == 6    ))
+            {
+                normalnyi_x_y_new  = 1;
+            }
+        }
+
+         //допустим хотим влево
+         else if (x_new < x_old)
+        {
+            //Из старой точки можно уйти влево
+            if (oblasti[nomer].lx == x_old &&
+                oblasti[nomer].vy == y_old &&
+                proverit_mozhno_vlevo(oblasti[nomer].poloj))
+            {
+                normalnyi_x_y_old  = 1;
+            }
+
+            //В новую точку можно прийти справа
+            if (oblasti[nomer].lx == x_new &&
+                oblasti[nomer].vy == y_new &&
+                proverit_mozhno_vpravo(oblasti[nomer].poloj))
+            {
+                normalnyi_x_y_new  = 1;
+            }
+        }
     }
 
+        if (normalnyi_x_y_old)
+        {
+            txTextOut(100, 300, "old");
+        }
+        if (normalnyi_x_y_new)
+        {
+            txTextOut(200, 500, "new");
+        }
+
+
+        txSleep(1000);
     if (normalnyi_x_y_old && normalnyi_x_y_new)
     {
         return 1;

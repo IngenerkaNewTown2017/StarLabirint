@@ -91,7 +91,6 @@ int main()
     HDC golova = txLoadImage("pictures\\head2.bmp");
     HDC fon = txLoadImage ("pictures\\fon.bmp");
     HDC fon1  = txLoadImage ("pictures\\fon11.bmp ");
-    //HDC golovy  = txLoadImage ("pictures\\face.bmp ");
     int RAZMER_KARTINKI_GOLOVY = 220;
     int width_golov = SizerX(golova);
     HDC teloPic  = txLoadImage ("pictures\\telo.bmp ");
@@ -171,7 +170,7 @@ bool isExit = false;
 
         if (x_lico != -100)
         {
-            //risovat_lico(lico1,x_lico,y_lico);
+            risovat_lico(lico1,x_lico,y_lico);
         }
         drawTabs();
         nomer_vkladki = changeTab(nomer_vkladki);

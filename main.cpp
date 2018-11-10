@@ -62,7 +62,6 @@ int main()
     HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
     HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
     HDC main_menu =      txLoadImage ("pictures\\Labirint\\main_menu.bmp");
-    HDC proba =          txLoadImage ("pictures\\Labirint\\proba.bmp");
     HDC vsecuby =        txLoadImage ("pictures\\Labirint\\vsecuby.bmp");
     HDC kartaurovneya =  txLoadImage ("pictures\\Labirint\\kartaurovneya.bmp");
     HDC fonurovnya =     txLoadImage ("pictures\\Labirint\\fonurovnya.bmp");
@@ -74,15 +73,16 @@ int main()
 
 
 
-    OblUr Lev1 = {76, 175, 115, 215, "levels\\1.txt"};
-    OblUr Lev2 = {301, 401, 125, 225, "levels\\2.txt"};
-    OblUr Lev3 = {191, 291, 392, 492, "levels\\3.txt"};
-    OblUr Lev4 = {506, 606, 151, 251, "levels\\4.txt"};
-    OblUr Lev5 = {1153, 1253, 15, 115, "levels\\5.txt"};
-    OblUr Lev6 = {247, 347, 569, 669, "levels\\6.txt"};
-    OblUr Lev7 = {1145, 1245, 240, 340, "levels\\7.txt"};
-    OblUr Lev8 = {503, 603, 591, 691, "levels\\8.txt"};
-    OblUr Lev9 = {1039, 1139, 438, 538, "levels\\9.txt"};
+    OblUr Lev[9];
+    Lev[0] = {76, 175, 115, 215, "levels\\1.txt"};
+    Lev[1] = {301, 401, 125, 225, "levels\\2.txt"};
+    Lev[2] = {191, 291, 392, 492, "levels\\3.txt"};
+    Lev[3] = {506, 606, 151, 251, "levels\\4.txt"};
+    Lev[4] = {1153, 1253, 15, 115, "levels\\5.txt"};
+    Lev[5] = {247, 347, 569, 669, "levels\\6.txt"};
+    Lev[6] = {1145, 1245, 240, 340, "levels\\7.txt"};
+    Lev[7] = {503, 603, 591, 691, "levels\\8.txt"};
+    Lev[8] = {1039, 1139, 438, 538, "levels\\9.txt"};
 
 
 
@@ -103,8 +103,6 @@ int main()
 
         if (checkClick(517, 705, 274, 370))
         {
-
-
             StartGame = true;
         }
 
@@ -118,69 +116,72 @@ int main()
 
         while(Start_level == false)
         {
-            if(checkClick(Lev1.x, Lev1.x1, Lev1.y, Lev1.y1))
-            {
-                while(frame < 4)
-                {
-                    txBitBlt (txDC(), 0, 0, 1280, 720, zagruzka, 0, 0);
-                    txBitBlt (txDC(), 1100, 530, 90, 90, spraitzagruzki, 90 * frame, 0);
-                    txSleep(1000);
-                    frame = frame + 1;
-                }
+            //What about for???
 
+            if(checkClick(Lev[0].x, Lev[0].x1, Lev[0].y, Lev[0].y1))
+            {
                 Start_level = true;
-                file_adress = Lev1.adress;
+                file_adress = Lev[0].adress;
             }
 
-            else if(checkClick(Lev2.x, Lev2.x1, Lev2.y, Lev2.y1))
+            else if(checkClick(Lev[1].x, Lev[1].x1, Lev[1].y, Lev[1].y1))
             {
                 Start_level = true;
-                file_adress = Lev2.adress;
+                file_adress = Lev[1].adress;
             }
 
-             else if(checkClick(Lev3.x, Lev3.x1, Lev3.y, Lev3.y1))
+            else if(checkClick(Lev[2].x, Lev[2].x1, Lev[2].y, Lev[2].y1))
             {
                 Start_level = true;
-                file_adress = Lev3.adress;
+                file_adress = Lev[2].adress;
             }
 
-             else if(checkClick(Lev4.x, Lev4.x1, Lev4.y, Lev4.y1))
+            else if(checkClick(Lev[3].x, Lev[3].x1, Lev[3].y, Lev[3].y1))
             {
                 Start_level = true;
-                file_adress = Lev4.adress;
+                file_adress = Lev[3].adress;
             }
 
-             else if(checkClick(Lev5.x, Lev5.x1, Lev5.y, Lev5.y1))
+            else if(checkClick(Lev[4].x, Lev[4].x1, Lev[4].y, Lev[4].y1))
             {
                 Start_level = true;
-                file_adress = Lev5.adress;
+                file_adress = Lev[4].adress;
             }
 
-             else if(checkClick(Lev6.x, Lev6.x1, Lev6.y, Lev6.y1))
+            else if(checkClick(Lev[5].x, Lev[5].x1, Lev[5].y, Lev[5].y1))
             {
                 Start_level = true;
-                file_adress = Lev6.adress;
+                file_adress = Lev[5].adress;
             }
 
-             else if(checkClick(Lev7.x, Lev7.x1, Lev7.y, Lev7.y1))
+            else if(checkClick(Lev[6].x, Lev[6].x1, Lev[6].y, Lev[6].y1))
             {
                 Start_level = true;
-                file_adress = Lev7.adress;
+                file_adress = Lev[6].adress;
             }
 
-             else if(checkClick(Lev8.x, Lev8.x1, Lev8.y, Lev8.y1))
+             else if(checkClick(Lev[7].x, Lev[7].x1, Lev[7].y, Lev[7].y1))
             {
                 Start_level = true;
-                file_adress = Lev8.adress;
+                file_adress = Lev[7].adress;
             }
 
-             else if(checkClick(Lev9.x, Lev9.x1, Lev9.y, Lev9.y1))
+             else if(checkClick(Lev[8].x, Lev[8].x1, Lev[8].y, Lev[8].y1))
             {
                 Start_level = true;
-                file_adress = Lev9.adress;
+                file_adress = Lev[8].adress;
             }
 
             txSleep(10);
+        }
+
+
+        while(frame < 40)
+        {
+            txBitBlt (txDC(), 0, 0, 1280, 720, zagruzka, 0, 0);
+            txBitBlt (txDC(), 1100, 530, 90, 90, spraitzagruzki, 90 * (frame % 4), 0);
+            txSleep(100);
+            frame = frame + 1;
         }
 
 
@@ -215,7 +216,7 @@ int main()
             int nomer_stolbca = (nomer_oblasti % 8) + 1;
             int nomer_stroki = (nomer_oblasti / 8) + 1;
 
-            get_min_x(nomer_stolbca + 1);
+            /*get_min_x(nomer_stolbca + 1);
             get_min_y(nomer_stroki);
 
 
@@ -228,18 +229,18 @@ int main()
             get_min_y(nomer_stroki + 1);
 
             get_min_x(nomer_stolbca);
-            get_min_y(nomer_stroki - 1);
+            get_min_y(nomer_stroki - 1);    */
         }
 
         if (proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,
            obl[16].lx  ,obl[16].vy ,obl[8].lx  ,obl[8].vy) )
         {
-            txTextOut(100, 100, "Ìîæíî"   );
+            txTextOut(100, 100, "Mozhno");
             txSleep(1000);
        }
         else
         {
-            txTextOut(100, 100, "Íå Ìîæíî"   );
+            txTextOut(100, 100, "Ne mozhno");
             txSleep(1000);
         }
 
@@ -284,7 +285,6 @@ int main()
 
     //Ã…Ã¹Ã¥ Ã¯Ã Ã°Ã³ ÃªÃ Ã°Ã²Ã¨Ã­Ã®Ãª Ã§Ã Ã¡Ã»Ã¢Ã Ã¥Ã¸Ã¼ Ã³Ã¤Ã Ã«Ã¨Ã²Ã¼
     txDeleteDC(main_menu);
-    txDeleteDC(proba);
     txDeleteDC(vsecuby);
     txDeleteDC(spraitshara);
 
