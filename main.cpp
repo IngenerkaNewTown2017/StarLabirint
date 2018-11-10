@@ -230,7 +230,7 @@ int main()
             get_min_x(nomer_stolbca);
             get_min_y(nomer_stroki - 1);
         }
-      
+
         if (proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,
            obl[16].lx  ,obl[16].vy ,obl[8].lx  ,obl[8].vy) )
         {
@@ -251,6 +251,8 @@ int main()
 
             txBegin();
             txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+            txTransparentBlt(txDC(), 30, 330, 50, 50, spraitshara, 0, 0, TX_WHITE);
+
 
             for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
             {
@@ -271,14 +273,13 @@ int main()
                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
             }
 
-             if(Start_level == true && Exit == false && StartGame == true)
-             {
-                  txBitBlt(txDC(), 0, 0, 50, 50, spraitshara, 30, 300);
-             }
-          
+
+
             txSleep(10);
             txEnd();
         }
+
+
     }
 
     //Ã…Ã¹Ã¥ Ã¯Ã Ã°Ã³ ÃªÃ Ã°Ã²Ã¨Ã­Ã®Ãª Ã§Ã Ã¡Ã»Ã¢Ã Ã¥Ã¸Ã¼ Ã³Ã¤Ã Ã«Ã¨Ã²Ã¼
@@ -286,7 +287,7 @@ int main()
     txDeleteDC(proba);
     txDeleteDC(vsecuby);
     txDeleteDC(spraitshara);
-  
+
     return 0;
 }
 
