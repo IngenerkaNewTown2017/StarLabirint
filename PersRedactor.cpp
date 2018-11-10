@@ -56,6 +56,20 @@ int SizerX(HDC golova)
     return bm.bmWidth;
 }
 
+int getAllParts(PersPartButton* bashka, int razmer_odnoi_chasti, int width_golov)
+{
+    int vsego_boshek = 0;
+    int coord = 0;
+    while (coord < width_golov - razmer_odnoi_chasti)
+    {
+        bashka[vsego_boshek] = { 643 + vsego_boshek * razmer_odnoi_chasti,  783 + vsego_boshek * razmer_odnoi_chasti, 127, 255,   vsego_boshek * razmer_odnoi_chasti, 0};
+        vsego_boshek ++;
+        coord += razmer_odnoi_chasti;
+    }
+
+    return vsego_boshek;
+}
+
 int main()
     {
     txCreateWindow (1280,720);
@@ -77,46 +91,22 @@ int main()
     HDC golova = txLoadImage("pictures\\head2.bmp");
     HDC fon = txLoadImage ("pictures\\fon.bmp");
     HDC fon1  = txLoadImage ("pictures\\fon11.bmp ");
-    HDC golovy  = txLoadImage ("pictures\\face.bmp ");
-    int RAZMER_KARTINKI_GOLOVY = 140;
-    int RAZMER_GOLOVY_V_MENU = 140;
-    int width_golov = SizerX(golovy);
+    //HDC golovy  = txLoadImage ("pictures\\face.bmp ");
+    int RAZMER_KARTINKI_GOLOVY = 220;
+    int width_golov = SizerX(golova);
+    HDC teloPic  = txLoadImage ("pictures\\telo.bmp ");
+    int RAZMER_KARTINKI_TELA = 180;
+    int width_tel = SizerX(teloPic);
     HDC rects  = txLoadImage ("pictures\\rects.bmp ");
     HDC FONtelo =  txLoadImage ("pictures\\1123456.bmp");
     HDC emodji = txLoadImage ("pictures\\5.bmp");
     HDC lico1 = txLoadImage ("pictures\\eye.bmp");
-    HDC teloPic  = txLoadImage ("pictures\\telo.bmp ");
     HDC kartinka = fon1;
 
     PersPartButton bashka[100];
-    int vsego_boshek = 0;
-    int coord = 0;
-    while (coord < width_golov - RAZMER_KARTINKI_GOLOVY)
-    {
-        bashka[vsego_boshek] = { 643 + vsego_boshek * RAZMER_GOLOVY_V_MENU,  783 + vsego_boshek * RAZMER_GOLOVY_V_MENU, 127, 255,   vsego_boshek * RAZMER_KARTINKI_GOLOVY, 0};
-        vsego_boshek ++;
-        coord += RAZMER_KARTINKI_GOLOVY;
-    }
-    /*
-    bashka[0] = { 643,  783, 127, 255,   3, 1};
-    bashka[1] = { 785,  925, 127, 255, 221, 0};
-    bashka[2] = {1055, 1190, 127, 255, 450, 3};//негр
-    bashka[3] = { 930, 1060, 127, 255, 665, 0};//дедушка
-    */
-
-    /*int vsego_boshek = 4;
-    PersPartButton bashka[vsego_boshek];
-    bashka[0] = { 643,  783, 127, 255,   3, 1};
-    bashka[1] = { 785,  925, 127, 255, 221, 0};
-    bashka[2] = {1055, 1190, 127, 255, 450, 3};//негр
-    bashka[3] = { 930, 1060, 127, 255, 665, 0};//дедушка*/
-
-    int vsego_tel = 4;
-    PersPartButton telo[vsego_tel];
-    telo[0] = { 643,  825, 127, 300, 5, 0};
-    telo[1] = { 820,  999, 127, 300, 200, 0};
-    telo[2] = {1000, 1180, 127, 300, 390, 0};
-    telo[3] = { 635,  825, 300, 485, 570, 0};
+    int vsego_boshek = getAllParts(bashka, RAZMER_KARTINKI_GOLOVY, width_golov);
+    PersPartButton telo[100];
+    int vsego_tel = getAllParts(telo, RAZMER_KARTINKI_TELA, width_tel);
 
  int vsego_emoj = 4;
     PersPartButton lico[vsego_emoj];
@@ -154,7 +144,7 @@ bool isExit = false;
         risovat_fon(kartinka);
         if (nomer_vkladki == VKLADKA_GOLOVA)
         {
-            txBitBlt (txDC(), 639, 120, 600, 600, golovy, 0, 0);
+            txBitBlt (txDC(), 639, 120, 600, 600, golova, 0, 0);
             txBitBlt (txDC(), 640, 580, 600, 80, rects, 0, 0);
         }
         else if (nomer_vkladki == VKLADKA_TELO)
@@ -181,7 +171,7 @@ bool isExit = false;
 
         if (x_lico != -100)
         {
-            risovat_lico(lico1,x_lico,y_lico);
+            //risovat_lico(lico1,x_lico,y_lico);
         }
         drawTabs();
         nomer_vkladki = changeTab(nomer_vkladki);
@@ -257,7 +247,7 @@ bool isExit = false;
 
 
     //Что-то мне кажется. у тебя еще 100500 картинок, которые никто не удаляет
-    txDeleteDC(golovy);
+    txDeleteDC(golova);
     txDeleteDC(rects);
 
     return 0;
