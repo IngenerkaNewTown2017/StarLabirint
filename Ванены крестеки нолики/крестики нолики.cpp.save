@@ -8,6 +8,26 @@ struct KrestIliNol
     HDC pic;
 };
 
+
+int getKrestik(KrestIliNol* Krestiki, int nomer_X, int x, int y, HDC pic)
+{
+    int krestikV11 = 0;
+
+    for (int counter = 0; counter < nomer_X; counter++)
+    {
+        if (Krestiki[counter].risovat  == true &&
+            Krestiki[counter].x == x &&
+            Krestiki[counter].y == y &&
+            Krestiki[counter].pic == pic)
+        {
+            krestikV11 = 1;
+        }
+    }
+
+    return krestikV11;
+}
+
+
   int jopa()
 {
  //txCreateWindow(490,490);
@@ -76,46 +96,11 @@ txBitBlt (txDC(), 0, 170, 162, 158, nolic, 0, 0);
         }
 
 
-       int krestikV11 = 0;
-
-		for (int counter = 0; counter < nomer_X; counter++)
-        {
-            if (Krestiki[counter].risovat  == true &&
-                Krestiki[counter].x == 0 &&
-                Krestiki[counter].y == 0 &&
-                Krestiki[counter].pic == krestic)
-            {
-                krestikV11 = 1;
-            }
-        }
+       int krestikV11 = getKrestik (Krestiki, nomer_X,   0, 0, krestic);
+       int krestikV12 = getKrestik (Krestiki, nomer_X, 165, 0, krestic);
+       int krestikV13 = getKrestik (Krestiki, nomer_X, 330, 0, krestic);
 
 
-       int krestikV12 = 0;
-
-		for (int counter = 0; counter < nomer_X; counter++)
-        {
-            if (Krestiki[counter].risovat  == true &&
-                Krestiki[counter].x == 165 &&
-                Krestiki[counter].y == 0 &&
-                Krestiki[counter].pic == krestic)
-            {
-                krestikV12 = 1;
-            }
-        }
-
-
-       int krestikV13 = 0;
-
-		for (int counter = 0; counter < nomer_X; counter++)
-        {
-            if (Krestiki[counter].risovat  == true &&
-                Krestiki[counter].x == 330 &&
-                Krestiki[counter].y == 0 &&
-                Krestiki[counter].pic == krestic)
-            {
-                krestikV13 = 1;
-            }
-        }
 
 
 
@@ -199,29 +184,36 @@ txBitBlt (txDC(), 0, 170, 162, 158, nolic, 0, 0);
 
         if (krestikV11 == 1 && krestikV12 == 1 && krestikV13 == 1)
         {
-        gameOver = true;
+            gameOver = true;
         }
         if (krestikV11 == 1 && krestikV21 == 1 && krestikV31 == 1)
         {
-        gameOver = true;
+            gameOver = true;
         }
         if (krestikV13 == 1 && krestikV41 == 1 && krestikV51 == 1)
         {
-        gameOver = true;
+            gameOver = true;
         }
         if (krestikV31 == 1 && krestikV61 == 1 && krestikV51 == 1)
         {
-        gameOver = true;
+            gameOver = true;
         }
         if (krestikV12 == 1 && krestikV71 == 1 && krestikV61 == 1)
         {
-        gameOver = true;
+            gameOver = true;
         }
         if (krestikV11 == 1 && krestikV71 == 1 && krestikV51 == 1)
         {
+            gameOver = true;
+        }
+        if (krestikV21 == 1 && krestikV71 == 1 && krestikV41 == 1)
+        {
+            gameOver = true;
+        }
+        if (krestikV13 == 1 && krestikV71 == 1 && krestikV31 == 1)
+        {
         gameOver = true;
         }
-
 
      txSleep(10);
 		txEnd();
