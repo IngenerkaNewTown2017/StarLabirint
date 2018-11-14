@@ -232,7 +232,7 @@ int main()
             get_min_y(nomer_stroki - 1);    */
         }
 
-        if (proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,
+       /* if (proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,
            obl[16].lx  ,obl[16].vy ,obl[8].lx  ,obl[8].vy) )
         {
             txTextOut(100, 100, "Mozhno");
@@ -242,7 +242,7 @@ int main()
         {
             txTextOut(100, 100, "Ne mozhno");
             txSleep(1000);
-        }
+        }*/
 
 
 
@@ -273,6 +273,59 @@ int main()
 
                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
             }
+
+            if(txMouseButtons () == 1 &&
+            txMouseX () <= 97 &&
+            txMouseX () >= 23 &&
+            txMouseY () >= 572 &&
+            txMouseY () <= 645)
+            {
+
+                bool gameFinished = false;
+                int nom_obl_shar = 16;
+
+                int old_x = 0;
+
+                while (!gameFinished)
+                {
+                    txBegin();
+                    txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+
+                    for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                    {
+                        txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                    }
+
+                    int x = obl[nom_obl_shar].lx;
+                    int y = obl[nom_obl_shar].vy;
+                    txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+
+                    txSleep(100);
+
+                    if (old_x != x + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x + 100, y) )
+                    {
+                        old_x = x;
+                        nom_obl_shar = nom_obl_shar + 1;
+                    }
+                    else if (old_x != x - 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x - 100, y) )
+                    {
+                        old_x = x;
+                        nom_obl_shar = nom_obl_shar - 1;
+                    }
+                    else if (old_x != y - 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y - 100) )
+                    {
+                        nom_obl_shar = nom_obl_shar - 8;
+                    }
+                    else if (old_x != y + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y + 100) )
+                    {
+                        nom_obl_shar = nom_obl_shar + 8;
+                    }
+
+                    txEnd();
+                }
+
+            }
+
 
 
 
