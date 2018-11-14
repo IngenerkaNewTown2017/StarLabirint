@@ -13,10 +13,10 @@ struct ColorButton
 
 //файл для рисования всех частей тел XD
 void risovat_golova(HDC golova,int x ,int y) {
-    txBitBlt (txDC(), 200, 200, 210, 210, golova, x, y);
+    txBitBlt (txDC(), 220, 255, 160, 160, golova, x, y);
 }
 void risovat_telo(HDC telo,int x ,int y) {
-    txBitBlt (txDC(), 220, 410, 169, 168, telo, x, y);
+    txBitBlt (txDC(), 220, 410,145, 145, telo, x, y);
 
 }
 void risovat_fon(HDC fon) {
@@ -28,3 +28,21 @@ void vkladka(HDC FONtelo){
 void risovat_lico(HDC lico1,int x ,int y) {
     txBitBlt (txDC(), 205, 295, 150, 50, lico1, x, y);
 }
+void reklama (){
+
+       txSetTextAlign (TA_CENTER);
+    txSelectFont("Arial", 95);
+    txSetColor(TX_RED, 5);
+    txDrawText(10, 10, 1000,1000, "нее ворууй");
+    txSleep (95);
+    txSetColor(TX_BLUE, 5);
+    txDrawText(10, 10, 1000,1000, "нее ворууй");
+    txSleep (95);
+    txSetColor(TX_RED, 5);
+    txDrawText(10, 10, 1000,1000, "нее ворууй");
+    txSleep (95);
+    txSetColor(TX_GREEN, 5);
+    txDrawText(10, 10, 1000,1000, "нее ворууй");
+    txSleep (95);
+    txSetColor(TX_YELLOW, 5);
+     txDrawText(10, 10, 1000,1000, "нее ворууй");}

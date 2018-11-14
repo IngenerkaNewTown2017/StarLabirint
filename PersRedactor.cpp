@@ -86,15 +86,15 @@ int main()
      int x_lico = -100;
     int y_lico = 0;
 
-
+    bool antivor = false;
 
     HDC golova = txLoadImage("pictures\\head2.bmp");
     HDC fon = txLoadImage ("pictures\\fon.bmp");
     HDC fon1  = txLoadImage ("pictures\\fon11.bmp ");
-    int RAZMER_KARTINKI_GOLOVY = 220;
+    int RAZMER_KARTINKI_GOLOVY = 165;
     int width_golov = SizerX(golova);
     HDC teloPic  = txLoadImage ("pictures\\telo.bmp ");
-    int RAZMER_KARTINKI_TELA = 180;
+    int RAZMER_KARTINKI_TELA =162;
     int width_tel = SizerX(teloPic);
     HDC rects  = txLoadImage ("pictures\\rects.bmp ");
     HDC FONtelo =  txLoadImage ("pictures\\1123456.bmp");
@@ -170,7 +170,7 @@ bool isExit = false;
 
         if (x_lico != -100)
         {
-            risovat_lico(lico1,x_lico,y_lico);
+            //risovat_lico(lico1,x_lico,y_lico);
         }
         drawTabs();
         nomer_vkladki = changeTab(nomer_vkladki);
@@ -219,7 +219,7 @@ bool isExit = false;
             }
         }
 
-        if (nomer_vkladki == VKLADKA_LICO)
+        /*if (nomer_vkladki == VKLADKA_LICO)
         {
             for (int nomer_lico = 0; nomer_lico < vsego_emoj; nomer_lico++)
             {
@@ -231,19 +231,62 @@ bool isExit = false;
 
             }
         }
+*/
+        if (GetAsyncKeyState('B')){
+          antivor= true;
+           }
 
-        //СОхранение
-        if (checkClick(785, 1080, 655, 715))
-        {
-             ScreenCapture(70, 120, 450, 450, "picture.jpg");
-             isExit = true;
-        }
+            int xtext = 10;
+        if (antivor == false ){
+           txSelectFont("Arial", 85);
+            txSetColor(TX_RED, 5);
+            txDrawText(150,350, 500,500, "туть");
+            }
 
-        txSleep(10);
-        txEnd();
+         if (antivor == false && checkClick(785, 1080, 655, 715) ){
+
+            txSetTextAlign (TA_CENTER);
+    txSelectFont("Arial", 150);
+    txSetColor(TX_RED, 5);
+    txDrawText(xtext, 50, 1000,1000, "buy full version");
+    txSleep (50);
+    xtext = xtext+30;
+    txSetColor(TX_BLUE, 5);
+    txDrawText(xtext, 0, 1000,1000, "buy full version");
+    txSleep (50);
+    xtext = xtext+30;
+    txSetColor(TX_RED, 5);
+    txDrawText(xtext, 10, 1000,1000, "buy full version");
+    txSleep (50);
+    xtext = xtext+30;
+
+    xtext = xtext+30;
+    txSetColor(TX_GREEN, 5);
+     txDrawText(xtext, 25, 1000,1000, "buy full version");
+     xtext = xtext+30;
+     txSleep(30);
     }
 
+        //СОхранение
+       if (checkClick(785, 1080, 655, 715))
+        {
+            /*txSetFillColor(TX_RED);
+            txFloodFill(220,220);*/
+             ScreenCapture(70, 120, 450, 450, "picture.jpg");
+             txSelectFont("Arial", 150);
+    txSetColor(TX_BLACK, 5);
+    txDrawText(0, 10, 1000,1280, "ава сохранена");
+    txSleep (2000);
 
+            isExit = true;
+        }
+
+ txSleep (50);
+        }
+
+
+
+txEnd();
 
     //Что-то мне кажется. у тебя еще 100500 картинок, которые никто не удаляет
     txDeleteDC(golova);

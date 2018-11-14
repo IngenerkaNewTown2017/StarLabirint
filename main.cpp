@@ -343,37 +343,3 @@ int main()
 
     return 0;
 }
-
-/*
-void move_ball_rigth()
-{
-for(x_ball=point_cuba; x_ball<=point_cuba; x_ball++)
-{
-  x_ball=x_ball+speed_ball;
-}
-}
-
-void move_ball_left()
-{
-for(x_ball=point_cuba; x_ball<=point_cuba; x_ball++)
-{
- x_ball=x_ball-speed_ball;
-}
-}
-
-void move_ball_up()
-{
-for(y_ball=point_cuba; y_ball<=point_cuba; y_ball++)
-{
- y_ball=y_ball+speed_ball;
-}
-}
-
-void move_ball_down()
-{
-for(y_ball=point_cuba; y_ball<=point_cuba; y_ball++)
-{
- y_ball=y_ball-speed_ball;
-}
-}
-*/
