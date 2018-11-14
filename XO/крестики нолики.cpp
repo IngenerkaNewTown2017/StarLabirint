@@ -105,6 +105,15 @@ int jopa()
         int krestikV31 = getKrestik (Krestiki, nomer_X,   0, 330, krestic);
         int krestikV32 = getKrestik (Krestiki, nomer_X, 165, 330, krestic);
         int krestikV33 = getKrestik (Krestiki, nomer_X, 330, 330, krestic);
+        int nolicV11 = getKrestik (Krestiki, nomer_X,   0,   0, nolic);
+        int nolicV12 = getKrestik (Krestiki, nomer_X, 165,   0, nolic);
+        int nolicV13 = getKrestik (Krestiki, nomer_X, 330,   0, nolic);
+        int nolicV21 = getKrestik (Krestiki, nomer_X,   0, 165, nolic);
+        int nolicV22 = getKrestik (Krestiki, nomer_X, 165, 165, nolic);
+        int nolicV23 = getKrestik (Krestiki, nomer_X, 330, 165, nolic);
+        int nolicV31 = getKrestik (Krestiki, nomer_X,   0, 330, nolic);
+        int nolicV32 = getKrestik (Krestiki, nomer_X, 165, 330, nolic);
+        int nolicV33 = getKrestik (Krestiki, nomer_X, 330, 330, nolic);
 
 
 
@@ -141,6 +150,39 @@ int jopa()
         {
             gameOver = true;
         }
+        if (nolicV11 == 1 && nolicV12 == 1 && nolicV13 == 1)
+        {
+            gameOver = true;
+        }
+        if (nolicV21 == 1 && nolicV22 == 1 && nolicV23 == 1)
+        {
+            gameOver = true;
+        }
+        if (nolicV31 == 1 && nolicV32 == 1 && nolicV33 == 1)
+        {
+            gameOver = true;
+        }
+        if (nolicV11 == 1 && nolicV21 == 1 && nolicV31 == 1)
+        {
+            gameOver = true;
+        }
+        if (nolicV12 == 1 && nolicV22 == 1 && nolicV32 == 1)
+        {
+            gameOver = true;
+        }
+        if (nolicV13 == 1 && nolicV23 == 1 && nolicV33 == 1)
+        {
+            gameOver = true;
+        }
+        if (nolicV11 == 1 && nolicV22 == 1 && nolicV33 == 1)
+        {
+            gameOver = true;
+        }
+        if (nolicV13 == 1 && nolicV22 == 1 && nolicV31 == 1)
+        {
+            gameOver = true;
+        }
+
 
         txSleep(10);
 		txEnd();
