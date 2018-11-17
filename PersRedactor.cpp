@@ -1,4 +1,5 @@
 #include "TXLib.h"
+#include "Lib\\config.cpp"
 #include "Lib\\lib.cpp"
 #include "Lib\\PersStruct.cpp"
 #include "Lib\\Buttons.cpp"
@@ -8,10 +9,6 @@
 
 #include "Lib\\save.cpp"
 using namespace std;
-
-const int VKLADKA_GOLOVA = 1;
-const int VKLADKA_TELO = 2;
-const int VKLADKA_LICO = 3;
 
 
 void drawTabs()
@@ -56,17 +53,43 @@ int SizerX(HDC golova)
     return bm.bmWidth;
 }
 
-int getAllParts(PersPartButton* bashka, int razmer_odnoi_chasti, int width_golov)
+int SizerY(HDC golova)
+{
+    HBITMAP hbm=(HBITMAP)Win32::GetCurrentObject(golova, OBJ_BITMAP);
+    BITMAP bm;
+    Win32::GetObject(hbm,sizeof(bm), (LPVOID)&bm);
+    return bm.bmHeight;
+}
+
+int getAllParts(PersPartButton* bashka, int razmer_odnoi_chasti, int width_golov, int vysota_golov)
 {
     int vsego_boshek = 0;
-    int coord = 0;
-    while (coord < width_golov - razmer_odnoi_chasti)
+    int coordX = 0;
+    int coordY = 0;
+    int x_nachalo = 643;
+    int y_nachalo = 127;
+    while (coordY < vysota_golov - razmer_odnoi_chasti)
     {
-        bashka[vsego_boshek] = { 643 + vsego_boshek * razmer_odnoi_chasti,  783 + vsego_boshek * razmer_odnoi_chasti, 127, 255,   vsego_boshek * razmer_odnoi_chasti, 0};
-        vsego_boshek ++;
-        coord += razmer_odnoi_chasti;
-    }
+        coordX = 0;
 
+        while (coordX < width_golov - razmer_odnoi_chasti)
+        {
+            bashka[vsego_boshek] = { x_nachalo +  vsego_boshek *      razmer_odnoi_chasti,
+                                     x_nachalo + (vsego_boshek + 1) * razmer_odnoi_chasti,
+                                     y_nachalo,
+                                     y_nachalo + 127,
+                                     (vsego_boshek % 5) * razmer_odnoi_chasti, y_nachalo - 127};
+            vsego_boshek ++;
+            coordX += razmer_odnoi_chasti;
+        }
+
+        //if (vsego_boshek % 4 == 0)
+        {
+            x_nachalo = x_nachalo - coordX;
+            y_nachalo = y_nachalo + 150;
+            coordY = coordY + razmer_odnoi_chasti;
+        }
+    }
     return vsego_boshek;
 }
 
@@ -74,6 +97,8 @@ int main()
     {
     txCreateWindow (1280,720);
     txSetFillColor(TX_WHITE);
+
+    COLORREF face_color = TX_WHITE;
 
     int nomer_vkladki = 0;
 
@@ -88,14 +113,14 @@ int main()
 
     bool antivor = false;
 
-    HDC golova = txLoadImage("pictures\\head2.bmp");
+    HDC golova = txLoadImage("pictures\\head3.bmp");
     HDC fon = txLoadImage ("pictures\\fon.bmp");
     HDC fon1  = txLoadImage ("pictures\\fon11.bmp ");
-    int RAZMER_KARTINKI_GOLOVY = 165;
     int width_golov = SizerX(golova);
-    HDC teloPic  = txLoadImage ("pictures\\telo.bmp ");
-    int RAZMER_KARTINKI_TELA =162;
+    int vysota_golov = SizerY(golova);
+    HDC teloPic  = txLoadImage ("pictures\\telo2.bmp ");
     int width_tel = SizerX(teloPic);
+    int vysota_tel = SizerY(teloPic);
     HDC rects  = txLoadImage ("pictures\\rects.bmp ");
     HDC FONtelo =  txLoadImage ("pictures\\1123456.bmp");
     HDC emodji = txLoadImage ("pictures\\5.bmp");
@@ -103,9 +128,9 @@ int main()
     HDC kartinka = fon1;
 
     PersPartButton bashka[100];
-    int vsego_boshek = getAllParts(bashka, RAZMER_KARTINKI_GOLOVY, width_golov);
+    int vsego_boshek = getAllParts(bashka, RAZMER_KARTINKI_GOLOVY, width_golov, vysota_golov);
     PersPartButton telo[100];
-    int vsego_tel = getAllParts(telo, RAZMER_KARTINKI_TELA, width_tel);
+    int vsego_tel = getAllParts(telo, RAZMER_KARTINKI_TELA, width_tel, vysota_tel);
 
  int vsego_emoj = 4;
     PersPartButton lico[vsego_emoj];
@@ -138,7 +163,10 @@ bool isExit = false;
     while (!GetAsyncKeyState('R') && !isExit) {
 
         txBegin();
+        txSetFillColor(TX_WHITE);
         txClear();
+
+        drawTabs();
 
         risovat_fon(kartinka);
         if (nomer_vkladki == VKLADKA_GOLOVA)
@@ -161,6 +189,9 @@ bool isExit = false;
         if (x_bashki != -100)   //450.660
         {
             risovat_golova(golova,x_bashki,y_bashki);
+
+            txSetFillColor(face_color);
+            txFloodFill(220,220);
         }
 
         if (x_odejdi != -100)
@@ -172,7 +203,6 @@ bool isExit = false;
         {
             //risovat_lico(lico1,x_lico,y_lico);
         }
-        drawTabs();
         nomer_vkladki = changeTab(nomer_vkladki);
 
         //f (checkClick(1185, 1240, 75, 121))
@@ -202,6 +232,12 @@ bool isExit = false;
             {
                 y_bashki = 205;
             }
+
+
+            if (checkClick(100,200, 100, 200))
+            {
+                face_color = TX_RED;
+            }
         }
 
 
@@ -218,6 +254,7 @@ bool isExit = false;
 
             }
         }
+
 
         /*if (nomer_vkladki == VKLADKA_LICO)
         {
@@ -270,8 +307,7 @@ bool isExit = false;
         //СОхранение
        if (checkClick(785, 1080, 655, 715))
         {
-            /*txSetFillColor(TX_RED);
-            txFloodFill(220,220);*/
+
              ScreenCapture(70, 120, 450, 450, "picture.jpg");
              txSelectFont("Arial", 150);
     txSetColor(TX_BLACK, 5);
