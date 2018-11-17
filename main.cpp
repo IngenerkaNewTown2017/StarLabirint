@@ -6,7 +6,6 @@
 #include "lib\\Buttons.cpp"
 #include "lib\\shar.cpp"
 
-
 struct OblUr
 {
     int x;
@@ -42,22 +41,31 @@ void drawLevelButton(int x, int y, const char* text, COLORREF backColor, COLORRE
     txSetColor(frontColor);
     txSetFillColor(frontColor);
     txRectangle(x + 25, y -  5, x +  75, y + 104);
-    txRectangle(x -  5, y + 24, x + 104, y +  84);
+    txRectangle(x -  5, y + 24, x + 105, y +  76);
 
     txSetColor(TX_BLACK);
     txSelectFont("Bauhaus 93", 36);
     txTextOut  (x + 34, y + 15, text);
 }
 
-
 int main()
     {
     txCreateWindow (1280, 720);
 
-    //drawLevelButton(76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29));
-    //drawLevelButton(303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29));
+    txSetColor(TX_YELLOW, 6);
+    //+50 - ��� ������
+    txLine( 76 + 50, 115 + 50, 303 + 50, 127 + 50);
+    txLine(303 + 50, 127 + 50, 191 + 50, 392 + 50);
 
-    //txSleep(2000);
+    drawLevelButton(76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29));
+    drawLevelButton(303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29));
+    drawLevelButton(191, 392, "3", RGB(34, 177, 76), RGB(181, 230, 29));
+    drawLevelButton(508, 151, "4", RGB(255, 127, 39), RGB(255, 201, 14));
+    drawLevelButton(1153, 16, "5", RGB(255, 127, 39), RGB(255, 201, 14));
+    drawLevelButton(246, 569, "6", RGB(255, 127, 39), RGB(255, 201, 14));
+    drawLevelButton(1146, 241, "7", RGB(237, 28, 36), RGB(255, 201, 14));
+    drawLevelButton(530, 590, "8", RGB(237, 28, 36), RGB(255, 201, 14));
+	  drawLevelButton(1039, 438, "9", RGB(237, 28, 36), RGB(255, 201, 14));
 
     HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
     HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
@@ -180,7 +188,7 @@ int main()
         {
             txBitBlt (txDC(), 0, 0, 1280, 720, zagruzka, 0, 0);
             txBitBlt (txDC(), 1100, 530, 90, 90, spraitzagruzki, 90 * (frame % 4), 0);
-            txSleep(100);
+            txSleep(50);
             frame = frame + 1;
         }
 
@@ -215,36 +223,7 @@ int main()
         {
             int nomer_stolbca = (nomer_oblasti % 8) + 1;
             int nomer_stroki = (nomer_oblasti / 8) + 1;
-
-            /*get_min_x(nomer_stolbca + 1);
-            get_min_y(nomer_stroki);
-
-
-
-            get_min_x(nomer_stolbca - 1);
-            get_min_y(nomer_stroki);
-
-
-            get_min_x(nomer_stolbca);
-            get_min_y(nomer_stroki + 1);
-
-            get_min_x(nomer_stolbca);
-            get_min_y(nomer_stroki - 1);    */
         }
-
-       /* if (proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,
-           obl[16].lx  ,obl[16].vy ,obl[8].lx  ,obl[8].vy) )
-        {
-            txTextOut(100, 100, "Mozhno");
-            txSleep(1000);
-       }
-        else
-        {
-            txTextOut(100, 100, "Ne mozhno");
-            txSleep(1000);
-        }*/
-
-
 
         //ÃŠÃ Ãª Ã¯Ã°Ã®Ã©Ã²Ã¨ Ã¨Ã£Ã°Ã³ / Ã¢Ã»Ã©Ã²Ã¨ Ã¨Ã§ Ã¨Ã£Ã°Ã»? Exit Ã¢Ã¥Ã¤Ã¼ Ã¢Ã±Ã¥Ã£Ã¤Ã  == false
         while(Exit == false)
@@ -386,10 +365,8 @@ int main()
                            x=x + speed_ball;
                         }
                     } */
-
                     txEnd();
                 }
-
             }
 
 
