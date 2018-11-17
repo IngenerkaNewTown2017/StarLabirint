@@ -44,12 +44,12 @@ void drawLevelButton(int x, int y, const char* text, COLORREF backColor, COLORRE
     txRectangle(x -  5, y + 24, x + 105, y +  76);
 
     txSetColor(TX_BLACK);
-    txSelectFont("Bauhaus 93", 36);
+    txSelectFont("Arial Black", 36);
     txTextOut  (x + 34, y + 15, text);
 }
 
 int main()
-    {
+{
     txCreateWindow (1280, 720);
 
     txSetColor(TX_YELLOW, 6);
@@ -65,7 +65,8 @@ int main()
     drawLevelButton(246, 569, "6", RGB(255, 127, 39), RGB(255, 201, 14));
     drawLevelButton(1146, 241, "7", RGB(237, 28, 36), RGB(255, 201, 14));
     drawLevelButton(530, 590, "8", RGB(237, 28, 36), RGB(255, 201, 14));
-	  drawLevelButton(1039, 438, "9", RGB(237, 28, 36), RGB(255, 201, 14));
+    drawLevelButton(1039, 438, "9", RGB(237, 28, 36), RGB(255, 201, 14));
+    txSleep(10000);
 
     HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
     HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
@@ -218,21 +219,12 @@ int main()
             obl[nomer_oblasti].min_poloj = min_max_poloj(obl[nomer_oblasti].poloj);
         }
 
-
-        for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
-        {
-            int nomer_stolbca = (nomer_oblasti % 8) + 1;
-            int nomer_stroki = (nomer_oblasti / 8) + 1;
-        }
-
         //ÃŠÃ Ãª Ã¯Ã°Ã®Ã©Ã²Ã¨ Ã¨Ã£Ã°Ã³ / Ã¢Ã»Ã©Ã²Ã¨ Ã¨Ã§ Ã¨Ã£Ã°Ã»? Exit Ã¢Ã¥Ã¤Ã¼ Ã¢Ã±Ã¥Ã£Ã¤Ã  == false
         while(Exit == false)
         {
-
             txBegin();
             txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
             txTransparentBlt(txDC(), 30, 330, 50, 50, spraitshara, 0, 0, TX_WHITE);
-
 
             for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
             {
@@ -254,10 +246,10 @@ int main()
             }
 
             if(txMouseButtons () == 1 &&
-            txMouseX () <= 97 &&
-            txMouseX () >= 23 &&
-            txMouseY () >= 572 &&
-            txMouseY () <= 645)
+                txMouseX () <= 97 &&
+                txMouseX () >= 23 &&
+                txMouseY () >= 572 &&
+                txMouseY () <= 645)
             {
 
                 bool gameFinished = false;
@@ -358,25 +350,14 @@ int main()
                         old_y = y;
                     }
 
-                    /*void move_ball_rigth()
-                    {
-                        for(x=x + speed_ball; x<=x+100; x++)
-                        {
-                           x=x + speed_ball;
-                        }
-                    } */
                     txEnd();
                 }
             }
 
 
-
-
             txSleep(10);
             txEnd();
         }
-
-
     }
 
     //Ã…Ã¹Ã¥ Ã¯Ã Ã°Ã³ ÃªÃ Ã°Ã²Ã¨Ã­Ã®Ãª Ã§Ã Ã¡Ã»Ã¢Ã Ã¥Ã¸Ã¼ Ã³Ã¤Ã Ã«Ã¨Ã²Ã¼

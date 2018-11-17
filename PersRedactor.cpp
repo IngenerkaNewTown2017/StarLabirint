@@ -68,7 +68,7 @@ int getAllParts(PersPartButton* bashka, int razmer_odnoi_chasti, int width_golov
     int coordY = 0;
     int x_nachalo = 643;
     int y_nachalo = 127;
-    while (coordY < vysota_golov - razmer_odnoi_chasti)
+    while (coordY < vysota_golov)
     {
         coordX = 0;
 
@@ -78,18 +78,16 @@ int getAllParts(PersPartButton* bashka, int razmer_odnoi_chasti, int width_golov
                                      x_nachalo + (vsego_boshek + 1) * razmer_odnoi_chasti,
                                      y_nachalo,
                                      y_nachalo + 127,
-                                     (vsego_boshek % 5) * razmer_odnoi_chasti, y_nachalo - 127};
+                                     (vsego_boshek % 4) * razmer_odnoi_chasti, y_nachalo - 127};
             vsego_boshek ++;
             coordX += razmer_odnoi_chasti;
         }
 
-        //if (vsego_boshek % 4 == 0)
-        {
-            x_nachalo = x_nachalo - coordX;
-            y_nachalo = y_nachalo + 150;
-            coordY = coordY + razmer_odnoi_chasti;
-        }
+        x_nachalo = x_nachalo - coordX;
+        y_nachalo = y_nachalo + 150;
+        coordY = coordY + razmer_odnoi_chasti;
     }
+
     return vsego_boshek;
 }
 
@@ -108,20 +106,21 @@ int main()
     int x_odejdi = -100;
     int y_odejdi = 0;
 
-     int x_lico = -100;
+    int x_lico = -100;
     int y_lico = 0;
 
     bool antivor = false;
 
-    HDC golova = txLoadImage("pictures\\head3.bmp");
     HDC fon = txLoadImage ("pictures\\fon.bmp");
-    HDC fon1  = txLoadImage ("pictures\\fon11.bmp ");
+    HDC fon1  = txLoadImage ("pictures\\fon11.bmp");
+
+    HDC golova = txLoadImage("pictures\\head3.bmp");
     int width_golov = SizerX(golova);
     int vysota_golov = SizerY(golova);
     HDC teloPic  = txLoadImage ("pictures\\telo2.bmp ");
     int width_tel = SizerX(teloPic);
     int vysota_tel = SizerY(teloPic);
-    HDC rects  = txLoadImage ("pictures\\rects.bmp ");
+    HDC rects  = txLoadImage ("pictures\\rects.bmp");
     HDC FONtelo =  txLoadImage ("pictures\\1123456.bmp");
     HDC emodji = txLoadImage ("pictures\\5.bmp");
     HDC lico1 = txLoadImage ("pictures\\eye.bmp");
@@ -132,10 +131,10 @@ int main()
     PersPartButton telo[100];
     int vsego_tel = getAllParts(telo, RAZMER_KARTINKI_TELA, width_tel, vysota_tel);
 
- int vsego_emoj = 4;
+    int vsego_emoj = 4;
     PersPartButton lico[vsego_emoj];
     lico[0] = { 640, 783,3,250,   5, 0};
-   lico[1] = { 785,  925,3, 250, 200, 0};
+    lico[1] = { 785,  925,3, 250, 200, 0};
     lico[2] = {1055, 350,3, 250, 390, 0};
     lico[3] = {931, 1060,3, 2, 570, 0};
 
@@ -151,15 +150,15 @@ int main()
     file.close();
 
 
-ofstream out;
-out.open("Lib\\3.txt");
-if (out.is_open())
-{
-out << x_bashki << std::endl;
-}
-out.close();
+    ofstream out;
+    out.open("Lib\\3.txt");
+    if (out.is_open())
+    {
+    out << x_bashki << std::endl;
+    }
+    out.close();
 
-bool isExit = false;
+    bool isExit = false;
     while (!GetAsyncKeyState('R') && !isExit) {
 
         txBegin();
@@ -269,43 +268,45 @@ bool isExit = false;
             }
         }
 */
-        if (GetAsyncKeyState('B')){
-          antivor= true;
-           }
+        if (GetAsyncKeyState('B'))
+        {
+            antivor= true;
+        }
 
-            int xtext = 10;
-        if (antivor == false ){
-           txSelectFont("Arial", 85);
+        if (antivor == false )
+        {
+            txSelectFont("Arial", 85);
             txSetColor(TX_RED, 5);
             txDrawText(150,350, 500,500, "туть");
-            }
+        }
 
-         if (antivor == false && checkClick(785, 1080, 655, 715) ){
-
+        if (antivor == false && checkClick(785, 1080, 655, 715) )
+        {
+            int xtext = 10;
             txSetTextAlign (TA_CENTER);
-    txSelectFont("Arial", 150);
-    txSetColor(TX_RED, 5);
-    txDrawText(xtext, 50, 1000,1000, "buy full version");
-    txSleep (50);
-    xtext = xtext+30;
-    txSetColor(TX_BLUE, 5);
-    txDrawText(xtext, 0, 1000,1000, "buy full version");
-    txSleep (50);
-    xtext = xtext+30;
-    txSetColor(TX_RED, 5);
-    txDrawText(xtext, 10, 1000,1000, "buy full version");
-    txSleep (50);
-    xtext = xtext+30;
+            txSelectFont("Arial", 150);
+            txSetColor(TX_RED, 5);
+            txDrawText(xtext, 50, 1000,1000, "buy full version");
+            txSleep (50);
+            xtext = xtext+30;
+            txSetColor(TX_BLUE, 5);
+            txDrawText(xtext, 0, 1000,1000, "buy full version");
+            txSleep (50);
+            xtext = xtext+30;
+            txSetColor(TX_RED, 5);
+            txDrawText(xtext, 10, 1000,1000, "buy full version");
+            txSleep (50);
+            xtext = xtext+30;
 
-    xtext = xtext+30;
-    txSetColor(TX_GREEN, 5);
-     txDrawText(xtext, 25, 1000,1000, "buy full version");
-     xtext = xtext+30;
-     txSleep(30);
-    }
+            xtext = xtext+30;
+            txSetColor(TX_GREEN, 5);
+            txDrawText(xtext, 25, 1000,1000, "buy full version");
+            xtext = xtext+30;
+            txSleep(30);
+        }
 
         //СОхранение
-       if (checkClick(785, 1080, 655, 715))
+        if (checkClick(785, 1080, 655, 715))
         {
 
              ScreenCapture(70, 120, 450, 450, "picture.jpg");
@@ -317,12 +318,12 @@ bool isExit = false;
             isExit = true;
         }
 
- txSleep (50);
-        }
+        txEnd();
+        txSleep (50);
+    }
 
 
 
-txEnd();
 
     //Что-то мне кажется. у тебя еще 100500 картинок, которые никто не удаляет
     txDeleteDC(golova);
