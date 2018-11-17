@@ -13,10 +13,10 @@ struct ColorButton
 
 //файл для рисования всех частей тел XD
 void risovat_golova(HDC golova,int x ,int y) {
-    txBitBlt (txDC(), 220, 255, 160, 160, golova, x, y);
+    txTransparentBlt (txDC(), 220, 255, 160, 160, golova, x, y , TX_WHITE);
 }
 void risovat_telo(HDC telo,int x ,int y) {
-    txBitBlt (txDC(), 220, 410,145, 145, telo, x, y);
+    txTransparentBlt (txDC(), 220, 410,145, 145, telo, x, y, TX_WHITE);
 
 }
 void risovat_fon(HDC fon) {
