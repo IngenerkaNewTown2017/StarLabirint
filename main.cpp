@@ -285,6 +285,7 @@ int main()
                 int nom_obl_shar = 16;
 
                 int old_x = 0;
+                int old_y = 0;
 
                 while (!gameFinished)
                 {
@@ -304,22 +305,87 @@ int main()
 
                     if (old_x != x + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x + 100, y) )
                     {
-                        old_x = x;
+                        for(int old_x1 = x ; old_x1 <= x + 100; old_x1 += speed_ball)
+                        {
+                            txBegin();
+                            txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+                            for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                            {
+                                txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                            }
+                            txTransparentBlt(txDC(), old_x1 + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                            txEnd();
+                            txSleep(10);
+                        }
+
                         nom_obl_shar = nom_obl_shar + 1;
+                        old_x = x;
+                        old_y = y;
                     }
                     else if (old_x != x - 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x - 100, y) )
                     {
-                        old_x = x;
+                        for(int old_x1 = x ; old_x1 >= x - 100; old_x1 -= speed_ball)
+                        {
+                            txBegin();
+                            txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+                            for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                            {
+                                txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                            }
+                            txTransparentBlt(txDC(), old_x1 + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                            txEnd();
+                            txSleep(10);
+                        }
+
                         nom_obl_shar = nom_obl_shar - 1;
+                        old_x = x;
+                        old_y = y;
                     }
-                    else if (old_x != y - 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y - 100) )
+                    else if (old_y != y - 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y - 100) )
                     {
+                        for(int old_y1 = y ; old_y1 >= y- 100; old_y1 -= speed_ball)
+                        {
+                            txBegin();
+                            txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+                            for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                            {
+                                txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                            }
+                            txTransparentBlt(txDC(), x + 25, old_y1 + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                            txEnd();
+                            txSleep(10);
+                        }
+
                         nom_obl_shar = nom_obl_shar - 8;
+                        old_x = x;
+                        old_y = y;
                     }
-                    else if (old_x != y + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y + 100) )
+                    else if (old_y != y + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y + 100) )
                     {
+                        for(int old_y1 = y ; old_y1 <= y + 100; old_y1 += speed_ball)
+                        {
+                            txBegin();
+                            txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+                            for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                            {
+                                txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                            }
+                            txTransparentBlt(txDC(), x + 25, old_y1 + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                            txEnd();
+                            txSleep(10);
+                        }
                         nom_obl_shar = nom_obl_shar + 8;
+                        old_x = x;
+                        old_y = y;
                     }
+
+                    /*void move_ball_rigth()
+                    {
+                        for(x=x + speed_ball; x<=x+100; x++)
+                        {
+                           x=x + speed_ball;
+                        }
+                    } */
 
                     txEnd();
                 }
