@@ -38,12 +38,6 @@ struct tohka_Shara
   int ys;
 };
 
-
-
-
-
-
-
 //Shar1.xs = get_x_shara(2);
 
 int get_x_shara(int nomer_stolbca); //x 288                            288,161     388,261   разница в 100
@@ -198,30 +192,42 @@ int proverit_chto_mozhno_idti_suda(
         {
             //Из старой точки можно уйти влево
             if (oblasti[nomer].lx == x_old &&
-                oblasti[nomer].vy == y_old &&
-                proverit_mozhno_vlevo(oblasti[nomer].poloj))
+                oblasti[nomer].vy == y_old)
             {
-                normalnyi_x_y_old  = 1;
+                if(proverit_mozhno_vlevo(oblasti[nomer].poloj))
+                {
+                    normalnyi_x_y_old  = 1;
+                }
+
+                char str[100];
+                sprintf(str, "%d %d %d", x_old, y_old, oblasti[nomer].poloj);
+                txTextOut(100, 300, str);
             }
 
             //В новую точку можно прийти справа
             if (oblasti[nomer].lx == x_new &&
-                oblasti[nomer].vy == y_new &&
-                proverit_mozhno_vpravo(oblasti[nomer].poloj))
+                oblasti[nomer].vy == y_new)
             {
-                normalnyi_x_y_new  = 1;
+                if(proverit_mozhno_vpravo(oblasti[nomer].poloj))
+                {
+                    normalnyi_x_y_new  = 1;
+                }
+
+                char str[100];
+                sprintf(str, "%d %d %d", x_old, y_old, oblasti[nomer].poloj);
+                txTextOut(100, 300, str);
             }
         }
     }
 
-       /* if (normalnyi_x_y_old)
+        if (normalnyi_x_y_old)
         {
             txTextOut(100, 300, "old");
         }
         if (normalnyi_x_y_new)
         {
             txTextOut(200, 500, "new");
-        }*/
+        }
 
 
         txSleep(1000);

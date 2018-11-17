@@ -6,7 +6,6 @@
 #include "lib\\Buttons.cpp"
 #include "lib\\shar.cpp"
 
-
 struct OblUr
 {
     int x;
@@ -47,18 +46,14 @@ void drawLevelButton(int x, int y, const char* text, COLORREF backColor, COLORRE
     txSetColor(TX_BLACK);
     txSelectFont("Bauhaus 93", 36);
     txTextOut  (x + 34, y + 15, text);
-
-
 }
-
-
 
 int main()
     {
     txCreateWindow (1280, 720);
 
     txSetColor(TX_YELLOW, 6);
-    //+50 - ��� ������
+    //+50 - ��� ������
     txLine( 76 + 50, 115 + 50, 303 + 50, 127 + 50);
     txLine(303 + 50, 127 + 50, 191 + 50, 392 + 50);
 
@@ -70,12 +65,9 @@ int main()
     drawLevelButton(246, 569, "6", RGB(255, 127, 39), RGB(255, 201, 14));
     drawLevelButton(1146, 241, "7", RGB(237, 28, 36), RGB(255, 201, 14));
     drawLevelButton(530, 590, "8", RGB(237, 28, 36), RGB(255, 201, 14));
-	drawLevelButton(1039, 438, "9", RGB(237, 28, 36), RGB(255, 201, 14));
+	  drawLevelButton(1039, 438, "9", RGB(237, 28, 36), RGB(255, 201, 14));
 
-
-	txSleep(20000);
-
-    HDC spraittzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
+    HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
     HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
     HDC main_menu =      txLoadImage ("pictures\\Labirint\\main_menu.bmp");
     HDC vsecuby =        txLoadImage ("pictures\\Labirint\\vsecuby.bmp");
@@ -195,8 +187,8 @@ int main()
         while(frame < 40)
         {
             txBitBlt (txDC(), 0, 0, 1280, 720, zagruzka, 0, 0);
-            //txBitBlt (txDC(), 1100, 530, 90, 90, spraitzagruzki, 90 * (frame % 4), 0);
-            txSleep(100);
+            txBitBlt (txDC(), 1100, 530, 90, 90, spraitzagruzki, 90 * (frame % 4), 0);
+            txSleep(50);
             frame = frame + 1;
         }
 
@@ -231,36 +223,7 @@ int main()
         {
             int nomer_stolbca = (nomer_oblasti % 8) + 1;
             int nomer_stroki = (nomer_oblasti / 8) + 1;
-
-            /*get_min_x(nomer_stolbca + 1);
-            get_min_y(nomer_stroki);
-
-
-
-            get_min_x(nomer_stolbca - 1);
-            get_min_y(nomer_stroki);
-
-
-            get_min_x(nomer_stolbca);
-            get_min_y(nomer_stroki + 1);
-
-            get_min_x(nomer_stolbca);
-            get_min_y(nomer_stroki - 1);    */
         }
-
-       /* if (proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,
-           obl[16].lx  ,obl[16].vy ,obl[8].lx  ,obl[8].vy) )
-        {
-            txTextOut(100, 100, "Mozhno");
-            txSleep(1000);
-       }
-        else
-        {
-            txTextOut(100, 100, "Ne mozhno");
-            txSleep(1000);
-        }*/
-
-
 
         //ÃŠÃ Ãª Ã¯Ã°Ã®Ã©Ã²Ã¨ Ã¨Ã£Ã°Ã³ / Ã¢Ã»Ã©Ã²Ã¨ Ã¨Ã§ Ã¨Ã£Ã°Ã»? Exit Ã¢Ã¥Ã¤Ã¼ Ã¢Ã±Ã¥Ã£Ã¤Ã  == false
         while(Exit == false)
@@ -301,6 +264,7 @@ int main()
                 int nom_obl_shar = 16;
 
                 int old_x = 0;
+                int old_y = 0;
 
                 while (!gameFinished)
                 {
@@ -320,26 +284,89 @@ int main()
 
                     if (old_x != x + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x + 100, y) )
                     {
-                        old_x = x;
+                        for(int old_x1 = x ; old_x1 <= x + 100; old_x1 += speed_ball)
+                        {
+                            txBegin();
+                            txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+                            for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                            {
+                                txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                            }
+                            txTransparentBlt(txDC(), old_x1 + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                            txEnd();
+                            txSleep(10);
+                        }
+
                         nom_obl_shar = nom_obl_shar + 1;
+                        old_x = x;
+                        old_y = y;
                     }
                     else if (old_x != x - 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x - 100, y) )
                     {
-                        old_x = x;
+                        for(int old_x1 = x ; old_x1 >= x - 100; old_x1 -= speed_ball)
+                        {
+                            txBegin();
+                            txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+                            for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                            {
+                                txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                            }
+                            txTransparentBlt(txDC(), old_x1 + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                            txEnd();
+                            txSleep(10);
+                        }
+
                         nom_obl_shar = nom_obl_shar - 1;
+                        old_x = x;
+                        old_y = y;
                     }
-                    else if (old_x != y - 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y - 100) )
+                    else if (old_y != y - 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y - 100) )
                     {
+                        for(int old_y1 = y ; old_y1 >= y- 100; old_y1 -= speed_ball)
+                        {
+                            txBegin();
+                            txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+                            for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                            {
+                                txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                            }
+                            txTransparentBlt(txDC(), x + 25, old_y1 + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                            txEnd();
+                            txSleep(10);
+                        }
+
                         nom_obl_shar = nom_obl_shar - 8;
+                        old_x = x;
+                        old_y = y;
                     }
-                    else if (old_x != y + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y + 100) )
+                    else if (old_y != y + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y + 100) )
                     {
+                        for(int old_y1 = y ; old_y1 <= y + 100; old_y1 += speed_ball)
+                        {
+                            txBegin();
+                            txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+                            for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                            {
+                                txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                            }
+                            txTransparentBlt(txDC(), x + 25, old_y1 + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                            txEnd();
+                            txSleep(10);
+                        }
                         nom_obl_shar = nom_obl_shar + 8;
+                        old_x = x;
+                        old_y = y;
                     }
 
+                    /*void move_ball_rigth()
+                    {
+                        for(x=x + speed_ball; x<=x+100; x++)
+                        {
+                           x=x + speed_ball;
+                        }
+                    } */
                     txEnd();
                 }
-
             }
 
 
