@@ -28,6 +28,7 @@ bool StartGame = false;
 bool Start_level = false;
 
 
+
 using namespace std;
 
 void drawLevelButton(int x, int y, const char* text, COLORREF backColor, COLORREF frontColor);
@@ -66,7 +67,7 @@ int main()
     drawLevelButton(1146, 241, "7", RGB(237, 28, 36), RGB(255, 201, 14));
     drawLevelButton(530, 590, "8", RGB(237, 28, 36), RGB(255, 201, 14));
     drawLevelButton(1039, 438, "9", RGB(237, 28, 36), RGB(255, 201, 14));
-    txSleep(10000);
+    //txSleep(10000);
 
     HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
     HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
@@ -119,7 +120,7 @@ int main()
         txEnd();
     }
 
-    if (StartGame == true)
+    while (StartGame == true)
     {
         txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
 
@@ -226,6 +227,7 @@ int main()
             txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
             txTransparentBlt(txDC(), 30, 330, 50, 50, spraitshara, 0, 0, TX_WHITE);
 
+
             for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
             {
                 //ÃˆÃ¹Ã¥Ã¬ ÃªÃ®Ã®Ã°Ã¤Ã¨Ã­Ã Ã²Ã³ Ã¤Ã«Ã¿ Ã°Ã¨Ã±Ã®Ã¢Ã Ã­Ã¨Ã¿ Ã­Ã³Ã¦Ã­Ã®Ã£Ã® ÃªÃ Ã¤Ã°Ã 
@@ -234,7 +236,9 @@ int main()
                 //ÃÃ°Ã®Ã¢Ã¥Ã°Ã¿Ã¥Ã¬, Ã·Ã²Ã® ÃªÃ Ã¤Ã° Ã­Ã¥ Ã±Ã«Ã¨Ã¸ÃªÃ®Ã¬ Ã¡Ã®Ã«Ã¼Ã¸Ã®Ã©
                 if (clickOnOblkast(obl[nomer_oblasti]) == 1)
                 {
+                    txSleep(100);
                     obl[nomer_oblasti].poloj = obl[nomer_oblasti].poloj + 1;
+
                     if (obl[nomer_oblasti].poloj > obl[nomer_oblasti].max_poloj)
                     {
                         obl[nomer_oblasti].poloj = obl[nomer_oblasti].min_poloj;
@@ -258,6 +262,22 @@ int main()
                 int old_x = 0;
                 int old_y = 0;
 
+                /*if(gameFinished = true)
+                {
+                  while(Start_level = false)
+                  {
+                   gameFinished = true;
+                  }
+                  while(StartGame = true)
+                  {
+                    gameFinished = true;
+                  }
+
+                  Start_level = false;
+                  StartGame = true;
+                } */
+
+
                 while (!gameFinished)
                 {
                     txBegin();
@@ -271,8 +291,6 @@ int main()
                     int x = obl[nom_obl_shar].lx;
                     int y = obl[nom_obl_shar].vy;
                     txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
-
-                    txSleep(100);
 
                     if (old_x != x + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x + 100, y) )
                     {
@@ -350,14 +368,31 @@ int main()
                         old_y = y;
                     }
 
+
+
+                    if(nom_obl_shar == 23)
+                    {
+                        gameFinished = true;
+                        Start_level = false;
+                        //Start_game = true;
+                        Exit = true;
+                        txTransparentBlt(txDC(), 1198, 337, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                        txSleep(3000);
+                    }
+
                     txEnd();
                 }
             }
 
 
+
+
             txSleep(10);
             txEnd();
+
         }
+
+        Exit = false;
     }
 
     //Ã…Ã¹Ã¥ Ã¯Ã Ã°Ã³ ÃªÃ Ã°Ã²Ã¨Ã­Ã®Ãª Ã§Ã Ã¡Ã»Ã¢Ã Ã¥Ã¸Ã¼ Ã³Ã¤Ã Ã«Ã¨Ã²Ã¼
