@@ -6,6 +6,17 @@
 #include "lib\\Buttons.cpp"
 #include "lib\\shar.cpp"
 
+struct LevelButton
+{
+    int x;
+    int y;
+    const char* text;
+    COLORREF color1;
+    COLORREF color2;
+};
+
+#include "XO\\�������� ������.cpp"
+
 struct OblUr
 {
     int x;
@@ -28,7 +39,6 @@ bool StartGame = false;
 bool Start_level = false;
 
 
-
 using namespace std;
 
 void drawLevelButton(int x, int y, const char* text, COLORREF backColor, COLORREF frontColor);
@@ -46,7 +56,7 @@ void drawLevelButton(int x, int y, const char* text, COLORREF backColor, COLORRE
 
     txSetColor(TX_BLACK);
     txSelectFont("Arial Black", 36);
-    txTextOut  (x + 34, y + 15, text);
+    txTextOut  (x + 42, y + 31, text);
 }
 
 int main()
@@ -55,19 +65,31 @@ int main()
 
     txSetColor(TX_YELLOW, 6);
     //+50 - ��� ������
-    txLine( 76 + 50, 115 + 50, 303 + 50, 127 + 50);
-    txLine(303 + 50, 127 + 50, 191 + 50, 392 + 50);
 
-    drawLevelButton(76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29));
-    drawLevelButton(303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29));
-    drawLevelButton(191, 392, "3", RGB(34, 177, 76), RGB(181, 230, 29));
-    drawLevelButton(508, 151, "4", RGB(255, 127, 39), RGB(255, 201, 14));
-    drawLevelButton(1153, 16, "5", RGB(255, 127, 39), RGB(255, 201, 14));
-    drawLevelButton(246, 569, "6", RGB(255, 127, 39), RGB(255, 201, 14));
-    drawLevelButton(1146, 241, "7", RGB(237, 28, 36), RGB(255, 201, 14));
-    drawLevelButton(530, 590, "8", RGB(237, 28, 36), RGB(255, 201, 14));
-    drawLevelButton(1039, 438, "9", RGB(237, 28, 36), RGB(255, 201, 14));
-    //txSleep(10000);
+	int kolich_urovnei = 9;
+	LevelButton levelButtons [kolich_urovnei];
+	levelButtons[0] = {76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29)};
+	levelButtons[1] = {303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29)};
+	levelButtons[2] = {191, 392, "3", RGB(34, 177, 76), RGB(181, 230, 29)};
+	levelButtons[3] = {508, 151, "4", RGB(255, 127, 39), RGB(255, 201, 14)};
+	levelButtons[4] = {1153, 16, "5", RGB(255, 127, 39), RGB(255, 201, 14)};
+	levelButtons[5] = {246, 569, "6", RGB(255, 127, 39), RGB(255, 201, 14)};
+	levelButtons[6] = {1146, 241, "7", RGB(237, 28, 36), RGB(255, 201, 14)};
+	levelButtons[7] = {530, 590, "8", RGB(237, 28, 36), RGB(255, 201, 14)};
+	levelButtons[8] = {1039, 438, "9", RGB(237, 28, 36), RGB(255, 201, 14)};
+
+
+	for (int n = 0; n < kolich_urovnei; n++)
+	{
+		if (n < kolich_urovnei - 1)
+		{
+			txSetColor(levelButtons[n].color2, 6);
+			txLine( levelButtons[n].x + 50, levelButtons[n].y + 50, levelButtons[n + 1].x + 50, levelButtons[n + 1].y + 50);
+		}
+
+		drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
+	}
+    txSleep(4000);
 
     HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
     HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
@@ -81,8 +103,6 @@ int main()
     Oblast obl[KOLVO_OBLASTEI];
     string file_adress = "";
 
-
-
     OblUr Lev[9];
     Lev[0] = {76, 175, 115, 215, "levels\\1.txt"};
     Lev[1] = {301, 401, 125, 225, "levels\\2.txt"};
@@ -93,9 +113,7 @@ int main()
     Lev[6] = {1145, 1245, 240, 340, "levels\\7.txt"};
     Lev[7] = {503, 603, 591, 691, "levels\\8.txt"};
     Lev[8] = {1039, 1139, 438, 538, "levels\\9.txt"};
-
-
-
+  
     while(Exit == false && StartGame == false)
     {
         txBegin();
@@ -249,6 +267,15 @@ int main()
                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
             }
 
+
+            if(txMouseButtons () == 1 &&
+                txMouseX () >= 1252 &&
+                txMouseX () <= 1274 &&
+                txMouseY () >= 3 &&
+                txMouseY () <= 12)
+               {
+                   igor();
+                }
             if(txMouseButtons () == 1 &&
                 txMouseX () <= 97 &&
                 txMouseX () >= 23 &&
@@ -261,22 +288,6 @@ int main()
 
                 int old_x = 0;
                 int old_y = 0;
-
-                /*if(gameFinished = true)
-                {
-                  while(Start_level = false)
-                  {
-                   gameFinished = true;
-                  }
-                  while(StartGame = true)
-                  {
-                    gameFinished = true;
-                  }
-
-                  Start_level = false;
-                  StartGame = true;
-                } */
-
 
                 while (!gameFinished)
                 {
@@ -368,8 +379,6 @@ int main()
                         old_y = y;
                     }
 
-
-
                     if(nom_obl_shar == 23)
                     {
                         gameFinished = true;
@@ -383,13 +392,9 @@ int main()
                     txEnd();
                 }
             }
-
-
-
-
+          
             txSleep(10);
             txEnd();
-
         }
 
         Exit = false;
