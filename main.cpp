@@ -5,6 +5,7 @@
 #include "lib\\Oblast.cpp"
 #include "lib\\Buttons.cpp"
 #include "lib\\shar.cpp"
+#include "XO\\�������� ������.cpp"
 
 struct OblUr
 {
@@ -226,6 +227,8 @@ int main()
             txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
             txTransparentBlt(txDC(), 30, 330, 50, 50, spraitshara, 0, 0, TX_WHITE);
 
+
+
             for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
             {
                 //ÃˆÃ¹Ã¥Ã¬ ÃªÃ®Ã®Ã°Ã¤Ã¨Ã­Ã Ã²Ã³ Ã¤Ã«Ã¿ Ã°Ã¨Ã±Ã®Ã¢Ã Ã­Ã¨Ã¿ Ã­Ã³Ã¦Ã­Ã®Ã£Ã® ÃªÃ Ã¤Ã°Ã 
@@ -245,6 +248,14 @@ int main()
                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
             }
 
+            if(txMouseButtons () == 1 &&
+                txMouseX () >= 1252 &&
+                txMouseX () <= 1274 &&
+                txMouseY () >= 3 &&
+                txMouseY () <= 12)
+               {
+                   igor();
+                }
             if(txMouseButtons () == 1 &&
                 txMouseX () <= 97 &&
                 txMouseX () >= 23 &&
