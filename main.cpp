@@ -15,6 +15,7 @@ struct LevelButton
     COLORREF color2;
 };
 
+#include "XO\\�������� ������.cpp"
 
 struct OblUr
 {
@@ -64,8 +65,6 @@ int main()
 
     txSetColor(TX_YELLOW, 6);
     //+50 - ��� ������
-    //txLine( 76 + 50, 115 + 50, 303 + 50, 127 + 50);
-    //txLine(303 + 50, 127 + 50, 191 + 50, 392 + 50);
 
 	int kolich_urovnei = 9;
 	LevelButton levelButtons [kolich_urovnei];
@@ -90,18 +89,7 @@ int main()
 
 		drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
 	}
-    txSleep(10000);
-
-    /*drawLevelButton(76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29));
-    drawLevelButton(303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29));
-    drawLevelButton(191, 392, "3", RGB(34, 177, 76), RGB(181, 230, 29));
-    drawLevelButton(508, 151, "4", RGB(255, 127, 39), RGB(255, 201, 14));
-    drawLevelButton(1153, 16, "5", RGB(255, 127, 39), RGB(255, 201, 14));
-    drawLevelButton(246, 569, "6", RGB(255, 127, 39), RGB(255, 201, 14));
-    drawLevelButton(1146, 241, "7", RGB(237, 28, 36), RGB(255, 201, 14));
-    drawLevelButton(530, 590, "8", RGB(237, 28, 36), RGB(255, 201, 14));
-    drawLevelButton(1039, 438, "9", RGB(237, 28, 36), RGB(255, 201, 14));
-    txSleep(10000);*/
+    txSleep(4000);
 
     HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
     HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
@@ -280,6 +268,14 @@ int main()
                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
             }
 
+            if(txMouseButtons () == 1 &&
+                txMouseX () >= 1252 &&
+                txMouseX () <= 1274 &&
+                txMouseY () >= 3 &&
+                txMouseY () <= 12)
+               {
+                   igor();
+                }
             if(txMouseButtons () == 1 &&
                 txMouseX () <= 97 &&
                 txMouseX () >= 23 &&
