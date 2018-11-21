@@ -103,8 +103,6 @@ int main()
     Oblast obl[KOLVO_OBLASTEI];
     string file_adress = "";
 
-
-
     OblUr Lev[9];
     Lev[0] = {76, 175, 115, 215, "levels\\1.txt"};
     Lev[1] = {301, 401, 125, 225, "levels\\2.txt"};
@@ -115,9 +113,7 @@ int main()
     Lev[6] = {1145, 1245, 240, 340, "levels\\7.txt"};
     Lev[7] = {503, 603, 591, 691, "levels\\8.txt"};
     Lev[8] = {1039, 1139, 438, 538, "levels\\9.txt"};
-
-
-
+  
     while(Exit == false && StartGame == false)
     {
         txBegin();
@@ -142,7 +138,7 @@ int main()
         txEnd();
     }
 
-    if (StartGame == true)
+    while (StartGame == true)
     {
         txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
 
@@ -249,6 +245,7 @@ int main()
             txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
             txTransparentBlt(txDC(), 30, 330, 50, 50, spraitshara, 0, 0, TX_WHITE);
 
+
             for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
             {
                 //ÃˆÃ¹Ã¥Ã¬ ÃªÃ®Ã®Ã°Ã¤Ã¨Ã­Ã Ã²Ã³ Ã¤Ã«Ã¿ Ã°Ã¨Ã±Ã®Ã¢Ã Ã­Ã¨Ã¿ Ã­Ã³Ã¦Ã­Ã®Ã£Ã® ÃªÃ Ã¤Ã°Ã 
@@ -257,7 +254,9 @@ int main()
                 //ÃÃ°Ã®Ã¢Ã¥Ã°Ã¿Ã¥Ã¬, Ã·Ã²Ã® ÃªÃ Ã¤Ã° Ã­Ã¥ Ã±Ã«Ã¨Ã¸ÃªÃ®Ã¬ Ã¡Ã®Ã«Ã¼Ã¸Ã®Ã©
                 if (clickOnOblkast(obl[nomer_oblasti]) == 1)
                 {
+                    txSleep(100);
                     obl[nomer_oblasti].poloj = obl[nomer_oblasti].poloj + 1;
+
                     if (obl[nomer_oblasti].poloj > obl[nomer_oblasti].max_poloj)
                     {
                         obl[nomer_oblasti].poloj = obl[nomer_oblasti].min_poloj;
@@ -267,6 +266,7 @@ int main()
 
                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
             }
+
 
             if(txMouseButtons () == 1 &&
                 txMouseX () >= 1252 &&
@@ -302,8 +302,6 @@ int main()
                     int x = obl[nom_obl_shar].lx;
                     int y = obl[nom_obl_shar].vy;
                     txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
-
-                    txSleep(100);
 
                     if (old_x != x + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x + 100, y) )
                     {
@@ -381,14 +379,25 @@ int main()
                         old_y = y;
                     }
 
+                    if(nom_obl_shar == 23)
+                    {
+                        gameFinished = true;
+                        Start_level = false;
+                        //Start_game = true;
+                        Exit = true;
+                        txTransparentBlt(txDC(), 1198, 337, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                        txSleep(3000);
+                    }
+
                     txEnd();
                 }
             }
-
-
+          
             txSleep(10);
             txEnd();
         }
+
+        Exit = false;
     }
 
     //Ã…Ã¹Ã¥ Ã¯Ã Ã°Ã³ ÃªÃ Ã°Ã²Ã¨Ã­Ã®Ãª Ã§Ã Ã¡Ã»Ã¢Ã Ã¥Ã¸Ã¼ Ã³Ã¤Ã Ã«Ã¨Ã²Ã¼
