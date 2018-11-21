@@ -28,7 +28,7 @@ int getKrestik(KrestIliNol* Krestiki, int nomer_X, int x, int y, HDC pic)
 }
 
 
-int jopa()
+int igor()
 {
     //txCreateWindow(490,490);
 
@@ -154,31 +154,31 @@ int jopa()
         {
             gameOver = true;
         }
-        if (nolicV21 == 1 && nolicV22 == 1 && krestikV23 == 1)
+        if (nolicV21 == 1 && nolicV22 == 1 && nolicV23 == 1)
         {
             gameOver = true;
         }
-        if (krestikV31 == 1 && krestikV32 == 1 && krestikV33 == 1)
+        if (nolicV31 == 1 && nolicV32 == 1 && nolicV33 == 1)
         {
             gameOver = true;
         }
-        if (krestikV11 == 1 && krestikV21 == 1 && krestikV31 == 1)
+        if (nolicV11 == 1 && nolicV21 == 1 && nolicV31 == 1)
         {
             gameOver = true;
         }
-        if (krestikV12 == 1 && krestikV22 == 1 && krestikV32 == 1)
+        if (nolicV12 == 1 && nolicV22 == 1 && nolicV32 == 1)
         {
             gameOver = true;
         }
-        if (krestikV13 == 1 && krestikV23 == 1 && krestikV33 == 1)
+        if (nolicV13 == 1 && nolicV23 == 1 && nolicV33 == 1)
         {
             gameOver = true;
         }
-        if (krestikV11 == 1 && krestikV22 == 1 && krestikV33 == 1)
+        if (nolicV11 == 1 && nolicV22 == 1 && nolicV33 == 1)
         {
             gameOver = true;
         }
-        if (krestikV13 == 1 && krestikV22 == 1 && krestikV31 == 1)
+        if (nolicV13 == 1 && nolicV22 == 1 && nolicV31 == 1)
         {
             gameOver = true;
         }
