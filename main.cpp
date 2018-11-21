@@ -6,6 +6,16 @@
 #include "lib\\Buttons.cpp"
 #include "lib\\shar.cpp"
 
+struct LevelButton
+{
+    int x;
+    int y;
+    const char* text;
+    COLORREF color1;
+    COLORREF color2;
+};
+
+
 struct OblUr
 {
     int x;
@@ -45,7 +55,7 @@ void drawLevelButton(int x, int y, const char* text, COLORREF backColor, COLORRE
 
     txSetColor(TX_BLACK);
     txSelectFont("Arial Black", 36);
-    txTextOut  (x + 34, y + 15, text);
+    txTextOut  (x + 42, y + 31, text);
 }
 
 int main()
@@ -54,12 +64,34 @@ int main()
 
     txSetColor(TX_YELLOW, 6);
     //+50 - ��� ������
-    txLine( 76 + 50, 115 + 50, 303 + 50, 127 + 50);
-    txLine(303 + 50, 127 + 50, 191 + 50, 392 + 50);
+    //txLine( 76 + 50, 115 + 50, 303 + 50, 127 + 50);
+    //txLine(303 + 50, 127 + 50, 191 + 50, 392 + 50);
 
-    drawLevelButton(76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29));
+	int kolich_urovnei = 9;
+	LevelButton levelButtons [kolich_urovnei];
+	levelButtons[0] = {76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29)};
+	levelButtons[1] = {303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29)};
+	levelButtons[2] = {191, 392, "3", RGB(34, 177, 76), RGB(181, 230, 29)};
+	levelButtons[3] = {508, 151, "4", RGB(255, 127, 39), RGB(255, 201, 14)};
+	levelButtons[4] = {1153, 16, "5", RGB(255, 127, 39), RGB(255, 201, 14)};
+	levelButtons[5] = {246, 569, "6", RGB(255, 127, 39), RGB(255, 201, 14)};
+	levelButtons[6] = {1146, 241, "7", RGB(237, 28, 36), RGB(255, 201, 14)};
+	levelButtons[7] = {530, 590, "8", RGB(237, 28, 36), RGB(255, 201, 14)};
+	levelButtons[8] = {1039, 438, "9", RGB(237, 28, 36), RGB(255, 201, 14)};
+
+	for (int n = 0; n < kolich_urovnei; n++)
+	{
+		if (n < kolich_urovnei - 1)
+		{
+			txSetColor(levelButtons[n].color2, 6);
+			txLine( levelButtons[n].x + 50, levelButtons[n].y + 50, levelButtons[n + 1].x + 50, levelButtons[n + 1].y + 50);
+		}
+
+		drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
+	}
+    /*drawLevelButton(76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29));
     drawLevelButton(303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29));
-    drawLevelButton(191, 392, "3", RGB(34, 177, 76), RGB(181, 230, 29));
+    drawLevelButton(191, 392, "3", RGB(34, 177, 76), RGB(181, 230, 29));  */
     drawLevelButton(508, 151, "4", RGB(255, 127, 39), RGB(255, 201, 14));
     drawLevelButton(1153, 16, "5", RGB(255, 127, 39), RGB(255, 201, 14));
     drawLevelButton(246, 569, "6", RGB(255, 127, 39), RGB(255, 201, 14));
