@@ -5,6 +5,7 @@
 #include "lib\\Oblast.cpp"
 #include "lib\\Buttons.cpp"
 #include "lib\\shar.cpp"
+#include "XO\\krestiki.cpp"
 
 struct LevelButton
 {
@@ -15,7 +16,6 @@ struct LevelButton
     COLORREF color2;
 };
 
-#include "XO\\�������� ������.cpp"
 
 struct OblUr
 {
@@ -113,7 +113,7 @@ int main()
     Lev[6] = {1145, 1245, 240, 340, "levels\\7.txt"};
     Lev[7] = {503, 603, 591, 691, "levels\\8.txt"};
     Lev[8] = {1039, 1139, 438, 538, "levels\\9.txt"};
-  
+
     while(Exit == false && StartGame == false)
     {
         txBegin();
@@ -392,7 +392,7 @@ int main()
                     txEnd();
                 }
             }
-          
+
             txSleep(10);
             txEnd();
         }
