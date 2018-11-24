@@ -61,7 +61,7 @@ int SizerY(HDC golova)
     return bm.bmHeight;
 }
 
-int getAllParts(PersPartButton* bashka, int razmer_odnoi_chasti, int width_golov, int vysota_golov)
+int getAllParts(PersPartButton* bashka, int razmer_odnoi_chasti, int width_golov, int vysota_golov, int vysota_odnoi_bashki)
 {
     int vsego_boshek = 0;
     int coordX = 0;
@@ -78,13 +78,14 @@ int getAllParts(PersPartButton* bashka, int razmer_odnoi_chasti, int width_golov
                                      x_nachalo + (vsego_boshek + 1) * razmer_odnoi_chasti,
                                      y_nachalo,
                                      y_nachalo + 127,
-                                     (vsego_boshek % 4) * razmer_odnoi_chasti, y_nachalo - 127};
+                                     (vsego_boshek % 3) * razmer_odnoi_chasti,
+                                     y_nachalo - 127};
             vsego_boshek ++;
             coordX += razmer_odnoi_chasti;
         }
 
         x_nachalo = x_nachalo - coordX;
-        y_nachalo = y_nachalo + 150;
+        y_nachalo = y_nachalo + vysota_odnoi_bashki;
         coordY = coordY + razmer_odnoi_chasti;
     }
 
@@ -121,15 +122,15 @@ int main()
     int width_tel = SizerX(teloPic);
     int vysota_tel = SizerY(teloPic);
     HDC rects  = txLoadImage ("pictures\\rects.bmp");
-    HDC FONtelo =  txLoadImage ("pictures\\1123456.bmp");
+    //HDC FONtelo =  txLoadImage ("pictures\\1123456.bmp");
     HDC emodji = txLoadImage ("pictures\\5.bmp");
     HDC lico1 = txLoadImage ("pictures\\eye.bmp");
     HDC kartinka = fon1;
 
     PersPartButton bashka[100];
-    int vsego_boshek = getAllParts(bashka, RAZMER_KARTINKI_GOLOVY, width_golov, vysota_golov);
+    int vsego_boshek = getAllParts(bashka, RAZMER_KARTINKI_GOLOVY, width_golov, vysota_golov, 150);
     PersPartButton telo[100];
-    int vsego_tel = getAllParts(telo, RAZMER_KARTINKI_TELA, width_tel, vysota_tel);
+    int vsego_tel = getAllParts(telo, RAZMER_KARTINKI_TELA, width_tel, vysota_tel, 220);
 
     int vsego_emoj = 4;
     PersPartButton lico[vsego_emoj];
@@ -175,8 +176,7 @@ int main()
         }
         else if (nomer_vkladki == VKLADKA_TELO)
         {
-            //Рисуем все варианты тел (но не весь фон меняем!!!)
-            vkladka(FONtelo);
+            txBitBlt (txDC(), 639, 120, 600, 600, teloPic, 0, 0);
         }
         else if (nomer_vkladki == VKLADKA_LICO)
         {
@@ -320,7 +320,12 @@ int main()
 
         txEnd();
         txSleep (50);
+
+		  //при выполнении программы
+
     }
+
+
 
 
 
