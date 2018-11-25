@@ -97,7 +97,6 @@ int main()
     HDC fonurovnya =     txLoadImage ("pictures\\Labirint\\fonurovnya.bmp");
     HDC spraitshara =    txLoadImage ("pictures\\Labirint\\spraitshara.bmp");
 
-    int KOLVO_OBLASTEI = 40;
     Oblast obl[KOLVO_OBLASTEI];
     string file_adress = "";
 
@@ -161,8 +160,8 @@ int main()
 			}
 
 			drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
-		}                                  
-      
+        }
+
         while(Start_level == false)
         {
             //What about for???
@@ -292,7 +291,7 @@ int main()
             {
                 txSleep(100);
             }
-          
+
             if(txMouseButtons () == 1 &&
                 txMouseX () >= 1252 &&
                 txMouseX () <= 1274 &&

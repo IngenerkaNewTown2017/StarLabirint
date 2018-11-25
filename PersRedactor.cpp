@@ -112,17 +112,15 @@ int main()
 
     bool antivor = false;
 
-    HDC fon = txLoadImage ("pictures\\fon.bmp");
     HDC fon1  = txLoadImage ("pictures\\fon11.bmp");
 
-    HDC golova = txLoadImage("pictures\\head3.bmp");
+    HDC golova = txLoadImage("pictures\\head.bmp");
     int width_golov = SizerX(golova);
     int vysota_golov = SizerY(golova);
-    HDC teloPic  = txLoadImage ("pictures\\telo2.bmp ");
+    HDC teloPic  = txLoadImage ("pictures\\telo.bmp ");
     int width_tel = SizerX(teloPic);
     int vysota_tel = SizerY(teloPic);
     HDC rects  = txLoadImage ("pictures\\rects.bmp");
-    //HDC FONtelo =  txLoadImage ("pictures\\1123456.bmp");
     HDC emodji = txLoadImage ("pictures\\5.bmp");
     HDC lico1 = txLoadImage ("pictures\\eye.bmp");
     HDC kartinka = fon1;
