@@ -5,6 +5,7 @@
 #include "lib\\Oblast.cpp"
 #include "lib\\Buttons.cpp"
 #include "lib\\shar.cpp"
+#include "lib\\slconfig.cpp"
 #include "XO\\krestiki.cpp"
 
 struct LevelButton
@@ -32,8 +33,6 @@ int uroven_staryi = 0;
 int frame = 0;
 int x_ball;
 int y_ball;
-int point_cuba;
-int speed_ball = 5;
 bool Exit = false;
 bool StartGame = false;
 bool Start_level = false;
@@ -246,6 +245,7 @@ int main()
             txTransparentBlt(txDC(), 30, 330, 50, 50, spraitshara, 0, 0, TX_WHITE);
 
 
+            bool povernuto = false;
             for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
             {
                 //ÃˆÃ¹Ã¥Ã¬ ÃªÃ®Ã®Ã°Ã¤Ã¨Ã­Ã Ã²Ã³ Ã¤Ã«Ã¿ Ã°Ã¨Ã±Ã®Ã¢Ã Ã­Ã¨Ã¿ Ã­Ã³Ã¦Ã­Ã®Ã£Ã® ÃªÃ Ã¤Ã°Ã 
@@ -254,17 +254,26 @@ int main()
                 //ÃÃ°Ã®Ã¢Ã¥Ã°Ã¿Ã¥Ã¬, Ã·Ã²Ã® ÃªÃ Ã¤Ã° Ã­Ã¥ Ã±Ã«Ã¨Ã¸ÃªÃ®Ã¬ Ã¡Ã®Ã«Ã¼Ã¸Ã®Ã©
                 if (clickOnOblkast(obl[nomer_oblasti]) == 1)
                 {
-                    txSleep(100);
+                    povernuto = true;
+                    //txSleep(100);
                     obl[nomer_oblasti].poloj = obl[nomer_oblasti].poloj + 1;
 
                     if (obl[nomer_oblasti].poloj > obl[nomer_oblasti].max_poloj)
                     {
                         obl[nomer_oblasti].poloj = obl[nomer_oblasti].min_poloj;
                     }
+
+                    //if(
+
                     //ÃÃ¥ Ã¬Ã¥Ã¸Ã Ã«Ã® Ã¡Ã» Ã±Ã¾Ã¤Ã  Ã¯Ã Ã³Ã§Ã³ Ã¤Ã®Ã¡Ã Ã¢Ã¨Ã²Ã¼. Ã€ Ã²Ã® Ã®Ã·Ã¥Ã­Ã¼ Ã²Ã¿Ã¦Ã¥Ã«Ã® ÃªÃ«Ã¨ÃªÃ®Ã¬ Ã®Ã²Ã«Ã®Ã¢Ã¨Ã²Ã¼ Ã­Ã³Ã¦Ã­Ã®Ã¥ Ã¯Ã®Ã«Ã®Ã¦Ã¥Ã­Ã¨Ã¥
                 }
 
                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
+            }
+
+            if (povernuto)
+            {
+                txSleep(100);
             }
 
 
@@ -301,7 +310,10 @@ int main()
 
                     int x = obl[nom_obl_shar].lx;
                     int y = obl[nom_obl_shar].vy;
-                    txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                    if (nom_obl_shar == 23)
+                    {
+                        txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                    }
 
                     if (old_x != x + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x + 100, y) )
                     {
@@ -404,6 +416,6 @@ int main()
     txDeleteDC(main_menu);
     txDeleteDC(vsecuby);
     txDeleteDC(spraitshara);
-
+    txDeleteDC(fonurovnya);
     return 0;
 }
