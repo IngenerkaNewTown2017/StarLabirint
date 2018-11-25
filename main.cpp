@@ -5,6 +5,7 @@
 #include "lib\\Oblast.cpp"
 #include "lib\\Buttons.cpp"
 #include "lib\\shar.cpp"
+#include "lib\\slconfig.cpp"
 #include "XO\\krestiki.cpp"
 
 struct LevelButton
@@ -32,8 +33,6 @@ int uroven_staryi = 0;
 int frame = 0;
 int x_ball;
 int y_ball;
-int point_cuba;
-int speed_ball = 5;
 bool Exit = false;
 bool StartGame = false;
 bool Start_level = false;
@@ -78,7 +77,6 @@ int main()
 	levelButtons[7] = {530, 590, "8", RGB(237, 28, 36), RGB(255, 201, 14)};
 	levelButtons[8] = {1039, 538, "9", RGB(237, 28, 36), RGB(255, 201, 14)};
 
-
 	for (int n = 0; n < kolich_urovnei; n++)
 	{
 		if (n < kolich_urovnei - 1)
@@ -89,7 +87,7 @@ int main()
 
 		drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
 	}
-    //txSleep(40000);
+    txSleep(4000);
 
     HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
     HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
@@ -116,6 +114,8 @@ int main()
     }
 
    /* Lev[1] = {levelButtons[1].x, levelButtons[1].x + 100, levelButtons[1].y, levelButtons[1].y + 100, "levels\\2.txt"};
+    Lev[0] = {76, 175, 115, 215, "levels\\1.txt"};
+    Lev[1] = {301, 401, 125, 225, "levels\\2.txt"};
     Lev[2] = {191, 291, 392, 492, "levels\\3.txt"};
     Lev[3] = {506, 606, 151, 251, "levels\\4.txt"};
     Lev[4] = {1153, 1253, 15, 115, "levels\\5.txt"};
@@ -152,7 +152,7 @@ int main()
     {
         txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
 
-		/*for (int n = 0; n < kolich_urovnei; n++)
+		for (int n = 0; n < kolich_urovnei; n++)
 		{
 			if (n < kolich_urovnei - 1)
 			{
@@ -161,8 +161,8 @@ int main()
 			}
 
 			drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
-		}                                   */
-
+		}                                  
+      
         while(Start_level == false)
         {
             //What about for???
@@ -267,6 +267,7 @@ int main()
             txTransparentBlt(txDC(), 30, 330, 50, 50, spraitshara, 0, 0, TX_WHITE);
 
 
+            bool povernuto = false;
             for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
             {
                 //ÃˆÃ¹Ã¥Ã¬ ÃªÃ®Ã®Ã°Ã¤Ã¨Ã­Ã Ã²Ã³ Ã¤Ã«Ã¿ Ã°Ã¨Ã±Ã®Ã¢Ã Ã­Ã¨Ã¿ Ã­Ã³Ã¦Ã­Ã®Ã£Ã® ÃªÃ Ã¤Ã°Ã 
@@ -275,20 +276,23 @@ int main()
                 //ÃÃ°Ã®Ã¢Ã¥Ã°Ã¿Ã¥Ã¬, Ã·Ã²Ã® ÃªÃ Ã¤Ã° Ã­Ã¥ Ã±Ã«Ã¨Ã¸ÃªÃ®Ã¬ Ã¡Ã®Ã«Ã¼Ã¸Ã®Ã©
                 if (clickOnOblkast(obl[nomer_oblasti]) == 1)
                 {
-                    txSleep(100);
+                    povernuto = true;
                     obl[nomer_oblasti].poloj = obl[nomer_oblasti].poloj + 1;
 
                     if (obl[nomer_oblasti].poloj > obl[nomer_oblasti].max_poloj)
                     {
                         obl[nomer_oblasti].poloj = obl[nomer_oblasti].min_poloj;
                     }
-                    //ÃÃ¥ Ã¬Ã¥Ã¸Ã Ã«Ã® Ã¡Ã» Ã±Ã¾Ã¤Ã  Ã¯Ã Ã³Ã§Ã³ Ã¤Ã®Ã¡Ã Ã¢Ã¨Ã²Ã¼. Ã€ Ã²Ã® Ã®Ã·Ã¥Ã­Ã¼ Ã²Ã¿Ã¦Ã¥Ã«Ã® ÃªÃ«Ã¨ÃªÃ®Ã¬ Ã®Ã²Ã«Ã®Ã¢Ã¨Ã²Ã¼ Ã­Ã³Ã¦Ã­Ã®Ã¥ Ã¯Ã®Ã«Ã®Ã¦Ã¥Ã­Ã¨Ã¥
                 }
 
                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
             }
 
-
+            if (povernuto)
+            {
+                txSleep(100);
+            }
+          
             if(txMouseButtons () == 1 &&
                 txMouseX () >= 1252 &&
                 txMouseX () <= 1274 &&
@@ -322,7 +326,10 @@ int main()
 
                     int x = obl[nom_obl_shar].lx;
                     int y = obl[nom_obl_shar].vy;
-                    txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                    if (nom_obl_shar != 23)
+                    {
+                        txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                    }
 
                     if (old_x != x + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x + 100, y) )
                     {
@@ -425,6 +432,6 @@ int main()
     txDeleteDC(main_menu);
     txDeleteDC(vsecuby);
     txDeleteDC(spraitshara);
-
+    txDeleteDC(fonurovnya);
     return 0;
 }
