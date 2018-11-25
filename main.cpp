@@ -54,8 +54,8 @@ void drawLevelButton(int x, int y, const char* text, COLORREF backColor, COLORRE
     txRectangle(x -  5, y + 24, x + 105, y +  76);
 
     txSetColor(TX_BLACK);
-    txSelectFont("Arial Black", 36);
-    txTextOut  (x + 42, y + 31, text);
+    txSelectFont("Arial Black", 50);
+    txTextOut  (x + 38, y + 25, text);
 }
 
 int main()
@@ -71,12 +71,11 @@ int main()
 	levelButtons[1] = {303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29)};
 	levelButtons[2] = {191, 392, "3", RGB(34, 177, 76), RGB(181, 230, 29)};
 	levelButtons[3] = {508, 151, "4", RGB(255, 127, 39), RGB(255, 201, 14)};
-	levelButtons[4] = {1153, 16, "5", RGB(255, 127, 39), RGB(255, 201, 14)};
-	levelButtons[5] = {246, 569, "6", RGB(255, 127, 39), RGB(255, 201, 14)};
-	levelButtons[6] = {1146, 241, "7", RGB(237, 28, 36), RGB(255, 201, 14)};
+	levelButtons[4] = {953, 116, "5", RGB(255, 127, 39), RGB(255, 201, 14)};
+	levelButtons[5] = {446, 419, "6", RGB(255, 127, 39), RGB(255, 201, 14)};
+	levelButtons[6] = {1000, 291, "7", RGB(237, 28, 36), RGB(255, 201, 14)};
 	levelButtons[7] = {530, 590, "8", RGB(237, 28, 36), RGB(255, 201, 14)};
-	levelButtons[8] = {1039, 438, "9", RGB(237, 28, 36), RGB(255, 201, 14)};
-
+	levelButtons[8] = {1039, 538, "9", RGB(237, 28, 36), RGB(255, 201, 14)};
 
 	for (int n = 0; n < kolich_urovnei; n++)
 	{
@@ -103,6 +102,18 @@ int main()
     string file_adress = "";
 
     OblUr Lev[9];
+	for (int n = 0; n < kolich_urovnei; n++)
+	{
+        char* imya_faila = new char[195];
+        strcpy(imya_faila, "levels\\");
+        strcat(imya_faila, levelButtons[n].text);
+        strcat(imya_faila, ".txt");
+
+		Lev[n] = {levelButtons[n].x, levelButtons[n].x + 100,
+				  levelButtons[n].y, levelButtons[n].y + 100, imya_faila};
+    }
+
+   /* Lev[1] = {levelButtons[1].x, levelButtons[1].x + 100, levelButtons[1].y, levelButtons[1].y + 100, "levels\\2.txt"};
     Lev[0] = {76, 175, 115, 215, "levels\\1.txt"};
     Lev[1] = {301, 401, 125, 225, "levels\\2.txt"};
     Lev[2] = {191, 291, 392, 492, "levels\\3.txt"};
@@ -111,7 +122,7 @@ int main()
     Lev[5] = {247, 347, 569, 669, "levels\\6.txt"};
     Lev[6] = {1145, 1245, 240, 340, "levels\\7.txt"};
     Lev[7] = {503, 603, 591, 691, "levels\\8.txt"};
-    Lev[8] = {1039, 1139, 438, 538, "levels\\9.txt"};
+    Lev[8] = {1039, 1139, 438, 538, "levels\\9.txt"};     */
 
     while(Exit == false && StartGame == false)
     {
@@ -141,6 +152,17 @@ int main()
     {
         txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
 
+		for (int n = 0; n < kolich_urovnei; n++)
+		{
+			if (n < kolich_urovnei - 1)
+			{
+				txSetColor(levelButtons[n].color2, 6);
+				txLine( levelButtons[n].x + 50, levelButtons[n].y + 50, levelButtons[n + 1].x + 50, levelButtons[n + 1].y + 50);
+			}
+
+			drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
+		}                                  
+      
         while(Start_level == false)
         {
             //What about for???
@@ -255,17 +277,12 @@ int main()
                 if (clickOnOblkast(obl[nomer_oblasti]) == 1)
                 {
                     povernuto = true;
-                    //txSleep(100);
                     obl[nomer_oblasti].poloj = obl[nomer_oblasti].poloj + 1;
 
                     if (obl[nomer_oblasti].poloj > obl[nomer_oblasti].max_poloj)
                     {
                         obl[nomer_oblasti].poloj = obl[nomer_oblasti].min_poloj;
                     }
-
-                    //if(
-
-                    //ÃÃ¥ Ã¬Ã¥Ã¸Ã Ã«Ã® Ã¡Ã» Ã±Ã¾Ã¤Ã  Ã¯Ã Ã³Ã§Ã³ Ã¤Ã®Ã¡Ã Ã¢Ã¨Ã²Ã¼. Ã€ Ã²Ã® Ã®Ã·Ã¥Ã­Ã¼ Ã²Ã¿Ã¦Ã¥Ã«Ã® ÃªÃ«Ã¨ÃªÃ®Ã¬ Ã®Ã²Ã«Ã®Ã¢Ã¨Ã²Ã¼ Ã­Ã³Ã¦Ã­Ã®Ã¥ Ã¯Ã®Ã«Ã®Ã¦Ã¥Ã­Ã¨Ã¥
                 }
 
                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
@@ -275,8 +292,7 @@ int main()
             {
                 txSleep(100);
             }
-
-
+          
             if(txMouseButtons () == 1 &&
                 txMouseX () >= 1252 &&
                 txMouseX () <= 1274 &&
@@ -310,7 +326,7 @@ int main()
 
                     int x = obl[nom_obl_shar].lx;
                     int y = obl[nom_obl_shar].vy;
-                    if (nom_obl_shar == 23)
+                    if (nom_obl_shar != 23)
                     {
                         txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
                     }
