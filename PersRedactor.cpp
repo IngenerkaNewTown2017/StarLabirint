@@ -71,6 +71,7 @@ int getAllParts(PersPartButton* bashka, int razmer_odnoi_chasti, int width_golov
     while (coordY < vysota_golov)
     {
         coordX = 0;
+        int kolich_stolbcov = (width_golov /  razmer_odnoi_chasti);
 
         while (coordX < width_golov - razmer_odnoi_chasti)
         {
@@ -78,7 +79,7 @@ int getAllParts(PersPartButton* bashka, int razmer_odnoi_chasti, int width_golov
                                      x_nachalo + (vsego_boshek + 1) * razmer_odnoi_chasti,
                                      y_nachalo,
                                      y_nachalo + 127,
-                                     (vsego_boshek % 3) * razmer_odnoi_chasti,
+                                     (vsego_boshek % kolich_stolbcov) * razmer_odnoi_chasti,
                                      y_nachalo - 127};
             vsego_boshek ++;
             coordX += razmer_odnoi_chasti;
@@ -156,6 +157,8 @@ int main()
     out << x_bashki << std::endl;
     }
     out.close();
+int Cod = 0;
+cin >> Cod;
 
     bool isExit = false;
     while (!GetAsyncKeyState('R') && !isExit) {
@@ -181,6 +184,10 @@ int main()
             //Рисуем все варианты эмоций (но не весь фон меняем!!!)
              vkladka(emodji);
         }
+
+        txSetColor(TX_BLACK, 5);
+        txRectangle(785, 655, 1080, 715);
+        txDrawText(785, 655, 1080, 715, "Сохранить");
 
 
         if (x_bashki != -100)   //450.660
@@ -266,7 +273,7 @@ int main()
             }
         }
 */
-        if (GetAsyncKeyState('B'))
+        if (Cod = 100)
         {
             antivor= true;
         }
@@ -286,6 +293,7 @@ int main()
             txSetColor(TX_RED, 5);
             txDrawText(xtext, 50, 1000,1000, "buy full version");
             txSleep (50);
+
             xtext = xtext+30;
             txSetColor(TX_BLUE, 5);
             txDrawText(xtext, 0, 1000,1000, "buy full version");
