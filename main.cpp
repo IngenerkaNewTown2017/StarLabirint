@@ -71,11 +71,11 @@ int main()
 	levelButtons[1] = {303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29)};
 	levelButtons[2] = {191, 392, "3", RGB(34, 177, 76), RGB(181, 230, 29)};
 	levelButtons[3] = {508, 151, "4", RGB(255, 127, 39), RGB(255, 201, 14)};
-	levelButtons[4] = {953, 116, "5", RGB(255, 127, 39), RGB(255, 201, 14)};
+	levelButtons[4] = {953, 60, "5", RGB(255, 127, 39), RGB(255, 201, 14)};
 	levelButtons[5] = {446, 419, "6", RGB(255, 127, 39), RGB(255, 201, 14)};
-	levelButtons[6] = {1000, 291, "7", RGB(237, 28, 36), RGB(255, 201, 14)};
-	levelButtons[7] = {530, 590, "8", RGB(237, 28, 36), RGB(255, 201, 14)};
-	levelButtons[8] = {1039, 538, "9", RGB(237, 28, 36), RGB(255, 201, 14)};
+	levelButtons[6] = {1100, 150, "7", RGB(237, 28, 36), RGB(255, 127, 39)};
+	levelButtons[7] = {530, 590, "8", RGB(237, 28, 36), RGB(255, 127, 39)};
+	levelButtons[8] = {950, 400, "9", RGB(237, 28, 36), RGB(255, 127, 39)};
 
 	for (int n = 0; n < kolich_urovnei; n++)
 	{
@@ -87,13 +87,14 @@ int main()
 
 		drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
 	}
-    txSleep(4000);
+    txSleep(0);
+
 
     HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
-    HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
+    HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka1.bmp");
     HDC main_menu =      txLoadImage ("pictures\\Labirint\\main_menu.bmp");
     HDC vsecuby =        txLoadImage ("pictures\\Labirint\\vsecuby.bmp");
-    HDC kartaurovneya =  txLoadImage ("pictures\\Labirint\\kartaurovneya.bmp");
+    HDC kartaurovneya1 = txLoadImage ("pictures\\Labirint\\kartaurovneya1.bmp");
     HDC fonurovnya =     txLoadImage ("pictures\\Labirint\\fonurovnya.bmp");
     HDC spraitshara =    txLoadImage ("pictures\\Labirint\\spraitshara.bmp");
 
@@ -149,7 +150,7 @@ int main()
 
     while (StartGame == true)
     {
-        txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
+        txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya1, 0, 0);
 
 		for (int n = 0; n < kolich_urovnei; n++)
 		{
