@@ -66,13 +66,12 @@ int main()
     txSetColor(TX_YELLOW, 6);
     //+50 - ГЇВїВЅГЇВїВЅГЇВїВЅ ГЇВїВЅГЇВїВЅГЇВїВЅГЇВїВЅГЇВїВЅГЇВїВЅ
 
-  LevelButton levelButtons [20];
+    LevelButton levelButtons [20];
 
 	levelButtons[0] = {76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29)};
 	levelButtons[1] = {303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29)};
 	levelButtons[2] = {191, 392, "3", RGB(34, 177, 76), RGB(181, 230, 29)};
 	levelButtons[3] = {508, 151, "4", RGB(255, 127, 39), RGB(255, 201, 14)};
-
 	levelButtons[4] = {953, 60, "5", RGB(255, 127, 39), RGB(255, 201, 14)};
 	levelButtons[5] = {446, 419, "6", RGB(255, 127, 39), RGB(255, 201, 14)};
 	levelButtons[6] = {1100, 150, "7", RGB(237, 28, 36), RGB(255, 127, 39)};
@@ -80,10 +79,10 @@ int main()
 	levelButtons[8] = {950, 400, "9", RGB(237, 28, 36), RGB(255, 127, 39)};
 
 
-
+    //Чтение спсика уровней в директории Levels
     DIR *mydir;
     struct dirent *filename;
-	  int kolich_urovnei = 0;
+    int kolich_urovnei = 0;
 
     if ((mydir = opendir ("levels\\")) != NULL)
     {
@@ -118,10 +117,10 @@ int main()
 
 
     HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
-    HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka1.bmp");
+    HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
     HDC main_menu =      txLoadImage ("pictures\\Labirint\\main_menu.bmp");
     HDC vsecuby =        txLoadImage ("pictures\\Labirint\\vsecuby.bmp");
-    HDC kartaurovneya1 = txLoadImage ("pictures\\Labirint\\kartaurovneya1.bmp");
+    HDC kartaurovneya  = txLoadImage ("pictures\\Labirint\\kartaurovneya.bmp");
     HDC fonurovnya =     txLoadImage ("pictures\\Labirint\\fonurovnya.bmp");
     HDC spraitshara =    txLoadImage ("pictures\\Labirint\\spraitshara.bmp");
 
@@ -129,15 +128,15 @@ int main()
     string file_adress = "";
 
     OblUr Lev[9];
-	  for (int n = 0; n < kolich_urovnei; n++)
- 	  {
+    for (int n = 0; n < kolich_urovnei; n++)
+    {
         char* imya_faila = new char[195];
         strcpy(imya_faila, "levels\\");
         strcat(imya_faila, levelButtons[n].text);
         strcat(imya_faila, ".txt");
 
-		    Lev[n] = {levelButtons[n].x, levelButtons[n].x + 100,
-				  levelButtons[n].y, levelButtons[n].y + 100, imya_faila};
+        Lev[n] = {levelButtons[n].x, levelButtons[n].x + 100,
+                  levelButtons[n].y, levelButtons[n].y + 100, imya_faila};
     }
 
 
@@ -167,6 +166,7 @@ int main()
 
     while (StartGame == true)
     {
+        //Рисуем список уровней
         txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
 
 		for (int n = 0; n < kolich_urovnei; n++)
@@ -174,21 +174,22 @@ int main()
 			if (n < kolich_urovnei - 1)
 			{
 				txSetColor(levelButtons[n].color2, 6);
-				txLine( levelButtons[n].x + 50, levelButtons[n].y + 50, levelButtons[n + 1].x + 50, levelButtons[n + 1].y + 50);
+				txLine(levelButtons[n].x + 50, levelButtons[n].y + 50, levelButtons[n + 1].x + 50, levelButtons[n + 1].y + 50);
 			}
 
 			drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
         }
 
+        //По клику на уровень начинаем новый
         while(Start_level == false)
         {
             for (int n = 0; n < kolich_urovnei; n++)
             {
-                    if(checkClick(Lev[n].x, Lev[n].x1, Lev[n].y, Lev[n].y1))
-                    {
-                        Start_level = true;
-                        file_adress = Lev[n].adress;
-                    }
+                if (checkClick(Lev[n].x, Lev[n].x1, Lev[n].y, Lev[n].y1))
+                {
+                    Start_level = true;
+                    file_adress = Lev[n].adress;
+                }
             }
 
             txSleep(10);
@@ -208,7 +209,7 @@ int main()
 
         string poloj;
         int nomer_obl = 0;
-        while(getline(file, poloj) )//ГѓВЇГѓВ®ГѓВЄГѓВ  ГѓВї ГѓВ­ГѓВҐ ГѓВ¤ГѓВ®ГѓВёГѓВҐГѓВ« ГѓВ¤ГѓВ® ГѓВЄГѓВ®ГѓВ­ГѓВ¶ГѓВ  ГѓВґГѓВ ГѓВ©ГѓВ«ГѓВ 
+        while(getline(file, poloj))//ГѓВЇГѓВ®ГѓВЄГѓВ  ГѓВї ГѓВ­ГѓВҐ ГѓВ¤ГѓВ®ГѓВёГѓВҐГѓВ« ГѓВ¤ГѓВ® ГѓВЄГѓВ®ГѓВ­ГѓВ¶ГѓВ  ГѓВґГѓВ ГѓВ©ГѓВ«ГѓВ 
         {
             obl[nomer_obl] = {atoi(poloj.c_str())};//ГѓВЄГѓВ®ГѓВ­ГѓВўГѓВҐГѓВ°ГѓВІГѓВ ГѓВ¶ГѓВЁГѓВї ГѓВ±ГѓВІГѓВ°ГѓВ®ГѓВЄГѓВЁ ГѓВў ГѓВ·ГѓВЁГѓВ±ГѓВ«ГѓВ®
             obl[nomer_obl].nomber_obl = nomer_obl;
@@ -234,7 +235,15 @@ int main()
         {
             txBegin();
             txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+
             txTransparentBlt(txDC(), 30, 330, 50, 50, spraitshara, 0, 0, TX_WHITE);
+
+
+            //Крестики
+            if (checkClick(1252, 1274, 3, 12))
+            {
+                igor();
+            }
 
 
             bool povernuto = false;
@@ -263,21 +272,9 @@ int main()
                 txSleep(100);
             }
 
-            if(txMouseButtons () == 1 &&
-                txMouseX () >= 1252 &&
-                txMouseX () <= 1274 &&
-                txMouseY () >= 3 &&
-                txMouseY () <= 12)
-               {
-                   igor();
-                }
-            if(txMouseButtons () == 1 &&
-                txMouseX () <= 97 &&
-                txMouseX () >= 23 &&
-                txMouseY () >= 572 &&
-                txMouseY () <= 645)
+            //Старт движения шарика
+            if (checkClick(23, 97, 572, 645))
             {
-
                 bool gameFinished = false;
                 int nom_obl_shar = 16;
 
@@ -377,36 +374,36 @@ int main()
                         old_y = y;
                     }
 
-                    if(nom_obl_shar == 23)
+                    //Прошли уровень
+                    if (nom_obl_shar == 23)
                     {
                         gameFinished = true;
                         Start_level = false;
-                        //Start_game = true;
                         Exit = true;
                         txTransparentBlt(txDC(), 1198, 337, 50, 50, spraitshara, 0, 0, TX_WHITE);
                         txSleep(3000);
                     }
 
-                    //Г‚ГҐГ°Г­ГіГ«ГЁГ±Гј Гў Г­Г Г·Г Г«Г®
+                    //Вернулись в начало
                     if(nom_obl_shar == 16 && old_y > 0 && old_x > 0)
                     {
-                          txSetColor(TX_RED);
-                          txTextOut(240, 50, "ГЏГ°Г®Г±ГІГЁГІГҐ Г¬ГЁГ±ГјГҐ, Г®ГёГЁГЎГЄГ .");
-                          txSleep(4000);
-                          gameFinished = true;
-                          Start_level = false;
-                          //Start_game = true;
-                          Exit = true;
+                        txSetColor(TX_RED);
+                        txTextOut(240, 50, "Простите мисье, ошибка.");
+                        txSleep(4000);
+                        gameFinished = true;
+                        Start_level = false;
+                        Exit = true;
                     }
 
+                    //Застряли на месте
                     if(old_x != x || old_y != y)
                     {
-                          txSetColor(TX_RED);
-                          txTextOut(240, 50, "ГЏГ°Г®Г±ГІГЁГІГҐ Г¬ГЁГ±ГјГҐ, ГўГ» Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г® ГЇГ°Г®ГёГ«ГЁ ГіГ°Г®ГўГҐГ­Гј.");
-                          txSleep(4000);
-                          gameFinished = true;
-                          Start_level = false;
-                          Exit = true;
+                        txSetColor(TX_RED);
+                        txTextOut(240, 50, "Простите мисье, вы неправильно прошли уровень.");
+                        txSleep(4000);
+                        gameFinished = true;
+                        Start_level = false;
+                        Exit = true;
                     }
 
                     txEnd();
@@ -420,7 +417,7 @@ int main()
         Exit = false;
     }
 
-    //ГѓЖ’Гўв‚¬В¦ГѓЖ’Г‚В№ГѓЖ’Г‚ВҐ ГѓЖ’Г‚ВЇГѓЖ’Г‚В ГѓЖ’Г‚В°ГѓЖ’Г‚Ві ГѓЖ’Г‚ВЄГѓЖ’Г‚В ГѓЖ’Г‚В°ГѓЖ’Г‚ВІГѓЖ’Г‚ВЁГѓЖ’Г‚В­ГѓЖ’Г‚В®ГѓЖ’Г‚ВЄ ГѓЖ’Г‚В§ГѓЖ’Г‚В ГѓЖ’Г‚ВЎГѓЖ’Г‚В»ГѓЖ’Г‚ВўГѓЖ’Г‚В ГѓЖ’Г‚ВҐГѓЖ’Г‚ВёГѓЖ’Г‚Вј ГѓЖ’Г‚ВіГѓЖ’Г‚В¤ГѓЖ’Г‚В ГѓЖ’Г‚В«ГѓЖ’Г‚ВЁГѓЖ’Г‚ВІГѓЖ’Г‚Вј
+    //Удаляй и другие картинки
     txDeleteDC(main_menu);
     txDeleteDC(vsecuby);
     txDeleteDC(spraitshara);

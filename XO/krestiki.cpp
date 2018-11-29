@@ -32,12 +32,12 @@ int igor()
 {
     //txCreateWindow(490,490);
 
-    HDC fon = txLoadImage ("крестикинолики.bmp");
+    HDC fon = txLoadImage ("Pictures\\XO\\крестикинолики.bmp");
 
-    HDC krestic = txLoadImage ("крестик.bmp");
+    HDC krestic = txLoadImage ("Pictures\\XO\\крестик.bmp");
     txBitBlt (txDC(), 0, 0, 162, 163, krestic, 0, 0);
 
-    HDC nolic = txLoadImage ("нолик.bmp");
+    HDC nolic = txLoadImage ("Pictures\\XO\\нолик.bmp");
     txBitBlt (txDC(), 0, 170, 162, 158, nolic, 0, 0);
 
     int nomer_X = 0;
@@ -117,7 +117,7 @@ int igor()
 
 
 
-
+        //Тут прям нигде цикл for нельзя, да?
         if (krestikV11 == 1 && krestikV12 == 1 && krestikV13 == 1)
         {
             gameOver = true;

@@ -25,8 +25,6 @@ void drawTabs()
     txDrawText(1000, 80, 1185, 120, "Эмоции");
 }
 
-
-
 int changeTab(int tab)
 {
     if (checkClick(645, 821, 77, 123))
@@ -94,7 +92,7 @@ int getAllParts(PersPartButton* bashka, int razmer_odnoi_chasti, int width_golov
 }
 
 int main()
-    {
+{
     txCreateWindow (1280,720);
     txSetFillColor(TX_WHITE);
 
@@ -110,8 +108,6 @@ int main()
 
     int x_lico = -100;
     int y_lico = 0;
-
-    bool antivor = false;
 
     HDC fon1  = txLoadImage ("pictures\\fon11.bmp");
 
@@ -138,7 +134,8 @@ int main()
     lico[2] = {1055, 350,3, 250, 390, 0};
     lico[3] = {931, 1060,3, 2, 570, 0};
 
-    ifstream file("Lib\\2.txt"); // С„Р°Р№Р» РёР· РєРѕС‚РѕСЂРѕРіРѕ С‡РёС‚Р°РµРј (РґР»СЏ Р»РёРЅСѓРєСЃ РїСѓС‚СЊ Р±СѓРґРµС‚ РІС‹РіР»СЏРґРµС‚СЊ РїРѕ РґСЂСѓРіРѕРјСѓ)
+    //Читаем сохраненную картинку
+    ifstream file("Lib\\2.txt");
 
     string stroka_golovy, stroka_tela,stroka_lico;
     getline(file, stroka_golovy);
@@ -150,19 +147,24 @@ int main()
     file.close();
 
 
-    ofstream out;
+    /*ofstream out;
     out.open("Lib\\3.txt");
     if (out.is_open())
     {
-    out << x_bashki << std::endl;
+        out << x_bashki << std::endl;
     }
-    out.close();
-int Cod = 0;
-cin >> Cod;
+    out.close(); */
+
+    //Код антивора
+    int Cod = 0;
+    cout << "Введите код антивора ";
+    cin >> Cod;
+    bool antivor = (Cod == 100);
+    system("cls");
 
     bool isExit = false;
-    while (!GetAsyncKeyState('R') && !isExit) {
-
+    while (!GetAsyncKeyState('R') && !isExit)
+    {
         txBegin();
         txSetFillColor(TX_WHITE);
         txClear();
@@ -182,7 +184,7 @@ cin >> Cod;
         else if (nomer_vkladki == VKLADKA_LICO)
         {
             //Рисуем все варианты эмоций (но не весь фон меняем!!!)
-             vkladka(emodji);
+            vkladka(emodji);
         }
 
         txSetColor(TX_BLACK, 5);
@@ -227,20 +229,17 @@ cin >> Cod;
                     x_bashki = bashka[nomer_bashki].part_x;
                     y_bashki = bashka[nomer_bashki].part_y;
                 }
-
             }
 
 
-            //640 580 1240 660
-            if (checkClick( 640, 700, 580, 660))
-            {
-                y_bashki = 205;
-            }
-
-
-            if (checkClick(100,200, 100, 200))
+            //640 580 1240 660 - Размеры прямоугольников цветовых
+            if (checkClick(640, 720, 600, 680))
             {
                 face_color = TX_RED;
+            }
+            else if (checkClick(720, 800, 600, 680))
+            {
+                face_color = TX_YELLOW;
             }
         }
 
@@ -273,10 +272,6 @@ cin >> Cod;
             }
         }
 */
-        if (Cod = 100)
-        {
-            antivor= true;
-        }
 
         if (antivor == false )
         {
@@ -314,27 +309,18 @@ cin >> Cod;
         //СОхранение
         if (checkClick(785, 1080, 655, 715))
         {
-
-             ScreenCapture(70, 120, 450, 450, "picture.jpg");
-             txSelectFont("Arial", 150);
-    txSetColor(TX_BLACK, 5);
-    txDrawText(0, 10, 1000,1280, "ава сохранена");
-    txSleep (2000);
+            ScreenCapture(70, 120, 450, 450, "picture.jpg");
+            txSelectFont("Arial", 150);
+            txSetColor(TX_BLACK, 5);
+            txDrawText(0, 10, 1000,1280, "ава сохранена");
+            txSleep (2000);
 
             isExit = true;
         }
 
         txEnd();
         txSleep (50);
-
-		  //при выполнении программы
-
     }
-
-
-
-
-
 
     //Что-то мне кажется. у тебя еще 100500 картинок, которые никто не удаляет
     txDeleteDC(golova);
