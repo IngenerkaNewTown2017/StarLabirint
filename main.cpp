@@ -64,18 +64,15 @@ int main()
     txCreateWindow (1280, 720);
 
     txSetColor(TX_YELLOW, 6);
-    //+50 - ��� ������
+    //+50 - ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
+  LevelButton levelButtons [20];
 
-
-
-
-
-	LevelButton levelButtons [20];
 	levelButtons[0] = {76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29)};
 	levelButtons[1] = {303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29)};
 	levelButtons[2] = {191, 392, "3", RGB(34, 177, 76), RGB(181, 230, 29)};
 	levelButtons[3] = {508, 151, "4", RGB(255, 127, 39), RGB(255, 201, 14)};
+
 	levelButtons[4] = {953, 60, "5", RGB(255, 127, 39), RGB(255, 201, 14)};
 	levelButtons[5] = {446, 419, "6", RGB(255, 127, 39), RGB(255, 201, 14)};
 	levelButtons[6] = {1100, 150, "7", RGB(237, 28, 36), RGB(255, 127, 39)};
@@ -86,7 +83,7 @@ int main()
 
     DIR *mydir;
     struct dirent *filename;
-	int kolich_urovnei = 0;
+	  int kolich_urovnei = 0;
 
     if ((mydir = opendir ("levels\\")) != NULL)
     {
@@ -97,7 +94,6 @@ int main()
                 char* levelmaker = new char[100];
                 string str = filename->d_name;
                 strcpy(levelmaker, str.substr(0, strlen(filename->d_name)-4).c_str());
-                //�������� 4 ��������� �������
 
                 levelButtons[kolich_urovnei].text = levelmaker;
 
@@ -106,9 +102,6 @@ int main()
         }
         closedir (mydir);
     }
-
-
-
 
 
 	for (int n = 0; n < kolich_urovnei; n++)
@@ -121,7 +114,7 @@ int main()
 
 		drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
 	}
-    txSleep(0);
+    txSleep(100);
 
 
     HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
@@ -136,27 +129,17 @@ int main()
     string file_adress = "";
 
     OblUr Lev[9];
-	for (int n = 0; n < kolich_urovnei; n++)
-	{
+	  for (int n = 0; n < kolich_urovnei; n++)
+ 	  {
         char* imya_faila = new char[195];
         strcpy(imya_faila, "levels\\");
         strcat(imya_faila, levelButtons[n].text);
         strcat(imya_faila, ".txt");
 
-		Lev[n] = {levelButtons[n].x, levelButtons[n].x + 100,
+		    Lev[n] = {levelButtons[n].x, levelButtons[n].x + 100,
 				  levelButtons[n].y, levelButtons[n].y + 100, imya_faila};
     }
 
-   /* Lev[1] = {levelButtons[1].x, levelButtons[1].x + 100, levelButtons[1].y, levelButtons[1].y + 100, "levels\\2.txt"};
-    Lev[0] = {76, 175, 115, 215, "levels\\1.txt"};
-    Lev[1] = {301, 401, 125, 225, "levels\\2.txt"};
-    Lev[2] = {191, 291, 392, 492, "levels\\3.txt"};
-    Lev[3] = {506, 606, 151, 251, "levels\\4.txt"};
-    Lev[4] = {1153, 1253, 15, 115, "levels\\5.txt"};
-    Lev[5] = {247, 347, 569, 669, "levels\\6.txt"};
-    Lev[6] = {1145, 1245, 240, 340, "levels\\7.txt"};
-    Lev[7] = {503, 603, 591, 691, "levels\\8.txt"};
-    Lev[8] = {1039, 1139, 438, 538, "levels\\9.txt"};     */
 
     while(Exit == false && StartGame == false)
     {
@@ -184,7 +167,7 @@ int main()
 
     while (StartGame == true)
     {
-        txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya1, 0, 0);
+        txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
 
 		for (int n = 0; n < kolich_urovnei; n++)
 		{
@@ -199,60 +182,13 @@ int main()
 
         while(Start_level == false)
         {
-            //What about for???
-
-            if(checkClick(Lev[0].x, Lev[0].x1, Lev[0].y, Lev[0].y1))
+            for (int n = 0; n < kolich_urovnei; n++)
             {
-                Start_level = true;
-                file_adress = Lev[0].adress;
-            }
-
-            else if(checkClick(Lev[1].x, Lev[1].x1, Lev[1].y, Lev[1].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[1].adress;
-            }
-
-            else if(checkClick(Lev[2].x, Lev[2].x1, Lev[2].y, Lev[2].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[2].adress;
-            }
-
-            else if(checkClick(Lev[3].x, Lev[3].x1, Lev[3].y, Lev[3].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[3].adress;
-            }
-
-            else if(checkClick(Lev[4].x, Lev[4].x1, Lev[4].y, Lev[4].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[4].adress;
-            }
-
-            else if(checkClick(Lev[5].x, Lev[5].x1, Lev[5].y, Lev[5].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[5].adress;
-            }
-
-            else if(checkClick(Lev[6].x, Lev[6].x1, Lev[6].y, Lev[6].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[6].adress;
-            }
-
-             else if(checkClick(Lev[7].x, Lev[7].x1, Lev[7].y, Lev[7].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[7].adress;
-            }
-
-             else if(checkClick(Lev[8].x, Lev[8].x1, Lev[8].y, Lev[8].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[8].adress;
+                    if(checkClick(Lev[n].x, Lev[n].x1, Lev[n].y, Lev[n].y1))
+                    {
+                        Start_level = true;
+                        file_adress = Lev[n].adress;
+                    }
             }
 
             txSleep(10);
@@ -272,9 +208,9 @@ int main()
 
         string poloj;
         int nomer_obl = 0;
-        while(getline(file, poloj) )//ïîêà ÿ íå äîøåë äî êîíöà ôàéëà
+        while(getline(file, poloj) )//Ã¯Ã®ÃªÃ  Ã¿ Ã­Ã¥ Ã¤Ã®Ã¸Ã¥Ã« Ã¤Ã® ÃªÃ®Ã­Ã¶Ã  Ã´Ã Ã©Ã«Ã 
         {
-            obl[nomer_obl] = {atoi(poloj.c_str())};//êîíâåðòàöèÿ ñòðîêè â ÷èñëî
+            obl[nomer_obl] = {atoi(poloj.c_str())};//ÃªÃ®Ã­Ã¢Ã¥Ã°Ã²Ã Ã¶Ã¨Ã¿ Ã±Ã²Ã°Ã®ÃªÃ¨ Ã¢ Ã·Ã¨Ã±Ã«Ã®
             obl[nomer_obl].nomber_obl = nomer_obl;
             nomer_obl = nomer_obl + 1;
         }
@@ -284,7 +220,7 @@ int main()
 
         for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
         {
-            //13%8 = 5, Ã¯Ã®Ã²Ã®Ã¬Ã³ Ã·Ã²Ã® 13 = 8 * 1 + 5
+            //13%8 = 5, ÃƒÂ¯ÃƒÂ®ÃƒÂ²ÃƒÂ®ÃƒÂ¬ÃƒÂ³ ÃƒÂ·ÃƒÂ²ÃƒÂ® 13 = 8 * 1 + 5
             obl[nomer_oblasti].lx = get_min_x((nomer_oblasti % 8) + 1);
             obl[nomer_oblasti].rx = get_min_x((nomer_oblasti % 8) + 2);
             obl[nomer_oblasti].vy = get_min_y(nomer_oblasti / 8 + 1);
@@ -293,7 +229,7 @@ int main()
             obl[nomer_oblasti].min_poloj = min_max_poloj(obl[nomer_oblasti].poloj);
         }
 
-        //ÃŠÃ Ãª Ã¯Ã°Ã®Ã©Ã²Ã¨ Ã¨Ã£Ã°Ã³ / Ã¢Ã»Ã©Ã²Ã¨ Ã¨Ã§ Ã¨Ã£Ã°Ã»? Exit Ã¢Ã¥Ã¤Ã¼ Ã¢Ã±Ã¥Ã£Ã¤Ã  == false
+        //ÃƒÅ ÃƒÂ ÃƒÂª ÃƒÂ¯ÃƒÂ°ÃƒÂ®ÃƒÂ©ÃƒÂ²ÃƒÂ¨ ÃƒÂ¨ÃƒÂ£ÃƒÂ°ÃƒÂ³ / ÃƒÂ¢ÃƒÂ»ÃƒÂ©ÃƒÂ²ÃƒÂ¨ ÃƒÂ¨ÃƒÂ§ ÃƒÂ¨ÃƒÂ£ÃƒÂ°ÃƒÂ»? Exit ÃƒÂ¢ÃƒÂ¥ÃƒÂ¤ÃƒÂ¼ ÃƒÂ¢ÃƒÂ±ÃƒÂ¥ÃƒÂ£ÃƒÂ¤ÃƒÂ  == false
         while(Exit == false)
         {
             txBegin();
@@ -304,10 +240,10 @@ int main()
             bool povernuto = false;
             for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
             {
-                //ÃˆÃ¹Ã¥Ã¬ ÃªÃ®Ã®Ã°Ã¤Ã¨Ã­Ã Ã²Ã³ Ã¤Ã«Ã¿ Ã°Ã¨Ã±Ã®Ã¢Ã Ã­Ã¨Ã¿ Ã­Ã³Ã¦Ã­Ã®Ã£Ã® ÃªÃ Ã¤Ã°Ã 
+                //ÃƒË†ÃƒÂ¹ÃƒÂ¥ÃƒÂ¬ ÃƒÂªÃƒÂ®ÃƒÂ®ÃƒÂ°ÃƒÂ¤ÃƒÂ¨ÃƒÂ­ÃƒÂ ÃƒÂ²ÃƒÂ³ ÃƒÂ¤ÃƒÂ«ÃƒÂ¿ ÃƒÂ°ÃƒÂ¨ÃƒÂ±ÃƒÂ®ÃƒÂ¢ÃƒÂ ÃƒÂ­ÃƒÂ¨ÃƒÂ¿ ÃƒÂ­ÃƒÂ³ÃƒÂ¦ÃƒÂ­ÃƒÂ®ÃƒÂ£ÃƒÂ® ÃƒÂªÃƒÂ ÃƒÂ¤ÃƒÂ°ÃƒÂ 
                 int coord1 = coord(obl[nomer_oblasti]);
 
-                //ÃÃ°Ã®Ã¢Ã¥Ã°Ã¿Ã¥Ã¬, Ã·Ã²Ã® ÃªÃ Ã¤Ã° Ã­Ã¥ Ã±Ã«Ã¨Ã¸ÃªÃ®Ã¬ Ã¡Ã®Ã«Ã¼Ã¸Ã®Ã©
+                //ÃƒÂÃƒÂ°ÃƒÂ®ÃƒÂ¢ÃƒÂ¥ÃƒÂ°ÃƒÂ¿ÃƒÂ¥ÃƒÂ¬, ÃƒÂ·ÃƒÂ²ÃƒÂ® ÃƒÂªÃƒÂ ÃƒÂ¤ÃƒÂ° ÃƒÂ­ÃƒÂ¥ ÃƒÂ±ÃƒÂ«ÃƒÂ¨ÃƒÂ¸ÃƒÂªÃƒÂ®ÃƒÂ¬ ÃƒÂ¡ÃƒÂ®ÃƒÂ«ÃƒÂ¼ÃƒÂ¸ÃƒÂ®ÃƒÂ©
                 if (clickOnOblkast(obl[nomer_oblasti]) == 1)
                 {
                     povernuto = true;
@@ -451,6 +387,28 @@ int main()
                         txSleep(3000);
                     }
 
+                    //Âåðíóëèñü â íà÷àëî
+                    if(nom_obl_shar == 16 && old_y > 0 && old_x > 0)
+                    {
+                          txSetColor(TX_RED);
+                          txTextOut(240, 50, "Ïðîñòèòå ìèñüå, îøèáêà.");
+                          txSleep(4000);
+                          gameFinished = true;
+                          Start_level = false;
+                          //Start_game = true;
+                          Exit = true;
+                    }
+
+                    if(old_x != x || old_y != y)
+                    {
+                          txSetColor(TX_RED);
+                          txTextOut(240, 50, "Ïðîñòèòå ìèñüå, âû íåïðàâèëüíî ïðîøëè óðîâåíü.");
+                          txSleep(4000);
+                          gameFinished = true;
+                          Start_level = false;
+                          Exit = true;
+                    }
+
                     txEnd();
                 }
             }
@@ -462,7 +420,7 @@ int main()
         Exit = false;
     }
 
-    //Ã…Ã¹Ã¥ Ã¯Ã Ã°Ã³ ÃªÃ Ã°Ã²Ã¨Ã­Ã®Ãª Ã§Ã Ã¡Ã»Ã¢Ã Ã¥Ã¸Ã¼ Ã³Ã¤Ã Ã«Ã¨Ã²Ã¼
+    //Ãƒâ€¦ÃƒÂ¹ÃƒÂ¥ ÃƒÂ¯ÃƒÂ ÃƒÂ°ÃƒÂ³ ÃƒÂªÃƒÂ ÃƒÂ°ÃƒÂ²ÃƒÂ¨ÃƒÂ­ÃƒÂ®ÃƒÂª ÃƒÂ§ÃƒÂ ÃƒÂ¡ÃƒÂ»ÃƒÂ¢ÃƒÂ ÃƒÂ¥ÃƒÂ¸ÃƒÂ¼ ÃƒÂ³ÃƒÂ¤ÃƒÂ ÃƒÂ«ÃƒÂ¨ÃƒÂ²ÃƒÂ¼
     txDeleteDC(main_menu);
     txDeleteDC(vsecuby);
     txDeleteDC(spraitshara);
