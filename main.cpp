@@ -27,6 +27,14 @@ struct OblUr
     const char* adress;
 };
 
+//int
+
+/*struct urovni
+{
+  Start_level;
+
+};  */
+
 int uroven_tekushii = 1;
 int uroven_staryi = 0;
 
@@ -165,59 +173,13 @@ int main()
         while(Start_level == false)
         {
             //What about for???
-
-            if(checkClick(Lev[0].x, Lev[0].x1, Lev[0].y, Lev[0].y1))
+            for (int n = 0; n < kolich_urovnei; n++)
             {
-                Start_level = true;
-                file_adress = Lev[0].adress;
-            }
-
-            else if(checkClick(Lev[1].x, Lev[1].x1, Lev[1].y, Lev[1].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[1].adress;
-            }
-
-            else if(checkClick(Lev[2].x, Lev[2].x1, Lev[2].y, Lev[2].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[2].adress;
-            }
-
-            else if(checkClick(Lev[3].x, Lev[3].x1, Lev[3].y, Lev[3].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[3].adress;
-            }
-
-            else if(checkClick(Lev[4].x, Lev[4].x1, Lev[4].y, Lev[4].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[4].adress;
-            }
-
-            else if(checkClick(Lev[5].x, Lev[5].x1, Lev[5].y, Lev[5].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[5].adress;
-            }
-
-            else if(checkClick(Lev[6].x, Lev[6].x1, Lev[6].y, Lev[6].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[6].adress;
-            }
-
-             else if(checkClick(Lev[7].x, Lev[7].x1, Lev[7].y, Lev[7].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[7].adress;
-            }
-
-             else if(checkClick(Lev[8].x, Lev[8].x1, Lev[8].y, Lev[8].y1))
-            {
-                Start_level = true;
-                file_adress = Lev[8].adress;
+                    if(checkClick(Lev[n].x, Lev[n].x1, Lev[n].y, Lev[n].y1))
+                    {
+                        Start_level = true;
+                        file_adress = Lev[n].adress;
+                    }
             }
 
             txSleep(10);
@@ -414,6 +376,28 @@ int main()
                         Exit = true;
                         txTransparentBlt(txDC(), 1198, 337, 50, 50, spraitshara, 0, 0, TX_WHITE);
                         txSleep(3000);
+                    }
+
+                    //Вернулись в начало
+                    if(nom_obl_shar == 16 && old_y > 0 && old_x > 0)
+                    {
+                          txSetColor(TX_RED);
+                          txTextOut(240, 50, "Простите мисье, ошибка.");
+                          txSleep(4000);
+                          gameFinished = true;
+                          Start_level = false;
+                          //Start_game = true;
+                          Exit = true;
+                    }
+
+                    if(old_x != x || old_y != y)
+                    {
+                          txSetColor(TX_RED);
+                          txTextOut(240, 50, "Простите мисье, вы неправильно прошли уровень.");
+                          txSleep(4000);
+                          gameFinished = true;
+                          Start_level = false;
+                          Exit = true;
                     }
 
                     txEnd();
