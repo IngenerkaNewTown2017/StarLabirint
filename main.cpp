@@ -102,6 +102,9 @@ int main()
         closedir (mydir);
     }
 
+    //ѕоследний уровень рисуем на месте дев€того
+    levelButtons[kolich_urovnei - 1].y = levelButtons[8].y;
+    levelButtons[kolich_urovnei - 1].x = levelButtons[8].x;
 
 	for (int n = 0; n < kolich_urovnei; n++)
 	{
