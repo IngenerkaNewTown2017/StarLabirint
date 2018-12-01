@@ -119,7 +119,9 @@ int main()
     int vysota_tel = SizerY(teloPic);
     HDC rects  = txLoadImage ("pictures\\rects.bmp");
     HDC emodji = txLoadImage ("pictures\\5.bmp");
-    HDC lico1 = txLoadImage ("pictures\\eye.bmp");
+    HDC lico1 = txLoadImage ("pictures\\eye2.bmp");
+    int width_emo = SizerX(lico1);
+    int vysota_emo = SizerY(lico1);
     HDC kartinka = fon1;
 
     PersPartButton bashka[100];
@@ -127,12 +129,12 @@ int main()
     PersPartButton telo[100];
     int vsego_tel = getAllParts(telo, RAZMER_KARTINKI_TELA, width_tel, vysota_tel, 220);
 
-    int vsego_emoj = 4;
-    PersPartButton lico[vsego_emoj];
-    lico[0] = { 640, 783,3,250,   5, 0};
+    PersPartButton lico[100];
+    int vsego_emoj = getAllParts(lico, RAZMER_KARTINKI_EMOJI, width_emo, vysota_emo, 75);
+    /*lico[0] = { 640, 783,3,250,   5, 0};
     lico[1] = { 785,  925,3, 250, 200, 0};
     lico[2] = {1055, 350,3, 250, 390, 0};
-    lico[3] = {931, 1060,3, 2, 570, 0};
+    lico[3] = {931, 1060,3, 2, 570, 0};*/
 
     //Читаем сохраненную картинку
     ifstream file("Lib\\2.txt");
@@ -157,6 +159,7 @@ int main()
 
     //Код антивора
     int Cod = 0;
+    cout <<  std::endl;
     cout << "Введите код антивора ";
     cin >> Cod;
     bool antivor = (Cod == 100);
@@ -183,8 +186,9 @@ int main()
         }
         else if (nomer_vkladki == VKLADKA_LICO)
         {
+            txBitBlt (txDC(), 639, 120, 660, 80, lico1, 0, 0);
             //Рисуем все варианты эмоций (но не весь фон меняем!!!)
-            vkladka(emodji);
+            //vkladka(emodji);
         }
 
         txSetColor(TX_BLACK, 5);
@@ -207,7 +211,7 @@ int main()
 
         if (x_lico != -100)
         {
-            //risovat_lico(lico1,x_lico,y_lico);
+            risovat_lico(lico1,x_lico,y_lico);
         }
         nomer_vkladki = changeTab(nomer_vkladki);
 
@@ -259,7 +263,7 @@ int main()
         }
 
 
-        /*if (nomer_vkladki == VKLADKA_LICO)
+        if (nomer_vkladki == VKLADKA_LICO)
         {
             for (int nomer_lico = 0; nomer_lico < vsego_emoj; nomer_lico++)
             {
@@ -268,10 +272,9 @@ int main()
                     x_lico = lico[nomer_lico].part_x;
                     y_lico = lico[nomer_lico].part_y;
                 }
-
             }
         }
-*/
+
 
         if (antivor == false )
         {
