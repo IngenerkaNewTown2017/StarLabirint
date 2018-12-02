@@ -8,3 +8,4 @@ const int VKLADKA_LICO = 3;
 
 const int RAZMER_KARTINKI_GOLOVY = 165;
 const int RAZMER_KARTINKI_TELA = 162;
+const int RAZMER_KARTINKI_EMOJI = 105;
