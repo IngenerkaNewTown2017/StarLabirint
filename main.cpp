@@ -37,6 +37,7 @@ int y_ball;
 bool Exit = false;
 bool StartGame = false;
 bool Start_level = false;
+bool Game = false;
 
 
 using namespace std;
@@ -59,12 +60,57 @@ void drawLevelButton(int x, int y, const char* text, COLORREF backColor, COLORRE
     txTextOut  (x + 38, y + 25, text);
 }
 
+bool checkReturnToStart(int nom_obl_shar, int old_x, int old_y);
+bool checkReturnToStart(int nom_obl_shar, int old_x, int old_y)
+{
+    if(nom_obl_shar == 16 && old_y > 0 && old_x > 0)
+    {
+        txSetColor(TX_RED);
+        txTextOut(240, 50, "Ïðîñòèòå ìèñüå, îøèáêà.");
+        txSleep(4000);
+        return true;
+    }
+    return false;
+}
+
+bool proshli(int nom_obl_shar, HDC spraitshara);
+bool proshli(int nom_obl_shar, HDC spraitshara)
+{
+    if(nom_obl_shar == 23)
+    {
+        txTransparentBlt(txDC(), 1198, 337, 50, 50, spraitshara, 0, 0, TX_WHITE);
+        txSleep(3000);
+        return true;
+    }
+    return false;
+ }
+
 int main()
 {
     txCreateWindow (1280, 720);
 
+    //Game == true;
+
+    /*if(Exit == false)
+    {
+        Game = true;
+    }
+    else if(StartGame == false)
+    {
+       Game = true;
+    }
+
+    if(Game == true)
+    {
+        Exit = false;
+    }
+    else if(Game == true)
+    {
+        StartGame = false;
+    } */
+
     txSetColor(TX_YELLOW, 6);
-    //+50 - ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    //+50 - Ã¯Â¿Â½Ã¯Â¿Â½Ã¯Â¿Â½ Ã¯Â¿Â½Ã¯Â¿Â½Ã¯Â¿Â½Ã¯Â¿Â½Ã¯Â¿Â½Ã¯Â¿Â½
 
     LevelButton levelButtons [20];
 
@@ -79,7 +125,7 @@ int main()
 	levelButtons[8] = {950, 400, "9", RGB(237, 28, 36), RGB(255, 127, 39)};
 
 
-    //������ ������ ������� � ���������� Levels
+    //×òåíèå ñïñèêà óðîâíåé â äèðåêòîðèè Levels
     DIR *mydir;
     struct dirent *filename;
     int kolich_urovnei = 0;
@@ -102,7 +148,7 @@ int main()
         closedir (mydir);
     }
 
-    //��������� ������� ������ �� ����� ��������
+    //Ïîñëåäíèé óðîâåíü ðèñóåì íà ìåñòå äåâÿòîãî
     levelButtons[kolich_urovnei - 1].y = levelButtons[8].y;
     levelButtons[kolich_urovnei - 1].x = levelButtons[8].x;
 
@@ -143,284 +189,295 @@ int main()
     }
 
 
-    while(Exit == false && StartGame == false)
+    while(/*Game == true*/Exit == false && StartGame == false)
     {
-        txBegin();
-        txClear();
-        txBitBlt (txDC(), 0, 0, 1280, 720, main_menu, 0, 0);
+       //if(Game == true)
+       //{
+         txBegin();
+         txClear();
+         txBitBlt (txDC(), 0, 0, 1280, 720, main_menu, 0, 0);
 
-        if(txMouseButtons () == 1 &&
-            txMouseX () >= 525 &&
-            txMouseX () <= 689 &&
-            txMouseY () >= 480 &&
-            txMouseY () <= 580)
-        {
-            Exit = true;
+         if(txMouseButtons () == 1 &&
+             txMouseX () >= 525 &&
+             txMouseX () <= 689 &&
+             txMouseY () >= 480 &&
+             txMouseY () <= 580)
+         {
+             Exit = true;
+         }
+
+         if (checkClick(517, 705, 274, 370))
+         {
+             StartGame = true;
+         }
+
+         txSleep(10);
+         txEnd();
+        //}
         }
 
-        if (checkClick(517, 705, 274, 370))
+        while (StartGame == true)
         {
-            StartGame = true;
-        }
+            //Ðèñóåì ñïèñîê óðîâíåé
+            txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
 
-        txSleep(10);
-        txEnd();
-    }
+            /*if(GetAsyncKeyState(VK_ESCAPE))
+            {
+               Game = true;
+            }*/
 
-    while (StartGame == true)
-    {
-        //������ ������ �������
-        txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
 
-		for (int n = 0; n < kolich_urovnei; n++)
-		{
-			if (n < kolich_urovnei - 1)
-			{
-				txSetColor(levelButtons[n].color2, 6);
-				txLine(levelButtons[n].x + 50, levelButtons[n].y + 50, levelButtons[n + 1].x + 50, levelButtons[n + 1].y + 50);
-			}
-
-			drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
-        }
-
-        //�� ����� �� ������� �������� �����
-        while(Start_level == false)
-        {
             for (int n = 0; n < kolich_urovnei; n++)
             {
-                if (checkClick(Lev[n].x, Lev[n].x1, Lev[n].y, Lev[n].y1))
+                if (n < kolich_urovnei - 1)
                 {
-                    Start_level = true;
-                    file_adress = Lev[n].adress;
+                    txSetColor(levelButtons[n].color2, 6);
+                    txLine(levelButtons[n].x + 50, levelButtons[n].y + 50, levelButtons[n + 1].x + 50, levelButtons[n + 1].y + 50);
                 }
+
+                drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
             }
 
-            txSleep(10);
-        }
-
-
-        while(frame < 40)
-        {
-            txBitBlt (txDC(), 0, 0, 1280, 720, zagruzka, 0, 0);
-            txBitBlt (txDC(), 1100, 530, 90, 90, spraitzagruzki, 90 * (frame % 4), 0);
-            txSleep(50);
-            frame = frame + 1;
-        }
-
-
-        ifstream file (file_adress);
-
-        string poloj;
-        int nomer_obl = 0;
-        while(getline(file, poloj))//Ã¯Ã®ÃªÃ  Ã¿ Ã­Ã¥ Ã¤Ã®Ã¸Ã¥Ã« Ã¤Ã® ÃªÃ®Ã­Ã¶Ã  Ã´Ã Ã©Ã«Ã 
-        {
-            obl[nomer_obl] = {atoi(poloj.c_str())};//ÃªÃ®Ã­Ã¢Ã¥Ã°Ã²Ã Ã¶Ã¨Ã¿ Ã±Ã²Ã°Ã®ÃªÃ¨ Ã¢ Ã·Ã¨Ã±Ã«Ã®
-            obl[nomer_obl].nomber_obl = nomer_obl;
-            nomer_obl = nomer_obl + 1;
-        }
-
-        file.close();
-
-
-        for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
-        {
-            //13%8 = 5, ÃƒÂ¯ÃƒÂ®ÃƒÂ²ÃƒÂ®ÃƒÂ¬ÃƒÂ³ ÃƒÂ·ÃƒÂ²ÃƒÂ® 13 = 8 * 1 + 5
-            obl[nomer_oblasti].lx = get_min_x((nomer_oblasti % 8) + 1);
-            obl[nomer_oblasti].rx = get_min_x((nomer_oblasti % 8) + 2);
-            obl[nomer_oblasti].vy = get_min_y(nomer_oblasti / 8 + 1);
-            obl[nomer_oblasti].ny = get_min_y(nomer_oblasti / 8 + 2);
-            obl[nomer_oblasti].max_poloj = get_max_poloj(obl[nomer_oblasti].poloj);
-            obl[nomer_oblasti].min_poloj = min_max_poloj(obl[nomer_oblasti].poloj);
-        }
-
-        //ÃƒÅ ÃƒÂ ÃƒÂª ÃƒÂ¯ÃƒÂ°ÃƒÂ®ÃƒÂ©ÃƒÂ²ÃƒÂ¨ ÃƒÂ¨ÃƒÂ£ÃƒÂ°ÃƒÂ³ / ÃƒÂ¢ÃƒÂ»ÃƒÂ©ÃƒÂ²ÃƒÂ¨ ÃƒÂ¨ÃƒÂ§ ÃƒÂ¨ÃƒÂ£ÃƒÂ°ÃƒÂ»? Exit ÃƒÂ¢ÃƒÂ¥ÃƒÂ¤ÃƒÂ¼ ÃƒÂ¢ÃƒÂ±ÃƒÂ¥ÃƒÂ£ÃƒÂ¤ÃƒÂ  == false
-        while(Exit == false)
-        {
-            txBegin();
-            txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
-
-            txTransparentBlt(txDC(), 30, 330, 50, 50, spraitshara, 0, 0, TX_WHITE);
-
-
-            //��������
-            if (checkClick(1252, 1274, 3, 12))
+            //Ïî êëèêó íà óðîâåíü íà÷èíàåì íîâûé
+            while(Start_level == false && Exit == false)
             {
-                igor();
-            }
-
-
-            bool povernuto = false;
-            for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
-            {
-                //ÃƒË†ÃƒÂ¹ÃƒÂ¥ÃƒÂ¬ ÃƒÂªÃƒÂ®ÃƒÂ®ÃƒÂ°ÃƒÂ¤ÃƒÂ¨ÃƒÂ­ÃƒÂ ÃƒÂ²ÃƒÂ³ ÃƒÂ¤ÃƒÂ«ÃƒÂ¿ ÃƒÂ°ÃƒÂ¨ÃƒÂ±ÃƒÂ®ÃƒÂ¢ÃƒÂ ÃƒÂ­ÃƒÂ¨ÃƒÂ¿ ÃƒÂ­ÃƒÂ³ÃƒÂ¦ÃƒÂ­ÃƒÂ®ÃƒÂ£ÃƒÂ® ÃƒÂªÃƒÂ ÃƒÂ¤ÃƒÂ°ÃƒÂ 
-                int coord1 = coord(obl[nomer_oblasti]);
-
-                //ÃƒÂÃƒÂ°ÃƒÂ®ÃƒÂ¢ÃƒÂ¥ÃƒÂ°ÃƒÂ¿ÃƒÂ¥ÃƒÂ¬, ÃƒÂ·ÃƒÂ²ÃƒÂ® ÃƒÂªÃƒÂ ÃƒÂ¤ÃƒÂ° ÃƒÂ­ÃƒÂ¥ ÃƒÂ±ÃƒÂ«ÃƒÂ¨ÃƒÂ¸ÃƒÂªÃƒÂ®ÃƒÂ¬ ÃƒÂ¡ÃƒÂ®ÃƒÂ«ÃƒÂ¼ÃƒÂ¸ÃƒÂ®ÃƒÂ©
-                if (clickOnOblkast(obl[nomer_oblasti]) == 1)
+               if(GetAsyncKeyState(VK_ESCAPE))
                 {
-                    povernuto = true;
-                    obl[nomer_oblasti].poloj = obl[nomer_oblasti].poloj + 1;
+                 Exit = true;
+                 StartGame = false;
+                }
 
-                    if (obl[nomer_oblasti].poloj > obl[nomer_oblasti].max_poloj)
+                for (int n = 0; n < kolich_urovnei; n++)
+                {
+                    if (checkClick(Lev[n].x, Lev[n].x1, Lev[n].y, Lev[n].y1))
                     {
-                        obl[nomer_oblasti].poloj = obl[nomer_oblasti].min_poloj;
+                        Start_level = true;
+                        file_adress = Lev[n].adress;
                     }
                 }
 
-                txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
+                txSleep(10);
             }
 
-            if (povernuto)
+            if (Exit == false)
             {
-                txSleep(100);
-            }
+                while(frame < 40)
+                {
+                    txBitBlt (txDC(), 0, 0, 1280, 720, zagruzka, 0, 0);
+                    txBitBlt (txDC(), 1100, 530, 90, 90, spraitzagruzki, 90 * (frame % 4), 0);
+                    txSleep(50);
+                    frame = frame + 1;
+                }
 
-            //����� �������� ������
-            if (checkClick(23, 97, 572, 645))
-            {
-                bool gameFinished = false;
-                int nom_obl_shar = 16;
 
-                int old_x = 0;
-                int old_y = 0;
+                ifstream file (file_adress);
 
-                while (!gameFinished)
+                string poloj;
+                int nomer_obl = 0;
+                while(getline(file, poloj))//ÃƒÂ¯ÃƒÂ®ÃƒÂªÃƒÂ  ÃƒÂ¿ ÃƒÂ­ÃƒÂ¥ ÃƒÂ¤ÃƒÂ®ÃƒÂ¸ÃƒÂ¥ÃƒÂ« ÃƒÂ¤ÃƒÂ® ÃƒÂªÃƒÂ®ÃƒÂ­ÃƒÂ¶ÃƒÂ  ÃƒÂ´ÃƒÂ ÃƒÂ©ÃƒÂ«ÃƒÂ 
+                {
+                    obl[nomer_obl] = {atoi(poloj.c_str())};//ÃƒÂªÃƒÂ®ÃƒÂ­ÃƒÂ¢ÃƒÂ¥ÃƒÂ°ÃƒÂ²ÃƒÂ ÃƒÂ¶ÃƒÂ¨ÃƒÂ¿ ÃƒÂ±ÃƒÂ²ÃƒÂ°ÃƒÂ®ÃƒÂªÃƒÂ¨ ÃƒÂ¢ ÃƒÂ·ÃƒÂ¨ÃƒÂ±ÃƒÂ«ÃƒÂ®
+                    obl[nomer_obl].nomber_obl = nomer_obl;
+                    nomer_obl = nomer_obl + 1;
+                }
+
+                file.close();
+
+
+                for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                {
+                    //13%8 = 5, ÃƒÆ’Ã‚Â¯ÃƒÆ’Ã‚Â®ÃƒÆ’Ã‚Â²ÃƒÆ’Ã‚Â®ÃƒÆ’Ã‚Â¬ÃƒÆ’Ã‚Â³ ÃƒÆ’Ã‚Â·ÃƒÆ’Ã‚Â²ÃƒÆ’Ã‚Â® 13 = 8 * 1 + 5
+                    obl[nomer_oblasti].lx = get_min_x((nomer_oblasti % 8) + 1);
+                    obl[nomer_oblasti].rx = get_min_x((nomer_oblasti % 8) + 2);
+                    obl[nomer_oblasti].vy = get_min_y(nomer_oblasti / 8 + 1);
+                    obl[nomer_oblasti].ny = get_min_y(nomer_oblasti / 8 + 2);
+                    obl[nomer_oblasti].max_poloj = get_max_poloj(obl[nomer_oblasti].poloj);
+                    obl[nomer_oblasti].min_poloj = min_max_poloj(obl[nomer_oblasti].poloj);
+                }
+
+                //ÃƒÆ’Ã…Â ÃƒÆ’Ã‚Â ÃƒÆ’Ã‚Âª ÃƒÆ’Ã‚Â¯ÃƒÆ’Ã‚Â°ÃƒÆ’Ã‚Â®ÃƒÆ’Ã‚Â©ÃƒÆ’Ã‚Â²ÃƒÆ’Ã‚Â¨ ÃƒÆ’Ã‚Â¨ÃƒÆ’Ã‚Â£ÃƒÆ’Ã‚Â°ÃƒÆ’Ã‚Â³ / ÃƒÆ’Ã‚Â¢ÃƒÆ’Ã‚Â»ÃƒÆ’Ã‚Â©ÃƒÆ’Ã‚Â²ÃƒÆ’Ã‚Â¨ ÃƒÆ’Ã‚Â¨ÃƒÆ’Ã‚Â§ ÃƒÆ’Ã‚Â¨ÃƒÆ’Ã‚Â£ÃƒÆ’Ã‚Â°ÃƒÆ’Ã‚Â»? Exit ÃƒÆ’Ã‚Â¢ÃƒÆ’Ã‚Â¥ÃƒÆ’Ã‚Â¤ÃƒÆ’Ã‚Â¼ ÃƒÆ’Ã‚Â¢ÃƒÆ’Ã‚Â±ÃƒÆ’Ã‚Â¥ÃƒÆ’Ã‚Â£ÃƒÆ’Ã‚Â¤ÃƒÆ’Ã‚Â  == false
+                while(Exit == false)
                 {
                     txBegin();
                     txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
 
+                    txTransparentBlt(txDC(), 30, 330, 50, 50, spraitshara, 0, 0, TX_WHITE);
+
+
+                    //Êðåñòèêè
+                    if (checkClick(1252, 1274, 3, 12))
+                    {
+                        igor();
+                    }
+
+
+                    bool povernuto = false;
                     for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
                     {
-                        txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                        //ÃƒÆ’Ã‹â€ ÃƒÆ’Ã‚Â¹ÃƒÆ’Ã‚Â¥ÃƒÆ’Ã‚Â¬ ÃƒÆ’Ã‚ÂªÃƒÆ’Ã‚Â®ÃƒÆ’Ã‚Â®ÃƒÆ’Ã‚Â°ÃƒÆ’Ã‚Â¤ÃƒÆ’Ã‚Â¨ÃƒÆ’Ã‚Â­ÃƒÆ’Ã‚Â ÃƒÆ’Ã‚Â²ÃƒÆ’Ã‚Â³ ÃƒÆ’Ã‚Â¤ÃƒÆ’Ã‚Â«ÃƒÆ’Ã‚Â¿ ÃƒÆ’Ã‚Â°ÃƒÆ’Ã‚Â¨ÃƒÆ’Ã‚Â±ÃƒÆ’Ã‚Â®ÃƒÆ’Ã‚Â¢ÃƒÆ’Ã‚Â ÃƒÆ’Ã‚Â­ÃƒÆ’Ã‚Â¨ÃƒÆ’Ã‚Â¿ ÃƒÆ’Ã‚Â­ÃƒÆ’Ã‚Â³ÃƒÆ’Ã‚Â¦ÃƒÆ’Ã‚Â­ÃƒÆ’Ã‚Â®ÃƒÆ’Ã‚Â£ÃƒÆ’Ã‚Â® ÃƒÆ’Ã‚ÂªÃƒÆ’Ã‚Â ÃƒÆ’Ã‚Â¤ÃƒÆ’Ã‚Â°ÃƒÆ’Ã‚Â 
+                        int coord1 = coord(obl[nomer_oblasti]);
+
+                        //ÃƒÆ’Ã‚ÂÃƒÆ’Ã‚Â°ÃƒÆ’Ã‚Â®ÃƒÆ’Ã‚Â¢ÃƒÆ’Ã‚Â¥ÃƒÆ’Ã‚Â°ÃƒÆ’Ã‚Â¿ÃƒÆ’Ã‚Â¥ÃƒÆ’Ã‚Â¬, ÃƒÆ’Ã‚Â·ÃƒÆ’Ã‚Â²ÃƒÆ’Ã‚Â® ÃƒÆ’Ã‚ÂªÃƒÆ’Ã‚Â ÃƒÆ’Ã‚Â¤ÃƒÆ’Ã‚Â° ÃƒÆ’Ã‚Â­ÃƒÆ’Ã‚Â¥ ÃƒÆ’Ã‚Â±ÃƒÆ’Ã‚Â«ÃƒÆ’Ã‚Â¨ÃƒÆ’Ã‚Â¸ÃƒÆ’Ã‚ÂªÃƒÆ’Ã‚Â®ÃƒÆ’Ã‚Â¬ ÃƒÆ’Ã‚Â¡ÃƒÆ’Ã‚Â®ÃƒÆ’Ã‚Â«ÃƒÆ’Ã‚Â¼ÃƒÆ’Ã‚Â¸ÃƒÆ’Ã‚Â®ÃƒÆ’Ã‚Â©
+                        if (clickOnOblkast(obl[nomer_oblasti]) == 1)
+                        {
+                            povernuto = true;
+                            obl[nomer_oblasti].poloj = obl[nomer_oblasti].poloj + 1;
+
+                            if (obl[nomer_oblasti].poloj > obl[nomer_oblasti].max_poloj)
+                            {
+                                obl[nomer_oblasti].poloj = obl[nomer_oblasti].min_poloj;
+                            }
+                        }
+
+                        txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby, coord1, 10);
                     }
 
-                    int x = obl[nom_obl_shar].lx;
-                    int y = obl[nom_obl_shar].vy;
-                    if (nom_obl_shar != 23)
+                    if (povernuto)
                     {
-                        txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                        txSleep(100);
                     }
 
-                    if (old_x != x + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x + 100, y) )
+                    //Ñòàðò äâèæåíèÿ øàðèêà
+                    if (checkClick(23, 97, 572, 645))
                     {
-                        for(int old_x1 = x ; old_x1 <= x + 100; old_x1 += speed_ball)
+                        bool gameFinished = false;
+                        int nom_obl_shar = 16;
+
+                        int old_x = 0;
+                        int old_y = 0;
+
+                        while (!gameFinished)
                         {
                             txBegin();
                             txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+
                             for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
                             {
                                 txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
                             }
-                            txTransparentBlt(txDC(), old_x1 + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
-                            txEnd();
-                            txSleep(10);
-                        }
-
-                        nom_obl_shar = nom_obl_shar + 1;
-                        old_x = x;
-                        old_y = y;
-                    }
-                    else if (old_x != x - 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x - 100, y) )
-                    {
-                        for(int old_x1 = x ; old_x1 >= x - 100; old_x1 -= speed_ball)
-                        {
-                            txBegin();
-                            txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
-                            for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                            int x = obl[nom_obl_shar].lx;
+                            int y = obl[nom_obl_shar].vy;
+                            if (nom_obl_shar != 23)
                             {
-                                txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                                txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
                             }
-                            txTransparentBlt(txDC(), old_x1 + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
-                            txEnd();
-                            txSleep(10);
-                        }
 
-                        nom_obl_shar = nom_obl_shar - 1;
-                        old_x = x;
-                        old_y = y;
-                    }
-                    else if (old_y != y - 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y - 100) )
-                    {
-                        for(int old_y1 = y ; old_y1 >= y- 100; old_y1 -= speed_ball)
-                        {
-                            txBegin();
-                            txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
-                            for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                            if (old_x != x + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x + 100, y) )
                             {
-                                txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
-                            }
-                            txTransparentBlt(txDC(), x + 25, old_y1 + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
-                            txEnd();
-                            txSleep(10);
-                        }
+                                for(int old_x1 = x ; old_x1 <= x + 100; old_x1 += speed_ball)
+                                {
+                                    txBegin();
+                                    txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+                                    for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                                    {
+                                        txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                                    }
+                                    txTransparentBlt(txDC(), old_x1 + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                                    txEnd();
+                                    txSleep(10);
+                                }
 
-                        nom_obl_shar = nom_obl_shar - 8;
-                        old_x = x;
-                        old_y = y;
-                    }
-                    else if (old_y != y + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y + 100) )
-                    {
-                        for(int old_y1 = y ; old_y1 <= y + 100; old_y1 += speed_ball)
-                        {
-                            txBegin();
-                            txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
-                            for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                                nom_obl_shar = nom_obl_shar + 1;
+                                old_x = x;
+                                old_y = y;
+                            }
+                            else if (old_x != x - 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x - 100, y) )
                             {
-                                txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                                for(int old_x1 = x ; old_x1 >= x - 100; old_x1 -= speed_ball)
+                                {
+                                    txBegin();
+                                    txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+                                    for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                                    {
+                                        txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                                    }
+                                    txTransparentBlt(txDC(), old_x1 + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                                    txEnd();
+                                    txSleep(10);
+                                }
+
+                                nom_obl_shar = nom_obl_shar - 1;
+                                old_x = x;
+                                old_y = y;
                             }
-                            txTransparentBlt(txDC(), x + 25, old_y1 + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                            else if (old_y != y - 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y - 100) )
+                            {
+                                for(int old_y1 = y ; old_y1 >= y- 100; old_y1 -= speed_ball)
+                                {
+                                    txBegin();
+                                    txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+                                    for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                                    {
+                                        txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                                    }
+                                    txTransparentBlt(txDC(), x + 25, old_y1 + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                                    txEnd();
+                                    txSleep(10);
+                                }
+
+                                nom_obl_shar = nom_obl_shar - 8;
+                                old_x = x;
+                                old_y = y;
+                            }
+                            else if (old_y != y + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y + 100) )
+                            {
+                                for(int old_y1 = y ; old_y1 <= y + 100; old_y1 += speed_ball)
+                                {
+                                    txBegin();
+                                    txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+                                    for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+                                    {
+                                        txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+                                    }
+                                    txTransparentBlt(txDC(), x + 25, old_y1 + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+                                    txEnd();
+                                    txSleep(10);
+                                }
+                                nom_obl_shar = nom_obl_shar + 8;
+                                old_x = x;
+                                old_y = y;
+                            }
+
+                            //Ïðîøëè óðîâåíü
+                            if (proshli(nom_obl_shar, spraitshara))
+                            {
+                                gameFinished = true;
+                                Start_level = false;
+                                Exit = true;
+                            }
+
+                            //Âåðíóëèñü â íà÷àëî
+                            if (checkReturnToStart(nom_obl_shar, old_x, old_y))
+                            {
+                                gameFinished = true;
+                                Start_level = false;
+                                Exit = true;
+                            }
+
+                            //Çàñòðÿëè íà ìåñòå
+                            if(old_x != x || old_y != y)
+                            {
+                                txSetColor(TX_RED);
+                                txTextOut(240, 50, "Ïðîñòèòå ìèñüå, âû íåïðàâèëüíî ïðîøëè óðîâåíü.");
+                                txSleep(4000);
+                                gameFinished = true;
+                                Start_level = false;
+                                Exit = true;
+                            }
+
                             txEnd();
-                            txSleep(10);
                         }
-                        nom_obl_shar = nom_obl_shar + 8;
-                        old_x = x;
-                        old_y = y;
                     }
 
-                    //������ �������
-                    if (nom_obl_shar == 23)
-                    {
-                        gameFinished = true;
-                        Start_level = false;
-                        Exit = true;
-                        txTransparentBlt(txDC(), 1198, 337, 50, 50, spraitshara, 0, 0, TX_WHITE);
-                        txSleep(3000);
-                    }
-
-                    //��������� � ������
-                    if(nom_obl_shar == 16 && old_y > 0 && old_x > 0)
-                    {
-                        txSetColor(TX_RED);
-                        txTextOut(240, 50, "�������� �����, ������.");
-                        txSleep(4000);
-                        gameFinished = true;
-                        Start_level = false;
-                        Exit = true;
-                    }
-
-                    //�������� �� �����
-                    if(old_x != x || old_y != y)
-                    {
-                        txSetColor(TX_RED);
-                        txTextOut(240, 50, "�������� �����, �� ����������� ������ �������.");
-                        txSleep(4000);
-                        gameFinished = true;
-                        Start_level = false;
-                        Exit = true;
-                    }
-
+                    txSleep(10);
                     txEnd();
                 }
-            }
 
-            txSleep(10);
-            txEnd();
+                //Exit = false;
+            }
         }
 
-        Exit = false;
-    }
-
-    //������ � ������ ��������
+    //Óäàëÿé è äðóãèå êàðòèíêè
     txDeleteDC(main_menu);
     txDeleteDC(vsecuby);
     txDeleteDC(spraitshara);
