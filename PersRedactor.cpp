@@ -1,13 +1,13 @@
 #include "TXLib.h"
+#include "Lib\\Buttons.cpp"
 #include "Lib\\config.cpp"
 #include "Lib\\lib.cpp"
 #include "Lib\\PersStruct.cpp"
-#include "Lib\\Buttons.cpp"
-#include <string> // РїРѕРґРєР»СЋС‡Р°РµРј СЃС‚СЂРѕРєРё
+#include "Lib\\save.cpp"
+#include <string>
 #include <fstream>
 #include <iostream>
 
-#include "Lib\\save.cpp"
 using namespace std;
 
 
@@ -117,24 +117,18 @@ int main()
     HDC teloPic  = txLoadImage ("pictures\\telo.bmp ");
     int width_tel = SizerX(teloPic);
     int vysota_tel = SizerY(teloPic);
-    HDC rects  = txLoadImage ("pictures\\rects.bmp");
-    HDC emodji = txLoadImage ("pictures\\5.bmp");
-    HDC lico1 = txLoadImage ("pictures\\eye2.bmp");
+    HDC lico1 = txLoadImage ("pictures\\eye.bmp");
     int width_emo = SizerX(lico1);
     int vysota_emo = SizerY(lico1);
+    HDC rects  = txLoadImage ("pictures\\rects.bmp");
     HDC kartinka = fon1;
 
     PersPartButton bashka[100];
     int vsego_boshek = getAllParts(bashka, RAZMER_KARTINKI_GOLOVY, width_golov, vysota_golov, 150);
     PersPartButton telo[100];
     int vsego_tel = getAllParts(telo, RAZMER_KARTINKI_TELA, width_tel, vysota_tel, 220);
-
     PersPartButton lico[100];
     int vsego_emoj = getAllParts(lico, RAZMER_KARTINKI_EMOJI, width_emo, vysota_emo, 75);
-    /*lico[0] = { 640, 783,3,250,   5, 0};
-    lico[1] = { 785,  925,3, 250, 200, 0};
-    lico[2] = {1055, 350,3, 250, 390, 0};
-    lico[3] = {931, 1060,3, 2, 570, 0};*/
 
     //Читаем сохраненную картинку
     ifstream file("Lib\\2.txt");
@@ -328,6 +322,8 @@ int main()
     //Что-то мне кажется. у тебя еще 100500 картинок, которые никто не удаляет
     txDeleteDC(golova);
     txDeleteDC(rects);
+    txDeleteDC(teloPic);
+    txDeleteDC(lico1);
 
     return 0;
 }

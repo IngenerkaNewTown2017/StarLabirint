@@ -1,4 +1,5 @@
 #include "TXLib.h"
+#include "slconfig.cpp"
 
 struct Oblast
 {
@@ -20,6 +21,10 @@ int min_max_poloj(int poloj);
 int get_min_y(int nomer_stroki);
 int get_min_x(int nomer_stolbca);
 
+bool checkReturnToStart(int nom_obl_shar, int old_x, int old_y);
+bool proshli(int nom_obl_shar, HDC spraitshara);
+
+void drawFonOblastiIShar(Oblast* obl, HDC fon, HDC vsecuby, HDC spraitshara, int x, int y);
 
 
 int get_min_y(int nomer_stroki)
@@ -108,3 +113,38 @@ int clickOnOblkast(Oblast obl1)
      return 0;
 }
 
+bool checkReturnToStart(int nom_obl_shar, int old_x, int old_y)
+{
+    if(nom_obl_shar == 16 && old_y > 0 && old_x > 0)
+    {
+        txSetColor(TX_RED);
+        txTextOut(240, 50, "Простите мисье, ошибка.");
+        txSleep(4000);
+        return true;
+    }
+    return false;
+}
+
+bool proshli(int nom_obl_shar, HDC spraitshara)
+{
+    if (nom_obl_shar == 23)
+    {
+        txTransparentBlt(txDC(), 1198, 337, 50, 50, spraitshara, 0, 0, TX_WHITE);
+        txSleep(3000);
+        return true;
+    }
+    return false;
+}
+
+
+void drawFonOblastiIShar(Oblast* obl, HDC fon, HDC vsecuby, HDC spraitshara, int x, int y)
+{
+    txBegin();
+    txBitBlt (txDC(), 0, 0, 1280, 720, fon, 0, 0);
+    for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+    {
+        txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+    }
+    txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+    txEnd();
+}
