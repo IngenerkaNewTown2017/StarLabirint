@@ -1,401 +1,822 @@
 #include "TXLib.h"
+
 #include <iostream>
+
 #include <string>
+
 #include "dirent.h"
+
 #include <fstream>
+
 #include "lib\\Oblast.cpp"
+
 #include "lib\\Buttons.cpp"
+
 #include "lib\\LevelButtons.cpp"
+
 #include "lib\\shar.cpp"
+
 #include "lib\\slconfig.cpp"
+
 #include "XO\\krestiki.cpp"
 
 
+
+
+
 struct OblUr
+
 {
+
     int x;
+
     int x1;
+
     int y;
+
     int y1;
+
     const char* adress;
+
 };
 
+
+
 int uroven_tekushii = 1;
+
 int uroven_staryi = 0;
 
+
+
 int frame = 0;
+
 int x_ball;
+
 int y_ball;
+
 bool Exit = false;
+
 bool StartGame = false;
+
 bool Start_level = false;
+
 bool Game = false;
+
+
+
 
 
 using namespace std;
 
 
 
+
+
+
+
 int main()
+
 {
+
     txCreateWindow (1280, 720);
+
+
+
+
 
     //Game == true;
 
+
+
     /*if(Exit == false)
+
     {
+
         Game = true;
-    }
-    else if(StartGame == false)
-    {
-       Game = true;
+
     }
 
-    if(Game == true)
+    else if(StartGame == false)
+
     {
-        Exit = false;
+
+       Game = true;
+
     }
-    else if(Game == true)
+
+
+
+    if(Game == true)
+
     {
+
+        Exit = false;
+
+    }
+
+    else if(Game == true)
+
+    {
+
         StartGame = false;
+
     } */
+
+
 
     LevelButton levelButtons [20];
 
+
+
     //Сделать функцией
-	levelButtons[0] = {76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29)};
-	levelButtons[1] = {303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29)};
-	levelButtons[2] = {191, 392, "3", RGB(34, 177, 76), RGB(181, 230, 29)};
-	levelButtons[3] = {508, 151, "4", RGB(255, 127, 39), RGB(255, 201, 14)};
-	levelButtons[4] = {953, 60, "5", RGB(255, 127, 39), RGB(255, 201, 14)};
-	levelButtons[5] = {446, 419, "6", RGB(255, 127, 39), RGB(255, 201, 14)};
-	levelButtons[6] = {1100, 150, "7", RGB(237, 28, 36), RGB(255, 127, 39)};
-	levelButtons[7] = {530, 590, "8", RGB(237, 28, 36), RGB(255, 127, 39)};
-	levelButtons[8] = {950, 400, "9", RGB(237, 28, 36), RGB(255, 127, 39)};
+
+    levelButtons[0] = {76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29)};
+
+    levelButtons[1] = {303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29)};
+
+    levelButtons[2] = {191, 392, "3", RGB(34, 177, 76), RGB(181, 230, 29)};
+
+    levelButtons[3] = {508, 151, "4", RGB(255, 127, 39), RGB(255, 201, 14)};
+
+    levelButtons[4] = {953, 60, "5", RGB(255, 127, 39), RGB(255, 201, 14)};
+
+    levelButtons[5] = {446, 419, "6", RGB(255, 127, 39), RGB(255, 201, 14)};
+
+    levelButtons[6] = {1100, 150, "7", RGB(237, 28, 36), RGB(255, 127, 39)};
+
+    levelButtons[7] = {530, 590, "8", RGB(237, 28, 36), RGB(255, 127, 39)};
+
+    levelButtons[8] = {950, 400, "9", RGB(237, 28, 36), RGB(255, 127, 39)};
+
+
+
 
 
     //Чтение уровней из директории Levels. Сделать функцией
+
     DIR *mydir;
+
     struct dirent *filename;
+
     int kolich_urovnei = 0;
 
+
+
     if ((mydir = opendir ("levels\\")) != NULL)
+
     {
+
         while ((filename = readdir (mydir)) != NULL)
+
         {
+
             if ((strcmp(".", filename->d_name) !=0) and (strcmp("..", filename->d_name) != 0))
+
             {
+
                 char* levelmaker = new char[100];
+
                 string str = filename->d_name;
+
                 strcpy(levelmaker, str.substr(0, strlen(filename->d_name)-4).c_str());
+
+
 
                 levelButtons[kolich_urovnei].text = levelmaker;
 
+
+
                 kolich_urovnei++;
+
             }
+
         }
+
         closedir (mydir);
+
     }
 
+
+
     //Для красоты последний уровень всегда на месте девятого
+
     levelButtons[kolich_urovnei - 1].y = levelButtons[8].y;
+
     levelButtons[kolich_urovnei - 1].x = levelButtons[8].x;
 
 
+
+
+
     HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
+
     HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
+
     HDC main_menu =      txLoadImage ("pictures\\Labirint\\main_menu.bmp");
+
     HDC vsecuby =        txLoadImage ("pictures\\Labirint\\vsecuby.bmp");
+
     HDC kartaurovneya  = txLoadImage ("pictures\\Labirint\\kartaurovneya.bmp");
+
     HDC fonurovnya =     txLoadImage ("pictures\\Labirint\\fonurovnya.bmp");
+
     HDC spraitshara =    txLoadImage ("pictures\\Labirint\\spraitshara.bmp");
 
+
+
     Oblast obl[KOLVO_OBLASTEI];
+
     string file_adress = "";
 
+
+
     OblUr Lev[9];
+
     for (int n = 0; n < kolich_urovnei; n++)
+
     {
+
         char* imya_faila = new char[195];
+
         strcpy(imya_faila, "levels\\");
+
         strcat(imya_faila, levelButtons[n].text);
+
         strcat(imya_faila, ".txt");
 
+
+
         Lev[n] = {levelButtons[n].x, levelButtons[n].x + 100,
+
                   levelButtons[n].y, levelButtons[n].y + 100, imya_faila};
+
     }
 
 
+
+
+
     while(/*Game == true*/Exit == false && StartGame == false)
+
     {
+
        //if(Game == true)
+
        //{
+
          txBegin();
+
          txClear();
+
          txBitBlt (txDC(), 0, 0, 1280, 720, main_menu, 0, 0);
 
+
+
          if(txMouseButtons () == 1 &&
+
              txMouseX () >= 525 &&
+
              txMouseX () <= 689 &&
+
              txMouseY () >= 480 &&
+
              txMouseY () <= 580)
+
          {
+
              Exit = true;
+
          }
+
+
 
          if (checkClick(517, 705, 274, 370))
+
          {
+
              StartGame = true;
+
          }
 
+
+
          txSleep(10);
+
          txEnd();
+
         //}
+
         }
 
+
+
         while (StartGame == true)
+
         {
+
             //ГђГЁГ±ГіГҐГ¬ Г±ГЇГЁГ±Г®ГЄ ГіГ°Г®ГўГ­ГҐГ©
+
             txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
 
+
+
             /*if(GetAsyncKeyState(VK_ESCAPE))
+
             {
+
                Game = true;
+
             }*/
 
+
+
             //Сделать функцией
+
             for (int n = 0; n < kolich_urovnei; n++)
+
             {
+
                 if (n < kolich_urovnei - 1)
+
                 {
+
                     txSetColor(levelButtons[n].color2, 6);
+
                     txLine(levelButtons[n].x + 50, levelButtons[n].y + 50, levelButtons[n + 1].x + 50, levelButtons[n + 1].y + 50);
+
                 }
+
+
 
                 drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
+
             }
+
+
 
             //ГЏГ® ГЄГ«ГЁГЄГі Г­Г  ГіГ°Г®ГўГҐГ­Гј Г­Г Г·ГЁГ­Г ГҐГ¬ Г­Г®ГўГ»Г©
+
             while(Start_level == false && Exit == false)
+
             {
+
                if(GetAsyncKeyState(VK_ESCAPE))
+
                 {
+
                  Exit = true;
+
                  StartGame = false;
+
                 }
+
+
 
                 for (int n = 0; n < kolich_urovnei; n++)
+
                 {
+
                     if (checkClick(Lev[n].x, Lev[n].x1, Lev[n].y, Lev[n].y1))
+
                     {
+
                         Start_level = true;
+
                         file_adress = Lev[n].adress;
+
+
+
                     }
+
                 }
+
+
 
                 txSleep(10);
+
             }
 
+
+
+
+
+
+
+
+
+
+
             if (Exit == false)
+
             {
+
                 while(frame < 40)
+
                 {
+
                     txBitBlt (txDC(), 0, 0, 1280, 720, zagruzka, 0, 0);
+
                     txBitBlt (txDC(), 1100, 530, 90, 90, spraitzagruzki, 90 * (frame % 4), 0);
+
                     txSleep(50);
+
                     frame = frame + 1;
+
                 }
+
+
+
 
 
                 ifstream file (file_adress);
 
+
+
                 string poloj;
+
                 int nomer_obl = 0;
+
                 while(getline(file, poloj))//ГѓЖ’Г‚ВЇГѓЖ’Г‚В®ГѓЖ’Г‚ВЄГѓЖ’Г‚В  ГѓЖ’Г‚Вї ГѓЖ’Г‚В­ГѓЖ’Г‚ВҐ ГѓЖ’Г‚В¤ГѓЖ’Г‚В®ГѓЖ’Г‚ВёГѓЖ’Г‚ВҐГѓЖ’Г‚В« ГѓЖ’Г‚В¤ГѓЖ’Г‚В® ГѓЖ’Г‚ВЄГѓЖ’Г‚В®ГѓЖ’Г‚В­ГѓЖ’Г‚В¶ГѓЖ’Г‚В  ГѓЖ’Г‚ВґГѓЖ’Г‚В ГѓЖ’Г‚В©ГѓЖ’Г‚В«ГѓЖ’Г‚В 
+
                 {
+
                     obl[nomer_obl] = {atoi(poloj.c_str())};//ГѓЖ’Г‚ВЄГѓЖ’Г‚В®ГѓЖ’Г‚В­ГѓЖ’Г‚ВўГѓЖ’Г‚ВҐГѓЖ’Г‚В°ГѓЖ’Г‚ВІГѓЖ’Г‚В ГѓЖ’Г‚В¶ГѓЖ’Г‚ВЁГѓЖ’Г‚Вї ГѓЖ’Г‚В±ГѓЖ’Г‚ВІГѓЖ’Г‚В°ГѓЖ’Г‚В®ГѓЖ’Г‚ВЄГѓЖ’Г‚ВЁ ГѓЖ’Г‚Вў ГѓЖ’Г‚В·ГѓЖ’Г‚ВЁГѓЖ’Г‚В±ГѓЖ’Г‚В«ГѓЖ’Г‚В®
+
                     obl[nomer_obl].nomber_obl = nomer_obl;
+
                     nomer_obl = nomer_obl + 1;
+
                 }
+
+
 
                 file.close();
 
 
+
+
+
                 for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+
                 {
+
                     //13%8 = 5, ГѓЖ’Г†вЂ™ГѓвЂљГ‚ВЇГѓЖ’Г†вЂ™ГѓвЂљГ‚В®ГѓЖ’Г†вЂ™ГѓвЂљГ‚ВІГѓЖ’Г†вЂ™ГѓвЂљГ‚В®ГѓЖ’Г†вЂ™ГѓвЂљГ‚В¬ГѓЖ’Г†вЂ™ГѓвЂљГ‚Ві ГѓЖ’Г†вЂ™ГѓвЂљГ‚В·ГѓЖ’Г†вЂ™ГѓвЂљГ‚ВІГѓЖ’Г†вЂ™ГѓвЂљГ‚В® 13 = 8 * 1 + 5
+
                     obl[nomer_oblasti].lx = get_min_x((nomer_oblasti % 8) + 1);
+
                     obl[nomer_oblasti].rx = get_min_x((nomer_oblasti % 8) + 2);
+
                     obl[nomer_oblasti].vy = get_min_y(nomer_oblasti / 8 + 1);
+
                     obl[nomer_oblasti].ny = get_min_y(nomer_oblasti / 8 + 2);
+
                     obl[nomer_oblasti].max_poloj = get_max_poloj(obl[nomer_oblasti].poloj);
+
                     obl[nomer_oblasti].min_poloj = min_max_poloj(obl[nomer_oblasti].poloj);
+
                 }
 
+
+
                 //Поворачиваем кубики
+
                 while (Exit == false)
+
                 {
+
                     txBegin();
 
+
+
                     //Крестики
+
                     if (checkClick(1252, 1274, 3, 12))
+
                     {
+
                         igor();
+
                     }
+
+
 
                     //СДелать функцией
+
                     bool povernuto = false;
+
                     for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+
                     {
+
                         int coord1 = coord(obl[nomer_oblasti]);
 
+
+
                         if (clickOnOblkast(obl[nomer_oblasti]) == 1)
+
                         {
+
                             povernuto = true;
+
                             obl[nomer_oblasti].poloj = obl[nomer_oblasti].poloj + 1;
 
+
+
                             if (obl[nomer_oblasti].poloj > obl[nomer_oblasti].max_poloj)
+
                             {
+
                                 obl[nomer_oblasti].poloj = obl[nomer_oblasti].min_poloj;
+
                             }
+
                         }
+
                     }
+
+
 
                     drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, 30, 330);
 
+
+
+
+
+
+
+
+
                     if (povernuto)
+
                     {
+
                         txSleep(100);
+
                     }
+
+
 
                     //Старт движения шарика 
+
                     if (checkClick(23, 97, 572, 645))
+
                     {
+
                         bool gameFinished = false;
+
                         int nom_obl_shar = 16;
 
+
+
                         int old_x = 0;
+
                         int old_y = 0;
 
+
+
                         while (!gameFinished)
+
                         {
+
                             txBegin();
 
+
+
                             int x = obl[nom_obl_shar].lx;
+
                             int y = obl[nom_obl_shar].vy;
+
                             drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, x, y);
+
                             //FIXME Перенести это условие в функцию выше
+
+
+
                             if (nom_obl_shar != 23)
+
                             {
+
                                 txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+
                             }
+
+
 
                             if (old_x != x + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x + 100, y) )
+
                             {
+
                                 for(int old_x1 = x ; old_x1 <= x + 100; old_x1 += speed_ball)
+
                                 {
+
                                     txBegin();
+
                                     txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+
                                     for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+
                                     {
+
                                         txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+
                                     }
+
                                     txTransparentBlt(txDC(), old_x1 + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+
                                     txEnd();
+
                                     txSleep(10);
+
                                 }
+
+
 
                                 nom_obl_shar = nom_obl_shar + 1;
+
                                 old_x = x;
+
                                 old_y = y;
+
                             }
+
                             else if (old_x != x - 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x - 100, y) )
+
                             {
+
                                 for(int old_x1 = x ; old_x1 >= x - 100; old_x1 -= speed_ball)
+
                                 {
+
                                     txBegin();
+
                                     txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
+
                                     for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+
                                     {
+
                                         txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
+
                                     }
+
                                     txTransparentBlt(txDC(), old_x1 + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+
                                     txEnd();
+
                                     txSleep(10);
+
                                 }
+
+
 
                                 nom_obl_shar = nom_obl_shar - 1;
+
                                 old_x = x;
+
                                 old_y = y;
+
                             }
+
                             else if (old_y != y - 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y - 100) )
+
                             {
+
                                 for (int old_y1 = y ; old_y1 >= y- 100; old_y1 -= speed_ball)
+
                                 {
+
                                     //FIXME Рассказать Вадиму про эту функцию
+
                                     drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, x, old_y1);
+
                                     txSleep(10);
+
                                 }
+
+
 
                                 nom_obl_shar = nom_obl_shar - 8;
+
                                 old_x = x;
+
                                 old_y = y;
+
                             }
+
                             else if (old_y != y + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x, y + 100) )
+
                             {
+
                                 for (int old_y1 = y ; old_y1 <= y + 100; old_y1 += speed_ball)
+
                                 {
+
                                     drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, x, old_y1);
+
                                     txSleep(10);
-                                }
+
+                               }
+
                                 nom_obl_shar = nom_obl_shar + 8;
+
                                 old_x = x;
+
                                 old_y = y;
+
                             }
+
+
 
                             //Прошли уровень
+
                             if (proshli(nom_obl_shar, spraitshara))
+
                             {
+
                                 gameFinished = true;
+
                                 Start_level = false;
+
                                 Exit = true;
+
                             }
+
+
 
                             //Вернулись в начало
+
                             if (checkReturnToStart(nom_obl_shar, old_x, old_y))
+
                             {
+
                                 gameFinished = true;
+
                                 Start_level = false;
+
                                 Exit = true;
+
                             }
+
+
 
                             //Застряли на месте
+
                             if(old_x != x || old_y != y)
+
                             {
+
                                 txSetColor(TX_RED);
-                                txTextOut(240, 50, "Простите мисье, вы неправильно прошли уровень.");
+
+                                txTextOut(240, 50, "Простите мисье, вы неправильно прошли уровень.10011101");
+
                                 txSleep(4000);
+
                                 gameFinished = true;
+
                                 Start_level = false;
+
                                 Exit = true;
+
                             }
 
+
+
                             txEnd();
+
                         }
+
                     }
 
+
+
                     txSleep(10);
+
                     txEnd();
+
                 }
 
+
+
                 Exit = false;
+
             }
+
         }
 
+
+
     //Г“Г¤Г Г«ГїГ© ГЁ Г¤Г°ГіГЈГЁГҐ ГЄГ Г°ГІГЁГ­ГЄГЁ
+
     txDeleteDC(main_menu);
+
     txDeleteDC(vsecuby);
+
     txDeleteDC(spraitshara);
+
     txDeleteDC(fonurovnya);
+
     return 0;
+
 }
+
