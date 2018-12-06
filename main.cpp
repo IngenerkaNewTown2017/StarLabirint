@@ -244,24 +244,8 @@ int main()
                     }
 
                     //СДелать функцией
-                    bool povernuto = false;
-                    for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
-                    {
-                        int coord1 = coord(obl[nomer_oblasti]);
-
-                        if (clickOnOblkast(obl[nomer_oblasti]) == 1)
-                        {
-                            povernuto = true;
-                            obl[nomer_oblasti].poloj = obl[nomer_oblasti].poloj + 1;
-
-                            if (obl[nomer_oblasti].poloj > obl[nomer_oblasti].max_poloj)
-                            {
-                                obl[nomer_oblasti].poloj = obl[nomer_oblasti].min_poloj;
-                            }
-                        }
-                    }
-
-                    drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, 30, 330);
+                    bool povernuto = GetPovernuto(obl);
+                    drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, 30, 330, 0);
 
                     if (povernuto)
                     {
@@ -272,7 +256,7 @@ int main()
                     if (checkClick(23, 97, 572, 645))
                     {
                         bool gameFinished = false;
-                        int nom_obl_shar = 16;
+                        int nom_obl_shar = obl_start;
 
                         int old_x = 0;
                         int old_y = 0;
@@ -283,25 +267,13 @@ int main()
 
                             int x = obl[nom_obl_shar].lx;
                             int y = obl[nom_obl_shar].vy;
-                            drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, x, y);
-                            //FIXME Перенести это условие в функцию выше
-                            if (nom_obl_shar != 23)
-                            {
-                                txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
-                            }
+                            drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, x, y, nom_obl_shar);
 
                             if (old_x != x + 100 and proverit_chto_mozhno_idti_suda(obl,   KOLVO_OBLASTEI,  x, y, x + 100, y) )
                             {
                                 for(int old_x1 = x ; old_x1 <= x + 100; old_x1 += speed_ball)
                                 {
-                                    txBegin();
-                                    txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
-                                    for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
-                                    {
-                                        txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
-                                    }
-                                    txTransparentBlt(txDC(), old_x1 + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
-                                    txEnd();
+                                    drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, old_x1, y, nom_obl_shar);
                                     txSleep(10);
                                 }
 
@@ -313,14 +285,7 @@ int main()
                             {
                                 for(int old_x1 = x ; old_x1 >= x - 100; old_x1 -= speed_ball)
                                 {
-                                    txBegin();
-                                    txBitBlt (txDC(), 0, 0, 1280, 720, fonurovnya, 0, 0);
-                                    for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
-                                    {
-                                        txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
-                                    }
-                                    txTransparentBlt(txDC(), old_x1 + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
-                                    txEnd();
+                                    drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, old_x1, y, nom_obl_shar);
                                     txSleep(10);
                                 }
 
@@ -333,7 +298,7 @@ int main()
                                 for (int old_y1 = y ; old_y1 >= y- 100; old_y1 -= speed_ball)
                                 {
                                     //FIXME Рассказать Вадиму про эту функцию
-                                    drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, x, old_y1);
+                                    drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, x, old_y1, nom_obl_shar);
                                     txSleep(10);
                                 }
 
@@ -345,7 +310,7 @@ int main()
                             {
                                 for (int old_y1 = y ; old_y1 <= y + 100; old_y1 += speed_ball)
                                 {
-                                    drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, x, old_y1);
+                                    drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, x, old_y1, nom_obl_shar);
                                     txSleep(10);
                                 }
                                 nom_obl_shar = nom_obl_shar + 8;
