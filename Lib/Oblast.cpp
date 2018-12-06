@@ -24,7 +24,7 @@ int get_min_x(int nomer_stolbca);
 bool checkReturnToStart(int nom_obl_shar, int old_x, int old_y);
 bool proshli(int nom_obl_shar, HDC spraitshara);
 
-void drawFonOblastiIShar(Oblast* obl, HDC fon, HDC vsecuby, HDC spraitshara, int x, int y);
+void drawFonOblastiIShar(Oblast* obl, HDC fon, HDC vsecuby, HDC spraitshara, int x, int y, int nom_obl_shar);
 
 
 int get_min_y(int nomer_stroki)
@@ -127,7 +127,7 @@ bool checkReturnToStart(int nom_obl_shar, int old_x, int old_y)
 
 bool proshli(int nom_obl_shar, HDC spraitshara)
 {
-    if (nom_obl_shar == 23)
+    if (nom_obl_shar == obl_end)
     {
         txTransparentBlt(txDC(), 1198, 337, 50, 50, spraitshara, 0, 0, TX_WHITE);
         txSleep(3000);
@@ -136,8 +136,30 @@ bool proshli(int nom_obl_shar, HDC spraitshara)
     return false;
 }
 
+bool GetPovernuto(Oblast* obl)
+{
+    bool povernuto = false;
+    for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+    {
+        int coord1 = coord(obl[nomer_oblasti]);
 
-void drawFonOblastiIShar(Oblast* obl, HDC fon, HDC vsecuby, HDC spraitshara, int x, int y)
+        if (clickOnOblkast(obl[nomer_oblasti]) == 1)
+        {
+            povernuto = true;
+            obl[nomer_oblasti].poloj = obl[nomer_oblasti].poloj + 1;
+
+            if (obl[nomer_oblasti].poloj > obl[nomer_oblasti].max_poloj)
+            {
+                obl[nomer_oblasti].poloj = obl[nomer_oblasti].min_poloj;
+            }
+        }
+    }
+
+    return povernuto;
+}
+
+
+void drawFonOblastiIShar(Oblast* obl, HDC fon, HDC vsecuby, HDC spraitshara, int x, int y, int nom_obl_shar)
 {
     txBegin();
     txBitBlt (txDC(), 0, 0, 1280, 720, fon, 0, 0);
@@ -145,6 +167,10 @@ void drawFonOblastiIShar(Oblast* obl, HDC fon, HDC vsecuby, HDC spraitshara, int
     {
         txBitBlt (txDC(), obl[nomer_oblasti].lx, obl[nomer_oblasti].vy, obl[nomer_oblasti].rx - obl[nomer_oblasti].lx, obl[nomer_oblasti].ny - obl[nomer_oblasti].vy, vsecuby,  coord(obl[nomer_oblasti]), 10);
     }
-    txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+
+    if (nom_obl_shar !=  obl_end)
+ {
+        txTransparentBlt(txDC(), x + 25, y + 25, 50, 50, spraitshara, 0, 0, TX_WHITE);
+    }
     txEnd();
 }

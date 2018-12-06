@@ -3,33 +3,6 @@ int seichas_v = 0;
 int bil_v = 0;
 int idet_v = 0;
 
-/*void obl,poloj1()
-{
-  obl.poloj == 1;
-}
-void obl,poloj2()
-{
-  obl.poloj == 2;
-}
-void obl,poloj3()
-{
-  obl.poloj == 3;
-}
-void obl,poloj4()
-{
-  obl.poloj == 4;
-}
-void obl,poloj5()
-{
-  obl.poloj == 5;
-}
-void obl,poloj6()
-{
-  obl.poloj == 6;
-}
-
-if obl_poloj(obl, nomer_stolbca, 3)
-      */
 
 
 struct tohka_Shara
