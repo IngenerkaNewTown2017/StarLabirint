@@ -66,7 +66,7 @@ int getAllParts(PersPartButton* bashka, int razmer_odnoi_chasti, int width_golov
     int coordY = 0;
     int x_nachalo = 643;
     int y_nachalo = 127;
-    while (coordY < vysota_golov)
+    while (coordY < vysota_golov - vysota_odnoi_bashki)
     {
         coordX = 0;
         int kolich_stolbcov = (width_golov /  razmer_odnoi_chasti);
@@ -76,7 +76,7 @@ int getAllParts(PersPartButton* bashka, int razmer_odnoi_chasti, int width_golov
             bashka[vsego_boshek] = { x_nachalo +  vsego_boshek *      razmer_odnoi_chasti,
                                      x_nachalo + (vsego_boshek + 1) * razmer_odnoi_chasti,
                                      y_nachalo,
-                                     y_nachalo + 127,
+                                     y_nachalo + vysota_odnoi_bashki,
                                      (vsego_boshek % kolich_stolbcov) * razmer_odnoi_chasti,
                                      y_nachalo - 127};
             vsego_boshek ++;
@@ -85,7 +85,7 @@ int getAllParts(PersPartButton* bashka, int razmer_odnoi_chasti, int width_golov
 
         x_nachalo = x_nachalo - coordX;
         y_nachalo = y_nachalo + vysota_odnoi_bashki;
-        coordY = coordY + razmer_odnoi_chasti;
+        coordY = coordY + vysota_odnoi_bashki;
     }
 
     return vsego_boshek;
@@ -128,7 +128,7 @@ int main()
     PersPartButton telo[100];
     int vsego_tel = getAllParts(telo, RAZMER_KARTINKI_TELA, width_tel, vysota_tel, 220);
     PersPartButton lico[100];
-    int vsego_emoj = getAllParts(lico, RAZMER_KARTINKI_EMOJI, width_emo, vysota_emo, 75);
+    int vsego_emoj = getAllParts(lico, RAZMER_KARTINKI_EMOJI, width_emo, vysota_emo, 45);
 
     //Читаем сохраненную картинку
     ifstream file("Lib\\2.txt");
@@ -153,10 +153,13 @@ int main()
 
     //Код антивора
     int Cod = 0;
-    cout <<  std::endl;
-    cout << "Введите код антивора ";
+    cout << "приобрести полную версию можно тут " << std::endl;
+    cout << "https://www.donationalerts.ru/r/persredactor" << std::endl;
+    cout << "Введите код полной версии ," << std::endl;
     cin >> Cod;
-    bool antivor = (Cod == 100);
+
+    bool antivor = (Cod == 144629);
+
     system("cls");
 
     bool isExit = false;
@@ -171,16 +174,16 @@ int main()
         risovat_fon(kartinka);
         if (nomer_vkladki == VKLADKA_GOLOVA)
         {
-            txBitBlt (txDC(), 639, 120, 600, 600, golova, 0, 0);
-            txBitBlt (txDC(), 640, 580, 600, 80, rects, 0, 0);
+            txBitBlt (txDC(), 639, 120, 900, 600, golova, 0, 0);
+            txBitBlt (txDC(), 640, 580, 900, 80, rects, 0, 0);
         }
         else if (nomer_vkladki == VKLADKA_TELO)
         {
-            txBitBlt (txDC(), 639, 120, 600, 600, teloPic, 0, 0);
+            txBitBlt (txDC(), 639, 120, 900, 600, teloPic, 0, 0);
         }
         else if (nomer_vkladki == VKLADKA_LICO)
         {
-            txBitBlt (txDC(), 639, 120, 660, 80, lico1, 0, 0);
+            txBitBlt (txDC(), 639, 120, 900, 80, lico1, 0, 0);
             //Рисуем все варианты эмоций (но не весь фон меняем!!!)
             //vkladka(emodji);
         }
@@ -208,12 +211,6 @@ int main()
             risovat_lico(lico1,x_lico,y_lico);
         }
         nomer_vkladki = changeTab(nomer_vkladki);
-
-        //f (checkClick(1185, 1240, 75, 121))
-        {
-            //txDestroyWindow();
-           // return 0;
-        }
 
 
 
