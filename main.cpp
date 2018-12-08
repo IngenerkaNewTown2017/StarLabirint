@@ -1,7 +1,6 @@
 #include "TXLib.h"
 #include <iostream>
 #include <string>
-#include "dirent.h"
 #include <fstream>
 #include "lib\\Oblast.cpp"
 #include "lib\\Buttons.cpp"
@@ -42,60 +41,12 @@ int main()
 
     //Game == true;
 
-    /*if(Exit == false)
-    {
-        Game = true;
-    }
-    else if(StartGame == false)
-    {
-       Game = true;
-    }
-
-    if(Game == true)
-    {
-        Exit = false;
-    }
-    else if(Game == true)
-    {
-        StartGame = false;
-    } */
-
     LevelButton levelButtons [20];
-
-    //������� ��������
-	levelButtons[0] = {76, 115, "1", RGB(34, 177, 76), RGB(181, 230, 29)};
-	levelButtons[1] = {303, 127, "2", RGB(34, 177, 76), RGB(181, 230, 29)};
-	levelButtons[2] = {191, 392, "3", RGB(34, 177, 76), RGB(181, 230, 29)};
-	levelButtons[3] = {508, 151, "4", RGB(255, 127, 39), RGB(255, 201, 14)};
-	levelButtons[4] = {953, 60, "5", RGB(255, 127, 39), RGB(255, 201, 14)};
-	levelButtons[5] = {446, 419, "6", RGB(255, 127, 39), RGB(255, 201, 14)};
-	levelButtons[6] = {1100, 150, "7", RGB(237, 28, 36), RGB(255, 127, 39)};
-	levelButtons[7] = {530, 590, "8", RGB(237, 28, 36), RGB(255, 127, 39)};
-	levelButtons[8] = {950, 400, "9", RGB(237, 28, 36), RGB(255, 127, 39)};
+    download_all_level_buttoms(levelButtons);
 
 
     //������ ������� �� ���������� Levels. ������� ��������
-    DIR *mydir;
-    struct dirent *filename;
-    int kolich_urovnei = 0;
-
-    if ((mydir = opendir ("levels\\")) != NULL)
-    {
-        while ((filename = readdir (mydir)) != NULL)
-        {
-            if ((strcmp(".", filename->d_name) !=0) and (strcmp("..", filename->d_name) != 0))
-            {
-                char* levelmaker = new char[100];
-                string str = filename->d_name;
-                strcpy(levelmaker, str.substr(0, strlen(filename->d_name)-4).c_str());
-
-                levelButtons[kolich_urovnei].text = levelmaker;
-
-                kolich_urovnei++;
-            }
-        }
-        closedir (mydir);
-    }
+    chtenie_txt_1(levelButtons);
 
     //��� ������� ��������� ������� ������ �� ����� ��������
     levelButtons[kolich_urovnei - 1].y = levelButtons[8].y;
@@ -155,11 +106,6 @@ int main()
         //Ðèñóåì ñïèñîê óðîâíåé
         txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
 
-        /*if(GetAsyncKeyState(VK_ESCAPE))
-        {
-           Game = true;
-        }*/
-
         //������� ��������
         for (int n = 0; n < kolich_urovnei; n++)
         {
@@ -187,6 +133,7 @@ int main()
                 {
                     Start_level = true;
                     file_adress = Lev[n].adress;
+                    uroven_tekushii = n;
                 }
             }
 
@@ -205,7 +152,6 @@ int main()
 
 
             ifstream file (file_adress);
-
             string poloj;
             int nomer_obl = 0;
             while(getline(file, poloj))//ÃƒÂ¯ÃƒÂ®ÃƒÂªÃƒÂ  ÃƒÂ¿ ÃƒÂ­ÃƒÂ¥ ÃƒÂ¤ÃƒÂ®ÃƒÂ¸ÃƒÂ¥ÃƒÂ« ÃƒÂ¤ÃƒÂ® ÃƒÂªÃƒÂ®ÃƒÂ­ÃƒÂ¶ÃƒÂ  ÃƒÂ´ÃƒÂ ÃƒÂ©ÃƒÂ«ÃƒÂ 
@@ -214,20 +160,9 @@ int main()
                 obl[nomer_obl].nomber_obl = nomer_obl;
                 nomer_obl = nomer_obl + 1;
             }
-
             file.close();
 
-
-            for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
-            {
-                //13%8 = 5, ÃƒÆ’Ã‚Â¯ÃƒÆ’Ã‚Â®ÃƒÆ’Ã‚Â²ÃƒÆ’Ã‚Â®ÃƒÆ’Ã‚Â¬ÃƒÆ’Ã‚Â³ ÃƒÆ’Ã‚Â·ÃƒÆ’Ã‚Â²ÃƒÆ’Ã‚Â® 13 = 8 * 1 + 5
-                obl[nomer_oblasti].lx = get_min_x((nomer_oblasti % 8) + 1);
-                obl[nomer_oblasti].rx = get_min_x((nomer_oblasti % 8) + 2);
-                obl[nomer_oblasti].vy = get_min_y(nomer_oblasti / 8 + 1);
-                obl[nomer_oblasti].ny = get_min_y(nomer_oblasti / 8 + 2);
-                obl[nomer_oblasti].max_poloj = get_max_poloj(obl[nomer_oblasti].poloj);
-                obl[nomer_oblasti].min_poloj = min_max_poloj(obl[nomer_oblasti].poloj);
-            }
+           vichislit_obl(obl);
 
             //������������ ������
             while (Exit == false)
@@ -240,10 +175,8 @@ int main()
                     igor();
                 }
 
-                //������� ��������
                 bool povernuto = GetPovernuto(obl);
                 drawFonOblastiIShar(obl, fonurovnya, vsecuby, spraitshara, 30, 330, 0);
-
                 if (povernuto)
                 {
                     txSleep(100);
@@ -319,7 +252,22 @@ int main()
                         {
                             gameFinished = true;
                             Start_level = false;
-                            Exit = true;
+                            //Exit = true;
+
+
+                            uroven_tekushii = uroven_tekushii + 1;
+                            ifstream file ( Lev[uroven_tekushii].adress);
+                            string poloj;
+                            int nomer_obl = 0;
+                            while(getline(file, poloj))//ÃƒÂ¯ÃƒÂ®ÃƒÂªÃƒÂ  ÃƒÂ¿ ÃƒÂ­ÃƒÂ¥ ÃƒÂ¤ÃƒÂ®ÃƒÂ¸ÃƒÂ¥ÃƒÂ« ÃƒÂ¤ÃƒÂ® ÃƒÂªÃƒÂ®ÃƒÂ­ÃƒÂ¶ÃƒÂ  ÃƒÂ´ÃƒÂ ÃƒÂ©ÃƒÂ«ÃƒÂ 
+                            {
+                                obl[nomer_obl] = {atoi(poloj.c_str())};//ÃƒÂªÃƒÂ®ÃƒÂ­ÃƒÂ¢ÃƒÂ¥ÃƒÂ°ÃƒÂ²ÃƒÂ ÃƒÂ¶ÃƒÂ¨ÃƒÂ¿ ÃƒÂ±ÃƒÂ²ÃƒÂ°ÃƒÂ®ÃƒÂªÃƒÂ¨ ÃƒÂ¢ ÃƒÂ·ÃƒÂ¨ÃƒÂ±ÃƒÂ«ÃƒÂ®
+                                obl[nomer_obl].nomber_obl = nomer_obl;
+                                nomer_obl = nomer_obl + 1;
+                            }
+                            file.close();
+
+                           vichislit_obl(obl);
                         }
 
                         //��������� � ������
