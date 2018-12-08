@@ -103,19 +103,14 @@ int main()
         //}
 		if (checkClick(469, 745, 386, 476))
 		{
-			txSleep(10);
-			while(!checkClick(469, 745, 386, 476))
-			{
-				txBitBlt (txDC(), 0, 0, 1280, 720, option, 0, 0);
-				txSleep(10000);
-			}
+            txBitBlt (txDC(), 0, 0, 1280, 720, option, 0, 0);
+			txSleep(1000);
 		}
 
     }
 
     while (StartGame == true)
     {
-        //ГђГЁГ±ГіГҐГ¬ Г±ГЇГЁГ±Г®ГЄ ГіГ°Г®ГўГ­ГҐГ©
         txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
 
         //Сделать функцией
@@ -154,7 +149,7 @@ int main()
 
         if (Exit == false)
         {
-            while(frame < 40)
+            while (frame < 40)
             {
                 txBitBlt (txDC(), 0, 0, 1280, 720, zagruzka, 0, 0);
                 txBitBlt (txDC(), 1100, 530, 90, 90, spraitzagruzki, 90 * (frame % 4), 0);
@@ -174,7 +169,7 @@ int main()
             }
             file.close();
 
-           vichislit_obl(obl);
+            vichislit_obl(obl);
 
             //Поворачиваем кубики
             while (Exit == false)
@@ -260,13 +255,13 @@ int main()
                         }
 
 						//Пауза
-						if (checkClick(610, 633, 0, 23))
+						if (checkClick(600, 643, 0, 23))
 						{
-							txSleep(10);
-							while(!checkClick(610, 633, 0, 23))
+							txSleep(1000);
+							while (!checkClick(600, 643, 0, 23))
 							{
 								txBitBlt (txDC(), 198, 93, 873, 536, pauza, 0, 0);
-								txSleep(10000);
+								txSleep(10);
 							}
 						}
 

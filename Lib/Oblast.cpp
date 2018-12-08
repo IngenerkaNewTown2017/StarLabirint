@@ -174,3 +174,16 @@ void drawFonOblastiIShar(Oblast* obl, HDC fon, HDC vsecuby, HDC spraitshara, int
     }
     txEnd();
 }
+
+void vichislit_obl(Oblast* obl)
+{
+        for (int nomer_oblasti = 0; nomer_oblasti < KOLVO_OBLASTEI; nomer_oblasti++)
+        {
+            obl[nomer_oblasti].lx = get_min_x((nomer_oblasti % 8) + 1);
+            obl[nomer_oblasti].rx = get_min_x((nomer_oblasti % 8) + 2);
+            obl[nomer_oblasti].vy = get_min_y(nomer_oblasti / 8 + 1);
+            obl[nomer_oblasti].ny = get_min_y(nomer_oblasti / 8 + 2);
+            obl[nomer_oblasti].max_poloj = get_max_poloj(obl[nomer_oblasti].poloj);
+            obl[nomer_oblasti].min_poloj = min_max_poloj(obl[nomer_oblasti].poloj);
+        }
+}

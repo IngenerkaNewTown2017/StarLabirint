@@ -124,7 +124,7 @@ int main()
     HDC kartinka = fon1;
 
     PersPartButton bashka[100];
-    int vsego_boshek = getAllParts(bashka, RAZMER_KARTINKI_GOLOVY, width_golov, vysota_golov, 150);
+    int vsego_boshek = getAllParts(bashka, RAZMER_KARTINKI_GOLOVY, width_golov, vysota_golov, 158);
     PersPartButton telo[100];
     int vsego_tel = getAllParts(telo, RAZMER_KARTINKI_TELA, width_tel, vysota_tel, 220);
     PersPartButton lico[100];
