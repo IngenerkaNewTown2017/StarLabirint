@@ -102,6 +102,8 @@ int main()
     levelButtons[kolich_urovnei - 1].x = levelButtons[8].x;
 
 
+    HDC option =         txLoadImage ("pictures\\Labirint\\option.bmp");
+    HDC pauza =          txLoadImage ("pictures\\Labirint\\Pauza.bmp");
     HDC spraitzagruzki = txLoadImage ("pictures\\Labirint\\spraitzagruzki.bmp");
     HDC zagruzka =       txLoadImage ("pictures\\Labirint\\zagrulka.bmp");
     HDC main_menu =      txLoadImage ("pictures\\Labirint\\main_menu.bmp");
@@ -148,6 +150,16 @@ int main()
         txSleep(10);
         txEnd();
         //}
+		if (checkClick(469, 745, 386, 476))
+		{
+			txSleep(10);
+			while(!checkClick(469, 745, 386, 476))
+			{
+				txBitBlt (txDC(), 0, 0, 1280, 720, option, 0, 0);
+				txSleep(10000);
+			}
+		}
+
     }
 
     while (StartGame == true)
@@ -313,6 +325,17 @@ int main()
                             old_x = x;
                             old_y = y;
                         }
+
+						//Пауза
+						if (checkClick(610, 633, 0, 23))
+						{
+							txSleep(10);
+							while(!checkClick(610, 633, 0, 23))
+							{
+								txBitBlt (txDC(), 198, 93, 873, 536, pauza, 0, 0);
+								txSleep(10000);
+							}
+						}
 
                         //Прошли уровень
                         if (proshli(nom_obl_shar, spraitshara))
