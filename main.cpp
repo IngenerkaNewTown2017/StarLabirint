@@ -33,6 +33,46 @@ bool Game = false;
 
 using namespace std;
 
+void YES_StartGame(LevelButton* levelButtons, HDC kartaurovneya)
+{
+		txBitBlt(txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
+
+        //������� ��������
+        for (int n = 0; n < kolich_urovnei; n++)
+        {
+            if (n < kolich_urovnei - 1)
+            {
+                txSetColor(levelButtons[n].color2, 6);
+                txLine(levelButtons[n].x + 50, levelButtons[n].y + 50, levelButtons[n + 1].x + 50, levelButtons[n + 1].y + 50);
+            }
+
+            drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
+         }
+
+         /*if (GetAsyncKeyState(VK_ESCAPE))
+		 {
+		    StartGame == false;
+			Exit == true;
+		 } */
+}
+
+void NO_StartGame(HDC main_menu, bool* Exit, bool* StartGame)
+{
+        txBitBlt (txDC(), 0, 0, 1280, 720, main_menu, 0, 0);
+
+        if (checkClick(525, 689, 480, 580))
+        {
+            *Exit = true;
+        }
+
+        //StartGame = (checkClick(517, 705, 274, 370));
+        if (checkClick(517, 705, 274, 370))
+        {
+            *StartGame = true;
+        }
+
+        txSleep(10);
+}
 
 
 int main()
@@ -85,20 +125,7 @@ int main()
        //{
         txBegin();
         txClear();
-        txBitBlt (txDC(), 0, 0, 1280, 720, main_menu, 0, 0);
-
-        if (checkClick(525, 689, 480, 580))
-        {
-            Exit = true;
-        }
-
-        //StartGame = (checkClick(517, 705, 274, 370));
-        if (checkClick(517, 705, 274, 370))
-        {
-            StartGame = true;
-        }
-
-        txSleep(10);
+        NO_StartGame(main_menu ,&Exit ,&StartGame);
         txEnd();
         //}
 		if (checkClick(469, 745, 386, 476))
@@ -111,28 +138,22 @@ int main()
 
     while (StartGame == true)
     {
-        txBitBlt (txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
+		YES_StartGame(levelButtons, kartaurovneya);
 
-        //������� ��������
-        for (int n = 0; n < kolich_urovnei; n++)
-        {
-            if (n < kolich_urovnei - 1)
-            {
-                txSetColor(levelButtons[n].color2, 6);
-                txLine(levelButtons[n].x + 50, levelButtons[n].y + 50, levelButtons[n + 1].x + 50, levelButtons[n + 1].y + 50);
-            }
-
-            drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
-        }
+		if (GetAsyncKeyState(VK_ESCAPE))
+		{
+		    StartGame == false;
+			//NO_StartGame(main_menu ,&Exit ,&StartGame);
+		}
 
         //Ïî êëèêó íà óðîâåíü íà÷èíàåì íîâûé
         while (Start_level == false && Exit == false)
         {
-            if (GetAsyncKeyState(VK_ESCAPE))
+            /*if (GetAsyncKeyState(VK_ESCAPE))
             {
                 Exit = true;
                 StartGame = false;
-            }
+            } */
 
             for (int n = 0; n < kolich_urovnei; n++)
             {
@@ -272,20 +293,29 @@ int main()
                             Start_level = false;
                             //Exit = true;
 
+							if (uroven_tekushii >= kolich_urovnei - 1)
+							{
+								gameFinished = true;
+								Start_level = false;
+								Exit = true;
+							}
+							else
+							{
+								uroven_tekushii = uroven_tekushii + 1;
+								ifstream file ( Lev[uroven_tekushii].adress);
+								string poloj;
+								int nomer_obl = 0;
 
-                            uroven_tekushii = uroven_tekushii + 1;
-                            ifstream file ( Lev[uroven_tekushii].adress);
-                            string poloj;
-                            int nomer_obl = 0;
-                            while(getline(file, poloj))//ÃƒÂ¯ÃƒÂ®ÃƒÂªÃƒÂ  ÃƒÂ¿ ÃƒÂ­ÃƒÂ¥ ÃƒÂ¤ÃƒÂ®ÃƒÂ¸ÃƒÂ¥ÃƒÂ« ÃƒÂ¤ÃƒÂ® ÃƒÂªÃƒÂ®ÃƒÂ­ÃƒÂ¶ÃƒÂ  ÃƒÂ´ÃƒÂ ÃƒÂ©ÃƒÂ«ÃƒÂ 
-                            {
-                                obl[nomer_obl] = {atoi(poloj.c_str())};//ÃƒÂªÃƒÂ®ÃƒÂ­ÃƒÂ¢ÃƒÂ¥ÃƒÂ°ÃƒÂ²ÃƒÂ ÃƒÂ¶ÃƒÂ¨ÃƒÂ¿ ÃƒÂ±ÃƒÂ²ÃƒÂ°ÃƒÂ®ÃƒÂªÃƒÂ¨ ÃƒÂ¢ ÃƒÂ·ÃƒÂ¨ÃƒÂ±ÃƒÂ«ÃƒÂ®
-                                obl[nomer_obl].nomber_obl = nomer_obl;
-                                nomer_obl = nomer_obl + 1;
-                            }
-                            file.close();
+								while(getline(file, poloj))//ÃƒÂ¯ÃƒÂ®ÃƒÂªÃƒÂ  ÃƒÂ¿ ÃƒÂ­ÃƒÂ¥ ÃƒÂ¤ÃƒÂ®ÃƒÂ¸ÃƒÂ¥ÃƒÂ« ÃƒÂ¤ÃƒÂ® ÃƒÂªÃƒÂ®ÃƒÂ­ÃƒÂ¶ÃƒÂ  ÃƒÂ´ÃƒÂ ÃƒÂ©ÃƒÂ«ÃƒÂ 
+								{
+									obl[nomer_obl] = {atoi(poloj.c_str())};//ÃƒÂªÃƒÂ®ÃƒÂ­ÃƒÂ¢ÃƒÂ¥ÃƒÂ°ÃƒÂ²ÃƒÂ ÃƒÂ¶ÃƒÂ¨ÃƒÂ¿ ÃƒÂ±ÃƒÂ²ÃƒÂ°ÃƒÂ®ÃƒÂªÃƒÂ¨ ÃƒÂ¢ ÃƒÂ·ÃƒÂ¨ÃƒÂ±ÃƒÂ«ÃƒÂ®
+									obl[nomer_obl].nomber_obl = nomer_obl;
+									nomer_obl = nomer_obl + 1;
+								}
+								file.close();
 
-                           vichislit_obl(obl);
+							vichislit_obl(obl);
+                           }
                         }
 
                         //��������� � ������
