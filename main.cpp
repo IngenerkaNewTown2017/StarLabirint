@@ -254,17 +254,6 @@ int main()
                             old_y = y;
                         }
 
-						//Пауза
-						if (checkClick(600, 643, 0, 23))
-						{
-							txSleep(1000);
-							while (!checkClick(600, 643, 0, 23))
-							{
-								txBitBlt (txDC(), 198, 93, 873, 536, pauza, 0, 0);
-								txSleep(10);
-							}
-						}
-
                         //Прошли уровень
                         if (proshli(nom_obl_shar, spraitshara))
                         {
@@ -306,6 +295,32 @@ int main()
                             Start_level = false;
                             Exit = true;
                         }
+
+						//Пауза
+						bool Restart = false;
+						bool Return = false;
+						if (checkClick(600, 643, 0, 23))
+						{
+							txSleep(1000);
+							while (!Restart and !Return)
+							{
+								txBitBlt (txDC(), 198, 93, 873, 536, pauza, 0, 0);
+								txSleep(10);
+
+                                if (checkClick(600, 643, 0, 23))
+                                {
+                                    Return = true;
+                                }
+                                //Рестарт
+                                if (checkClick(800, 934, 442, 577))
+                                {
+                                    nom_obl_shar = obl_start;
+                                    Restart = true;
+                                    gameFinished = true;
+                                    Exit = false;
+                                }
+                            }
+						}
 
                         txEnd();
                     }
