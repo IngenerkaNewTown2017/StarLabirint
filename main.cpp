@@ -35,43 +35,37 @@ using namespace std;
 
 void YES_StartGame(LevelButton* levelButtons, HDC kartaurovneya)
 {
-		txBitBlt(txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
+    txBitBlt(txDC(), 0, 0, 1280, 720, kartaurovneya, 0, 0);
 
-        //Сделать функцией
-        for (int n = 0; n < kolich_urovnei; n++)
+    //Сделать функцией
+    for (int n = 0; n < kolich_urovnei; n++)
+    {
+        if (n < kolich_urovnei - 1)
         {
-            if (n < kolich_urovnei - 1)
-            {
-                txSetColor(levelButtons[n].color2, 6);
-                txLine(levelButtons[n].x + 50, levelButtons[n].y + 50, levelButtons[n + 1].x + 50, levelButtons[n + 1].y + 50);
-            }
+            txSetColor(levelButtons[n].color2, 6);
+            txLine(levelButtons[n].x + 50, levelButtons[n].y + 50, levelButtons[n + 1].x + 50, levelButtons[n + 1].y + 50);
+        }
 
-            drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
-         }
-
-         /*if (GetAsyncKeyState(VK_ESCAPE))
-		 {
-		    StartGame == false;
-			Exit == true;
-		 } */
+        drawLevelButton(levelButtons[n].x, levelButtons[n].y, levelButtons[n].text, levelButtons[n].color1, levelButtons[n].color2);
+     }
 }
 
 void NO_StartGame(HDC main_menu, bool* Exit, bool* StartGame)
 {
-        txBitBlt (txDC(), 0, 0, 1280, 720, main_menu, 0, 0);
+    txBitBlt (txDC(), 0, 0, 1280, 720, main_menu, 0, 0);
 
-        if (checkClick(525, 689, 480, 580))
-        {
-            *Exit = true;
-        }
+    if (checkClick(525, 689, 480, 580))
+    {
+        *Exit = true;
+    }
 
-        //StartGame = (checkClick(517, 705, 274, 370));
-        if (checkClick(517, 705, 274, 370))
-        {
-            *StartGame = true;
-        }
+    //StartGame = (checkClick(517, 705, 274, 370));
+    if (checkClick(517, 705, 274, 370))
+    {
+        *StartGame = true;
+    }
 
-        txSleep(10);
+    txSleep(10);
 }
 
 
@@ -119,41 +113,32 @@ int main()
     }
 
 
-    while(/*Game == true*/Exit == false && StartGame == false)
+    while (Exit == false && StartGame == false)
     {
-       //if(Game == true)
-       //{
         txBegin();
         txClear();
-        NO_StartGame(main_menu ,&Exit ,&StartGame);
+        NO_StartGame(main_menu, &Exit, &StartGame);
         txEnd();
-        //}
+
 		if (checkClick(469, 745, 386, 476))
 		{
             txBitBlt (txDC(), 0, 0, 1280, 720, option, 0, 0);
 			txSleep(1000);
 		}
-
     }
 
     while (StartGame == true)
     {
 		YES_StartGame(levelButtons, kartaurovneya);
 
-		if (GetAsyncKeyState(VK_ESCAPE))
-		{
-		    StartGame == false;
-			//NO_StartGame(main_menu ,&Exit ,&StartGame);
-		}
-
         //ГЏГ® ГЄГ«ГЁГЄГі Г­Г  ГіГ°Г®ГўГҐГ­Гј Г­Г Г·ГЁГ­Г ГҐГ¬ Г­Г®ГўГ»Г©
         while (Start_level == false && Exit == false)
         {
-            /*if (GetAsyncKeyState(VK_ESCAPE))
+            if (GetAsyncKeyState(VK_ESCAPE))
             {
                 Exit = true;
                 StartGame = false;
-            } */
+            }
 
             for (int n = 0; n < kolich_urovnei; n++)
             {
