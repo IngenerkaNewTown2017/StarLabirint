@@ -28,21 +28,4 @@ void vkladka(HDC FONtelo){
 void risovat_lico(HDC lico1,int x ,int y) {
     txTransparentBlt (txDC(), 238, 342, RAZMER_KARTINKI_EMOJI,37, lico1, x, y, TX_WHITE);
 }
-void reklama (){
 
-       txSetTextAlign (TA_CENTER);
-    txSelectFont("Arial", 95);
-    txSetColor(TX_RED, 5);
-    txDrawText(10, 10, 1000,1000, "нее ворууй");
-    txSleep (95);
-    txSetColor(TX_BLUE, 5);
-    txDrawText(10, 10, 1000,1000, "нее ворууй");
-    txSleep (95);
-    txSetColor(TX_RED, 5);
-    txDrawText(10, 10, 1000,1000, "нее ворууй");
-    txSleep (95);
-    txSetColor(TX_GREEN, 5);
-    txDrawText(10, 10, 1000,1000, "нее ворууй");
-    txSleep (95);
-    txSetColor(TX_YELLOW, 5);
-     txDrawText(10, 10, 1000,1000, "нее ворууй");}

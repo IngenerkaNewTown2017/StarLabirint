@@ -198,7 +198,7 @@ int main()
             risovat_golova(golova,x_bashki,y_bashki);
 
             txSetFillColor(face_color);
-            txFloodFill(220,220);
+            txFloodFill(300,360);
         }
 
         if (x_odejdi != -100)
@@ -301,7 +301,7 @@ int main()
         }
 
         //СОхранение
-        if (checkClick(785, 1080, 655, 715))
+        if (antivor == true && checkClick(785, 1080, 655, 715))
         {
             ScreenCapture(70, 120, 450, 450, "picture.jpg");
             txSelectFont("Arial", 150);
