@@ -1,3 +1,16 @@
+/*!
+\mainpage Эта программа написана командой cверхмолодых программистов .
+\file
+\brief main всего кода
+
+
+\authors StarLabirint™
+\version 1.0.0 beta
+\date 11.12.2018
+\name Функции основного файла
+
+*/
+
 #include "TXLib.h"
 #include <iostream>
 #include <string>
@@ -10,13 +23,14 @@
 #include "XO\\krestiki.cpp"
 
 
+
 struct OblUr
 {
-    int x;
-    int x1;
-    int y;
-    int y1;
-    const char* adress;
+    int x;              /// \brief  Координта х
+    int x1;             /// \brief  Координта x1
+    int y;              /// \brief  Координта y
+    int y1;             /// \brief  Координта y1
+    const char* adress; /// \brief Адрес картинки
 };
 
 int uroven_tekushii = 1;

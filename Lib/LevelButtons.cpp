@@ -1,3 +1,16 @@
+﻿/*!
+\file
+\brief Кнопки уровней
+
+
+\authors StarLabirint™
+\version 1.0.0 beta
+\date 11.12.2018
+\example https://github.com/IngenerkaNewTown2017/StarLabirint
+\warning Осторожнее
+\name Библиотеки
+
+*/
 #pragma once
 
 #include "TXLib.h"

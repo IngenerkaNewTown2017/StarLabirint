@@ -1,3 +1,17 @@
+ /*!
+\file
+\brief Ѕиблиотеки
+
+
+\authors StarLabirintЩ
+\version 1.0.0 beta
+\date 11.12.2018
+\example https://github.com/IngenerkaNewTown2017/StarLabirint
+\warning ќсторожнее
+\name Ѕиблиотеки
+
+*/
+
 #include "TXLib.h"
 
 struct ColorButton
