@@ -11,7 +11,7 @@
 using namespace std;
 
 
-void drawTabs()
+/*void drawTabs()
 {
     //Пусть остальные вкладки рисуются так же (через ректанглы)
     txSetTextAlign (TA_CENTER);
@@ -23,7 +23,7 @@ void drawTabs()
     txDrawText(825, 80, 1000, 120, "Тело");
     txRectangle(1000, 80, 1185, 120);
     txDrawText(1000, 80, 1185, 120, "Эмоции");
-}
+}*/
 
 int changeTab(int tab)
 {
@@ -109,19 +109,22 @@ int main()
     int x_lico = -100;
     int y_lico = 0;
 
-    HDC fon1  = txLoadImage ("pictures\\fon11.bmp");
+    HDC fon1  = txLoadImage ("pictures\\fon13.bmp");
 
-    HDC golova = txLoadImage("pictures\\head.bmp");
+    HDC golova = txLoadImage("pictures\\head2.bmp");
     int width_golov = SizerX(golova);
     int vysota_golov = SizerY(golova);
-    HDC teloPic  = txLoadImage ("pictures\\telo.bmp ");
+    HDC teloPic  = txLoadImage ("pictures\\telo2.bmp ");
     int width_tel = SizerX(teloPic);
     int vysota_tel = SizerY(teloPic);
-    HDC lico1 = txLoadImage ("pictures\\eye.bmp");
+    HDC lico1 = txLoadImage ("pictures\\eye2.bmp");
     int width_emo = SizerX(lico1);
     int vysota_emo = SizerY(lico1);
-    HDC rects  = txLoadImage ("pictures\\rects.bmp");
+    HDC rects  = txLoadImage ("pictures\\rects2.bmp");
     HDC kartinka = fon1;
+    HDC menu = txLoadImage ("pictures\\menu.bmp");
+     HDC menu2 = txLoadImage ("pictures\\menu en.bmp");
+     HDC kartinkamenu = menu;
 
     PersPartButton bashka[100];
     int vsego_boshek = getAllParts(bashka, RAZMER_KARTINKI_GOLOVY, width_golov, vysota_golov, 158);
@@ -152,6 +155,7 @@ int main()
     out.close(); */
 
     //Код антивора
+      txPlaySound ("tada.wav");
     int Cod = 0;
     cout << "приобрести полную версию можно тут " << std::endl;
     cout << "https://www.donationalerts.ru/r/persredactor" << std::endl;
@@ -161,20 +165,45 @@ int main()
     bool antivor = (Cod == 144629);
 
     system("cls");
+    txClear();
 
     bool isExit = false;
+
+
+     while(!checkClick(985, 1260, 325,400) && !isExit){
+
+
+if(checkClick(1050, 1135, 503,575) ){
+
+    risovat_fon(menu2);
+    txSleep(30);
+    }
+    else{
+      risovat_fon(menu);
+    txSleep(30);
+    }
+    }
+    if(checkClick(999, 1218,412,489) )
+    {
+
+    }
+txPlaySound ("tada.wav");
+
     while (!GetAsyncKeyState('R') && !isExit)
     {
         txBegin();
         txSetFillColor(TX_WHITE);
         txClear();
 
-        drawTabs();
+
+        //drawTabs();
 
         risovat_fon(kartinka);
+
+
         if (nomer_vkladki == VKLADKA_GOLOVA)
         {
-            txBitBlt (txDC(), 639, 120, 900, 600, golova, 0, 0);
+            txBitBlt (txDC(), 585, 125, 885, 595, golova, 0, 0);
             txBitBlt (txDC(), 640, 580, 900, 80, rects, 0, 0);
         }
         else if (nomer_vkladki == VKLADKA_TELO)
@@ -189,8 +218,8 @@ int main()
         }
 
         txSetColor(TX_BLACK, 5);
-        txRectangle(785, 655, 1080, 715);
-        txDrawText(785, 655, 1080, 715, "Сохранить");
+       // txRectangle(785, 655, 1080, 715);
+       // txDrawText(785, 655, 1080, 715, "Сохранить");
 
 
         if (x_bashki != -100)   //450.660
@@ -204,6 +233,7 @@ int main()
         if (x_odejdi != -100)
         {
             risovat_telo(teloPic,x_odejdi,y_odejdi);
+
         }
 
         if (x_lico != -100)
@@ -230,11 +260,31 @@ int main()
             //640 580 1240 660 - Размеры прямоугольников цветовых
             if (checkClick(640, 720, 600, 680))
             {
-                face_color = TX_RED;
+                face_color = RGB (246,214,199);
             }
             else if (checkClick(720, 800, 600, 680))
             {
-                face_color = TX_YELLOW;
+                face_color = RGB (239,182,154);
+            }
+            else if (checkClick(796, 870, 600, 680))
+            {
+                face_color = RGB (196,149,126);
+            }
+              else if (checkClick(875, 945, 600, 680))
+            {
+                face_color = RGB (80,255,116);
+            }
+            else if (checkClick(950, 1030, 600, 680))
+            {
+                face_color = RGB (80,191,255);
+            }
+            else if (checkClick(1030, 1105, 600, 680))
+            {
+                face_color = RGB (255,80,183);
+            }
+                 else if (checkClick(1110, 1185, 600, 680))
+            {
+                face_color = RGB (255,19,18);
             }
         }
 
@@ -269,9 +319,9 @@ int main()
 
         if (antivor == false )
         {
-            txSelectFont("Arial", 85);
-            txSetColor(TX_RED, 5);
-            txDrawText(150,350, 500,500, "туть");
+            txSelectFont("Arial",24);
+            txSetColor(TX_WHITE, 5);
+            txDrawText(110,350,500,500, "Pers redactor");
         }
 
         if (antivor == false && checkClick(785, 1080, 655, 715) )
@@ -280,6 +330,7 @@ int main()
             txSetTextAlign (TA_CENTER);
             txSelectFont("Arial", 150);
             txSetColor(TX_RED, 5);
+             txPlaySound ("alarm.wav");
             txDrawText(xtext, 50, 1000,1000, "buy full version");
             txSleep (50);
 
@@ -303,11 +354,13 @@ int main()
         //СОхранение
         if (antivor == true && checkClick(785, 1080, 655, 715))
         {
+               txPlaySound ("pop.wav");
             ScreenCapture(70, 120, 450, 450, "picture.jpg");
             txSelectFont("Arial", 150);
-            txSetColor(TX_BLACK, 5);
-            txDrawText(0, 10, 1000,1280, "ава сохранена");
+            txSetColor(TX_WHITE, 5);
+            txDrawText(0, 10, 1000,1280, "saved");
             txSleep (2000);
+
 
             isExit = true;
         }
