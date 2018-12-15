@@ -1,5 +1,5 @@
 /*!
-\mainpage Эта программа написана командой cверхмолодых программистов .
+\mainpage Эта программа написана командой молодых программистов .
 \file
 \brief main всего кода
 
@@ -162,6 +162,14 @@ int main()
                     file_adress = Lev[n].adress;
                     uroven_tekushii = n;
                 }
+            }
+
+            if (checkClick(612, 643, 0, 34))
+            {
+
+                Exit = true;
+                StartGame = false;
+                //NO_StartGame(main_menu, &Exit, &StartGame);
             }
 
             txSleep(10);
